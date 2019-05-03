@@ -1,0 +1,658 @@
+    <components xmlns="http://openconfig.net/yang/platform">
+      <component>
+        <name>oe1</name>
+        <config>
+          <name>oe1</name>
+        </config>
+        <state>
+          <type xmlns:oc-platform-types="http://openconfig.net/yang/platform-types">oc-platform-types:TRANSCEIVER</type>
+          <empty>false</empty>
+        </state>
+        <transceiver xmlns="http://openconfig.net/yang/platform/transceiver">
+          <config>
+            <enabled>true</enabled>
+            <form-factor-preconf xmlns:oc-opt-types="http://openconfig.net/yang/transport-types">oc-opt-types:CFP2_ACO</form-factor-preconf>
+          </config>
+        </transceiver>
+      </component>
+      <component>
+        <name>oe1/1</name>
+        <config>
+          <name>oe1/1</name>
+        </config>
+        <state>
+          <type xmlns:oc-opt-types="http://openconfig.net/yang/transport-types">oc-opt-types:OPTICAL_CHANNEL</type>
+          <empty>false</empty>
+        </state>
+        <optical-channel xmlns="http://openconfig.net/yang/terminal-device">
+          <config>
+            <frequency>194700000</frequency>
+            <target-output-power>-10.0</target-output-power>
+            <line-port>oe1</line-port>
+          </config>
+        </optical-channel>
+      </component>
+      <component>
+        <name>oe1/2</name>
+        <config>
+          <name>oe1/2</name>
+        </config>
+        <state>
+          <type xmlns:oc-opt-types="http://openconfig.net/yang/transport-types">oc-opt-types:OPTICAL_CHANNEL</type>
+          <empty>false</empty>
+        </state>
+        <optical-channel xmlns="http://openconfig.net/yang/terminal-device">
+          <config>
+            <frequency>194750000</frequency>
+            <target-output-power>-10.0</target-output-power>
+            <line-port>oe1</line-port>
+          </config>
+        </optical-channel>
+      </component>
+      <component>
+        <name>oe2</name>
+        <config>
+          <name>oe2</name>
+        </config>
+        <state>
+          <type xmlns:oc-platform-types="http://openconfig.net/yang/platform-types">oc-platform-types:TRANSCEIVER</type>
+          <empty>false</empty>
+        </state>
+        <transceiver xmlns="http://openconfig.net/yang/platform/transceiver">
+          <config>
+            <enabled>true</enabled>
+            <form-factor-preconf xmlns:oc-opt-types="http://openconfig.net/yang/transport-types">oc-opt-types:CFP2_ACO</form-factor-preconf>
+          </config>
+        </transceiver>
+      </component>
+      <component>
+        <name>oe2/1</name>
+        <config>
+          <name>oe2/1</name>
+        </config>
+        <state>
+          <type xmlns:oc-opt-types="http://openconfig.net/yang/transport-types">oc-opt-types:OPTICAL_CHANNEL</type>
+          <empty>false</empty>
+        </state>
+        <optical-channel xmlns="http://openconfig.net/yang/terminal-device">
+          <config>
+            <frequency>194700000</frequency>
+            <target-output-power>-10.0</target-output-power>
+            <line-port>oe2</line-port>
+          </config>
+        </optical-channel>
+      </component>
+      <component>
+        <name>oe2/2</name>
+        <config>
+          <name>oe2/2</name>
+        </config>
+        <state>
+          <type xmlns:oc-opt-types="http://openconfig.net/yang/transport-types">oc-opt-types:OPTICAL_CHANNEL</type>
+          <empty>false</empty>
+        </state>
+        <optical-channel xmlns="http://openconfig.net/yang/terminal-device">
+          <config>
+            <frequency>194750000</frequency>
+            <target-output-power>-10.0</target-output-power>
+            <line-port>oe2</line-port>
+          </config>
+        </optical-channel>
+      </component>
+      <component>
+        <name>oe3</name>
+        <config>
+          <name>oe3</name>
+        </config>
+        <state>
+          <type xmlns:oc-platform-types="http://openconfig.net/yang/platform-types">oc-platform-types:TRANSCEIVER</type>
+          <empty>false</empty>
+        </state>
+        <transceiver xmlns="http://openconfig.net/yang/platform/transceiver">
+          <config>
+            <enabled>true</enabled>
+            <form-factor-preconf xmlns:oc-opt-types="http://openconfig.net/yang/transport-types">oc-opt-types:CFP2_ACO</form-factor-preconf>
+          </config>
+        </transceiver>
+      </component>
+      <component>
+        <name>oe3/1</name>
+        <config>
+          <name>oe3/1</name>
+        </config>
+        <state>
+          <type xmlns:oc-opt-types="http://openconfig.net/yang/transport-types">oc-opt-types:OPTICAL_CHANNEL</type>
+          <empty>false</empty>
+        </state>
+        <optical-channel xmlns="http://openconfig.net/yang/terminal-device">
+          <config>
+            <frequency>194700000</frequency>
+            <target-output-power>-10.0</target-output-power>
+            <line-port>oe3</line-port>
+          </config>
+        </optical-channel>
+      </component>
+      <component>
+        <name>oe3/2</name>
+        <config>
+          <name>oe3/2</name>
+        </config>
+        <state>
+          <type xmlns:oc-opt-types="http://openconfig.net/yang/transport-types">oc-opt-types:OPTICAL_CHANNEL</type>
+          <empty>false</empty>
+        </state>
+        <optical-channel xmlns="http://openconfig.net/yang/terminal-device">
+          <config>
+            <frequency>194750000</frequency>
+            <target-output-power>-10.0</target-output-power>
+            <line-port>oe3</line-port>
+          </config>
+        </optical-channel>
+      </component>
+      <component>
+        <name>oe4</name>
+        <config>
+          <name>oe4</name>
+        </config>
+        <state>
+          <type xmlns:oc-platform-types="http://openconfig.net/yang/platform-types">oc-platform-types:TRANSCEIVER</type>
+          <empty>false</empty>
+        </state>
+        <transceiver xmlns="http://openconfig.net/yang/platform/transceiver">
+          <config>
+            <enabled>true</enabled>
+            <form-factor-preconf xmlns:oc-opt-types="http://openconfig.net/yang/transport-types">oc-opt-types:CFP2_ACO</form-factor-preconf>
+          </config>
+        </transceiver>
+      </component>
+      <component>
+        <name>oe4/1</name>
+        <config>
+          <name>oe4/1</name>
+        </config>
+        <state>
+          <type xmlns:oc-opt-types="http://openconfig.net/yang/transport-types">oc-opt-types:OPTICAL_CHANNEL</type>
+          <empty>false</empty>
+        </state>
+        <optical-channel xmlns="http://openconfig.net/yang/terminal-device">
+          <config>
+            <frequency>194700000</frequency>
+            <target-output-power>-10.0</target-output-power>
+            <line-port>oe4</line-port>
+          </config>
+        </optical-channel>
+      </component>
+      <component>
+        <name>oe4/2</name>
+        <config>
+          <name>oe4/2</name>
+        </config>
+        <state>
+          <type xmlns:oc-opt-types="http://openconfig.net/yang/transport-types">oc-opt-types:OPTICAL_CHANNEL</type>
+          <empty>false</empty>
+        </state>
+        <optical-channel xmlns="http://openconfig.net/yang/terminal-device">
+          <config>
+            <frequency>194750000</frequency>
+            <target-output-power>-10.0</target-output-power>
+            <line-port>oe4</line-port>
+          </config>
+        </optical-channel>
+      </component>
+      <component>
+        <name>oe5</name>
+        <config>
+          <name>oe5</name>
+        </config>
+        <state>
+          <type xmlns:oc-platform-types="http://openconfig.net/yang/platform-types">oc-platform-types:TRANSCEIVER</type>
+          <empty>false</empty>
+        </state>
+        <transceiver xmlns="http://openconfig.net/yang/platform/transceiver">
+          <config>
+            <enabled>true</enabled>
+            <form-factor-preconf xmlns:oc-opt-types="http://openconfig.net/yang/transport-types">oc-opt-types:CFP2_ACO</form-factor-preconf>
+          </config>
+        </transceiver>
+      </component>
+      <component>
+        <name>oe5/1</name>
+        <config>
+          <name>oe5/1</name>
+        </config>
+        <state>
+          <type xmlns:oc-opt-types="http://openconfig.net/yang/transport-types">oc-opt-types:OPTICAL_CHANNEL</type>
+          <empty>false</empty>
+        </state>
+        <optical-channel xmlns="http://openconfig.net/yang/terminal-device">
+          <config>
+            <frequency>194700000</frequency>
+            <target-output-power>-10.0</target-output-power>
+            <line-port>oe5</line-port>
+          </config>
+        </optical-channel>
+      </component>
+      <component>
+        <name>oe5/2</name>
+        <config>
+          <name>oe5/2</name>
+        </config>
+        <state>
+          <type xmlns:oc-opt-types="http://openconfig.net/yang/transport-types">oc-opt-types:OPTICAL_CHANNEL</type>
+          <empty>false</empty>
+        </state>
+        <optical-channel xmlns="http://openconfig.net/yang/terminal-device">
+          <config>
+            <frequency>194750000</frequency>
+            <target-output-power>-10.0</target-output-power>
+            <line-port>oe5</line-port>
+          </config>
+        </optical-channel>
+      </component>
+      <component>
+        <name>oe6</name>
+        <config>
+          <name>oe6</name>
+        </config>
+        <state>
+          <type xmlns:oc-platform-types="http://openconfig.net/yang/platform-types">oc-platform-types:TRANSCEIVER</type>
+          <empty>false</empty>
+        </state>
+        <transceiver xmlns="http://openconfig.net/yang/platform/transceiver">
+          <config>
+            <enabled>true</enabled>
+            <form-factor-preconf xmlns:oc-opt-types="http://openconfig.net/yang/transport-types">oc-opt-types:CFP2_ACO</form-factor-preconf>
+          </config>
+        </transceiver>
+      </component>
+      <component>
+        <name>oe6/1</name>
+        <config>
+          <name>oe6/1</name>
+        </config>
+        <state>
+          <type xmlns:oc-opt-types="http://openconfig.net/yang/transport-types">oc-opt-types:OPTICAL_CHANNEL</type>
+          <empty>false</empty>
+        </state>
+        <optical-channel xmlns="http://openconfig.net/yang/terminal-device">
+          <config>
+            <frequency>194700000</frequency>
+            <target-output-power>-10.0</target-output-power>
+            <line-port>oe6</line-port>
+          </config>
+        </optical-channel>
+      </component>
+      <component>
+        <name>oe6/2</name>
+        <config>
+          <name>oe6/2</name>
+        </config>
+        <state>
+          <type xmlns:oc-opt-types="http://openconfig.net/yang/transport-types">oc-opt-types:OPTICAL_CHANNEL</type>
+          <empty>false</empty>
+        </state>
+        <optical-channel xmlns="http://openconfig.net/yang/terminal-device">
+          <config>
+            <frequency>194750000</frequency>
+            <target-output-power>-10.0</target-output-power>
+            <line-port>oe6</line-port>
+          </config>
+        </optical-channel>
+      </component>
+      <component>
+        <name>oe7</name>
+        <config>
+          <name>oe7</name>
+        </config>
+        <state>
+          <type xmlns:oc-platform-types="http://openconfig.net/yang/platform-types">oc-platform-types:TRANSCEIVER</type>
+          <empty>false</empty>
+        </state>
+        <transceiver xmlns="http://openconfig.net/yang/platform/transceiver">
+          <config>
+            <enabled>true</enabled>
+            <form-factor-preconf xmlns:oc-opt-types="http://openconfig.net/yang/transport-types">oc-opt-types:CFP2_ACO</form-factor-preconf>
+          </config>
+        </transceiver>
+      </component>
+      <component>
+        <name>oe7/1</name>
+        <config>
+          <name>oe7/1</name>
+        </config>
+        <state>
+          <type xmlns:oc-opt-types="http://openconfig.net/yang/transport-types">oc-opt-types:OPTICAL_CHANNEL</type>
+          <empty>false</empty>
+        </state>
+        <optical-channel xmlns="http://openconfig.net/yang/terminal-device">
+          <config>
+            <frequency>194700000</frequency>
+            <target-output-power>-10.0</target-output-power>
+            <line-port>oe7</line-port>
+          </config>
+        </optical-channel>
+      </component>
+      <component>
+        <name>oe7/2</name>
+        <config>
+          <name>oe7/2</name>
+        </config>
+        <state>
+          <type xmlns:oc-opt-types="http://openconfig.net/yang/transport-types">oc-opt-types:OPTICAL_CHANNEL</type>
+          <empty>false</empty>
+        </state>
+        <optical-channel xmlns="http://openconfig.net/yang/terminal-device">
+          <config>
+            <frequency>194750000</frequency>
+            <target-output-power>-10.0</target-output-power>
+            <line-port>oe7</line-port>
+          </config>
+        </optical-channel>
+      </component>
+      <component>
+        <name>oe8</name>
+        <config>
+          <name>oe8</name>
+        </config>
+        <state>
+          <type xmlns:oc-platform-types="http://openconfig.net/yang/platform-types">oc-platform-types:TRANSCEIVER</type>
+          <empty>false</empty>
+        </state>
+        <transceiver xmlns="http://openconfig.net/yang/platform/transceiver">
+          <config>
+            <enabled>true</enabled>
+            <form-factor-preconf xmlns:oc-opt-types="http://openconfig.net/yang/transport-types">oc-opt-types:CFP2_ACO</form-factor-preconf>
+          </config>
+        </transceiver>
+      </component>
+      <component>
+        <name>oe8/1</name>
+        <config>
+          <name>oe8/1</name>
+        </config>
+        <state>
+          <type xmlns:oc-opt-types="http://openconfig.net/yang/transport-types">oc-opt-types:OPTICAL_CHANNEL</type>
+          <empty>false</empty>
+        </state>
+        <optical-channel xmlns="http://openconfig.net/yang/terminal-device">
+          <config>
+            <frequency>194700000</frequency>
+            <target-output-power>-10.0</target-output-power>
+            <line-port>oe8</line-port>
+          </config>
+        </optical-channel>
+      </component>
+      <component>
+        <name>oe8/2</name>
+        <config>
+          <name>oe8/2</name>
+        </config>
+        <state>
+          <type xmlns:oc-opt-types="http://openconfig.net/yang/transport-types">oc-opt-types:OPTICAL_CHANNEL</type>
+          <empty>false</empty>
+        </state>
+        <optical-channel xmlns="http://openconfig.net/yang/terminal-device">
+          <config>
+            <frequency>194750000</frequency>
+            <target-output-power>-10.0</target-output-power>
+            <line-port>oe8</line-port>
+          </config>
+        </optical-channel>
+      </component>
+      <component>
+        <name>xe1</name>
+        <config>
+          <name>xe1</name>
+        </config>
+        <state>
+          <type xmlns:oc-platform-types="http://openconfig.net/yang/platform-types">oc-platform-types:TRANSCEIVER</type>
+          <empty>false</empty>
+        </state>
+        <transceiver xmlns="http://openconfig.net/yang/platform/transceiver">
+          <config>
+            <enabled>true</enabled>
+            <form-factor-preconf xmlns:oc-opt-types="http://openconfig.net/yang/transport-types">oc-opt-types:QSFP28</form-factor-preconf>
+          </config>
+        </transceiver>
+      </component>
+      <component>
+        <name>xe10</name>
+        <config>
+          <name>xe10</name>
+        </config>
+        <state>
+          <type xmlns:oc-platform-types="http://openconfig.net/yang/platform-types">oc-platform-types:TRANSCEIVER</type>
+          <empty>false</empty>
+        </state>
+        <transceiver xmlns="http://openconfig.net/yang/platform/transceiver">
+          <config>
+            <enabled>true</enabled>
+            <form-factor-preconf xmlns:oc-opt-types="http://openconfig.net/yang/transport-types">oc-opt-types:QSFP28</form-factor-preconf>
+          </config>
+        </transceiver>
+      </component>
+      <component>
+        <name>xe11</name>
+        <config>
+          <name>xe11</name>
+        </config>
+        <state>
+          <type xmlns:oc-platform-types="http://openconfig.net/yang/platform-types">oc-platform-types:TRANSCEIVER</type>
+          <empty>false</empty>
+        </state>
+        <transceiver xmlns="http://openconfig.net/yang/platform/transceiver">
+          <config>
+            <enabled>true</enabled>
+            <form-factor-preconf xmlns:oc-opt-types="http://openconfig.net/yang/transport-types">oc-opt-types:QSFP28</form-factor-preconf>
+          </config>
+        </transceiver>
+      </component>
+      <component>
+        <name>xe12</name>
+        <config>
+          <name>xe12</name>
+        </config>
+        <state>
+          <type xmlns:oc-platform-types="http://openconfig.net/yang/platform-types">oc-platform-types:TRANSCEIVER</type>
+          <empty>false</empty>
+        </state>
+        <transceiver xmlns="http://openconfig.net/yang/platform/transceiver">
+          <config>
+            <enabled>true</enabled>
+            <form-factor-preconf xmlns:oc-opt-types="http://openconfig.net/yang/transport-types">oc-opt-types:QSFP28</form-factor-preconf>
+          </config>
+        </transceiver>
+      </component>
+      <component>
+        <name>xe13</name>
+        <config>
+          <name>xe13</name>
+        </config>
+        <state>
+          <type xmlns:oc-platform-types="http://openconfig.net/yang/platform-types">oc-platform-types:TRANSCEIVER</type>
+          <empty>false</empty>
+        </state>
+        <transceiver xmlns="http://openconfig.net/yang/platform/transceiver">
+          <config>
+            <enabled>true</enabled>
+            <form-factor-preconf xmlns:oc-opt-types="http://openconfig.net/yang/transport-types">oc-opt-types:QSFP28</form-factor-preconf>
+          </config>
+        </transceiver>
+      </component>
+      <component>
+        <name>xe14</name>
+        <config>
+          <name>xe14</name>
+        </config>
+        <state>
+          <type xmlns:oc-platform-types="http://openconfig.net/yang/platform-types">oc-platform-types:TRANSCEIVER</type>
+          <empty>false</empty>
+        </state>
+        <transceiver xmlns="http://openconfig.net/yang/platform/transceiver">
+          <config>
+            <enabled>true</enabled>
+            <form-factor-preconf xmlns:oc-opt-types="http://openconfig.net/yang/transport-types">oc-opt-types:QSFP28</form-factor-preconf>
+          </config>
+        </transceiver>
+      </component>
+      <component>
+        <name>xe15</name>
+        <config>
+          <name>xe15</name>
+        </config>
+        <state>
+          <type xmlns:oc-platform-types="http://openconfig.net/yang/platform-types">oc-platform-types:TRANSCEIVER</type>
+          <empty>false</empty>
+        </state>
+        <transceiver xmlns="http://openconfig.net/yang/platform/transceiver">
+          <config>
+            <enabled>true</enabled>
+            <form-factor-preconf xmlns:oc-opt-types="http://openconfig.net/yang/transport-types">oc-opt-types:QSFP28</form-factor-preconf>
+          </config>
+        </transceiver>
+      </component>
+      <component>
+        <name>xe16</name>
+        <config>
+          <name>xe16</name>
+        </config>
+        <state>
+          <type xmlns:oc-platform-types="http://openconfig.net/yang/platform-types">oc-platform-types:TRANSCEIVER</type>
+          <empty>false</empty>
+        </state>
+        <transceiver xmlns="http://openconfig.net/yang/platform/transceiver">
+          <config>
+            <enabled>true</enabled>
+            <form-factor-preconf xmlns:oc-opt-types="http://openconfig.net/yang/transport-types">oc-opt-types:QSFP28</form-factor-preconf>
+          </config>
+        </transceiver>
+      </component>
+      <component>
+        <name>xe2</name>
+        <config>
+          <name>xe2</name>
+        </config>
+        <state>
+          <type xmlns:oc-platform-types="http://openconfig.net/yang/platform-types">oc-platform-types:TRANSCEIVER</type>
+          <empty>false</empty>
+        </state>
+        <transceiver xmlns="http://openconfig.net/yang/platform/transceiver">
+          <config>
+            <enabled>true</enabled>
+            <form-factor-preconf xmlns:oc-opt-types="http://openconfig.net/yang/transport-types">oc-opt-types:QSFP28</form-factor-preconf>
+          </config>
+        </transceiver>
+      </component>
+      <component>
+        <name>xe3</name>
+        <config>
+          <name>xe3</name>
+        </config>
+        <state>
+          <type xmlns:oc-platform-types="http://openconfig.net/yang/platform-types">oc-platform-types:TRANSCEIVER</type>
+          <empty>false</empty>
+        </state>
+        <transceiver xmlns="http://openconfig.net/yang/platform/transceiver">
+          <config>
+            <enabled>true</enabled>
+            <form-factor-preconf xmlns:oc-opt-types="http://openconfig.net/yang/transport-types">oc-opt-types:QSFP28</form-factor-preconf>
+          </config>
+        </transceiver>
+      </component>
+      <component>
+        <name>xe4</name>
+        <config>
+          <name>xe4</name>
+        </config>
+        <state>
+          <type xmlns:oc-platform-types="http://openconfig.net/yang/platform-types">oc-platform-types:TRANSCEIVER</type>
+          <empty>false</empty>
+        </state>
+        <transceiver xmlns="http://openconfig.net/yang/platform/transceiver">
+          <config>
+            <enabled>true</enabled>
+            <form-factor-preconf xmlns:oc-opt-types="http://openconfig.net/yang/transport-types">oc-opt-types:QSFP28</form-factor-preconf>
+          </config>
+        </transceiver>
+      </component>
+      <component>
+        <name>xe5</name>
+        <config>
+          <name>xe5</name>
+        </config>
+        <state>
+          <type xmlns:oc-platform-types="http://openconfig.net/yang/platform-types">oc-platform-types:TRANSCEIVER</type>
+          <empty>false</empty>
+        </state>
+        <transceiver xmlns="http://openconfig.net/yang/platform/transceiver">
+          <config>
+            <enabled>true</enabled>
+            <form-factor-preconf xmlns:oc-opt-types="http://openconfig.net/yang/transport-types">oc-opt-types:QSFP28</form-factor-preconf>
+          </config>
+        </transceiver>
+      </component>
+      <component>
+        <name>xe6</name>
+        <config>
+          <name>xe6</name>
+        </config>
+        <state>
+          <type xmlns:oc-platform-types="http://openconfig.net/yang/platform-types">oc-platform-types:TRANSCEIVER</type>
+          <empty>false</empty>
+        </state>
+        <transceiver xmlns="http://openconfig.net/yang/platform/transceiver">
+          <config>
+            <enabled>true</enabled>
+            <form-factor-preconf xmlns:oc-opt-types="http://openconfig.net/yang/transport-types">oc-opt-types:QSFP28</form-factor-preconf>
+          </config>
+        </transceiver>
+      </component>
+      <component>
+        <name>xe7</name>
+        <config>
+          <name>xe7</name>
+        </config>
+        <state>
+          <type xmlns:oc-platform-types="http://openconfig.net/yang/platform-types">oc-platform-types:TRANSCEIVER</type>
+          <empty>false</empty>
+        </state>
+        <transceiver xmlns="http://openconfig.net/yang/platform/transceiver">
+          <config>
+            <enabled>true</enabled>
+            <form-factor-preconf xmlns:oc-opt-types="http://openconfig.net/yang/transport-types">oc-opt-types:QSFP28</form-factor-preconf>
+          </config>
+        </transceiver>
+      </component>
+      <component>
+        <name>xe8</name>
+        <config>
+          <name>xe8</name>
+        </config>
+        <state>
+          <type xmlns:oc-platform-types="http://openconfig.net/yang/platform-types">oc-platform-types:TRANSCEIVER</type>
+          <empty>false</empty>
+        </state>
+        <transceiver xmlns="http://openconfig.net/yang/platform/transceiver">
+          <config>
+            <enabled>true</enabled>
+            <form-factor-preconf xmlns:oc-opt-types="http://openconfig.net/yang/transport-types">oc-opt-types:QSFP28</form-factor-preconf>
+          </config>
+        </transceiver>
+      </component>
+      <component>
+        <name>xe9</name>
+        <config>
+          <name>xe9</name>
+        </config>
+        <state>
+          <type xmlns:oc-platform-types="http://openconfig.net/yang/platform-types">oc-platform-types:TRANSCEIVER</type>
+          <empty>false</empty>
+        </state>
+        <transceiver xmlns="http://openconfig.net/yang/platform/transceiver">
+          <config>
+            <enabled>true</enabled>
+            <form-factor-preconf xmlns:oc-opt-types="http://openconfig.net/yang/transport-types">oc-opt-types:QSFP28</form-factor-preconf>
+          </config>
+        </transceiver>
+      </component>
+    </components>

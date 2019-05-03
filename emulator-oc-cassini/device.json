@@ -1,0 +1,30 @@
+{
+  "devices" : {
+    "netconf:127.0.0.1:11002" : {
+      "basic" : {
+        "name":"cassini2",
+        "driver":"cassini-ocnos"
+      },
+      "netconf" : {
+        "ip" : "127.0.0.1",
+        "port" : "11002",
+        "username" : "root",
+        "password" : "root",
+        "idle-timeout" : "0"
+      }
+    },
+    "netconf:127.0.0.1:11003" : {
+      "basic" : {
+        "name":"cassini1",
+        "driver":"cassini-ocnos"
+      },
+      "netconf" : {
+        "ip" : "127.0.0.1",
+        "port" : "11003",
+        "username" : "root",
+        "password" : "root",
+        "idle-timeout" : "0"
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+<edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+<target>
+    <running/>
+</target>
+<config xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0">
+	<components xmlns='http://openconfig.net/yang/platform'>
+    	<component nc:operation='merge'>
+        	<name>oe2/2</name>
+        	<oc-opt-term:optical-channel xmlns:oc-opt-term='http://openconfig.net/yang/terminal-device'>  
+            	<oc-opt-term:config>  
+                	<oc-opt-term:frequency>190700000</oc-opt-term:frequency>    
+            	</oc-opt-term:config> 
+        	</oc-opt-term:optical-channel>
+    	</component>
+    </components>
+    </config>
+</edit-config>

@@ -1,0 +1,10 @@
+version: '2'
+services:
+  openconfig_cassini_1:
+    build: ./emulator-oc-cassini
+    ports:
+      - "11002:830"
+  openconfig_cassini_2:
+    build: ./emulator-oc-cassini
+    ports:
+      - "11003:830"
