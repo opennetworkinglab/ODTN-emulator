@@ -1,11 +1,10 @@
-XML:
 <context xmlns="urn:onf:otcc:yang:tapi-common">
   <service-interface-point>
     <uuid>d0dab20b-f4dd-4776-8327-7784d6359d95</uuid>
     <layer-protocol-name>PHOTONIC_MEDIA</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11113/206</value>
+      <value>netconf:127.0.0.1:11003/206</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -13,7 +12,7 @@ XML:
     <layer-protocol-name>DSR</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11113/114</value>
+      <value>netconf:127.0.0.1:11003/114</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -21,7 +20,7 @@ XML:
     <layer-protocol-name>PHOTONIC_MEDIA</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11113/201</value>
+      <value>netconf:127.0.0.1:11003/201</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -29,7 +28,7 @@ XML:
     <layer-protocol-name>PHOTONIC_MEDIA</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11113/209</value>
+      <value>netconf:127.0.0.1:11003/209</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -37,7 +36,7 @@ XML:
     <layer-protocol-name>DSR</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11112/116</value>
+      <value>netconf:127.0.0.1:11002/116</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -45,7 +44,7 @@ XML:
     <layer-protocol-name>DSR</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11112/107</value>
+      <value>netconf:127.0.0.1:11002/107</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -53,7 +52,7 @@ XML:
     <layer-protocol-name>DSR</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11112/112</value>
+      <value>netconf:127.0.0.1:11002/112</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -61,7 +60,7 @@ XML:
     <layer-protocol-name>DSR</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11113/109</value>
+      <value>netconf:127.0.0.1:11003/109</value>
     </name>
   </service-interface-point>
   <topology-context xmlns="urn:onf:otcc:yang:tapi-topology">
@@ -104,7 +103,7 @@ XML:
           </name>
           <uuid>ca088a29-ab3a-48f6-9048-057a0b3efccf</uuid>
           <name>
-            <value>netconf:10.128.200.1:11113/216</value>
+            <value>netconf:127.0.0.1:11003/216</value>
             <value-name>onos-cp</value-name>
           </name>
         </owned-node-edge-point>
@@ -132,7 +131,7 @@ XML:
           </name>
           <uuid>bcc1089b-228d-4b0c-81ad-b8f74da3b423</uuid>
           <name>
-            <value>netconf:10.128.200.1:11113/211</value>
+            <value>netconf:127.0.0.1:11003/211</value>
             <value-name>onos-cp</value-name>
           </name>
         </owned-node-edge-point>
@@ -160,7 +159,7 @@ XML:
           </mapped-service-interface-point>
           <uuid>2656917d-f2af-45e5-856f-3bae1ed052b1</uuid>
           <name>
-            <value>netconf:10.128.200.1:11113/103</value>
+            <value>netconf:127.0.0.1:11003/103</value>
             <value-name>onos-cp</value-name>
           </name>
         </owned-node-edge-point>
@@ -185,7 +184,7 @@ XML:
           </name>
           <uuid>cfea1d97-1b77-49b1-a6f8-edf163fc8b2d</uuid>
           <name>
-            <value>netconf:10.128.200.1:11113/210</value>
+            <value>netconf:127.0.0.1:11003/210</value>
             <value-name>onos-cp</value-name>
           </name>
           <mapped-service-interface-point>
@@ -216,7 +215,7 @@ XML:
           </name>
           <uuid>03851f51-b0e5-49d4-bd33-01c69b09f955</uuid>
           <name>
-            <value>netconf:10.128.200.1:11113/110</value>
+            <value>netconf:127.0.0.1:11003/110</value>
             <value-name>onos-cp</value-name>
           </name>
         </owned-node-edge-point>
@@ -241,7 +240,7 @@ XML:
           </name>
           <uuid>8858ab8d-9828-4b45-8414-1e748406c4ab</uuid>
           <name>
-            <value>netconf:10.128.200.1:11113/209</value>
+            <value>netconf:127.0.0.1:11003/209</value>
             <value-name>onos-cp</value-name>
           </name>
           <mapped-service-interface-point>
@@ -249,7 +248,7 @@ XML:
           </mapped-service-interface-point>
         </owned-node-edge-point>
         <name>
-          <value>netconf:10.128.200.1:11113</value>
+          <value>netconf:127.0.0.1:11003</value>
           <value-name>device-id</value-name>
         </name>
         <owned-node-edge-point>
@@ -276,7 +275,7 @@ XML:
           </name>
           <uuid>7f672d2c-2cdc-425b-a77b-097b65ff7e5d</uuid>
           <name>
-            <value>netconf:10.128.200.1:11113/203</value>
+            <value>netconf:127.0.0.1:11003/203</value>
             <value-name>onos-cp</value-name>
           </name>
         </owned-node-edge-point>
@@ -301,7 +300,7 @@ XML:
           </name>
           <uuid>93860ea3-8a7f-410d-94b8-e599d3b9f4e8</uuid>
           <name>
-            <value>netconf:10.128.200.1:11113/109</value>
+            <value>netconf:127.0.0.1:11003/109</value>
             <value-name>onos-cp</value-name>
           </name>
           <mapped-service-interface-point>
@@ -332,7 +331,7 @@ XML:
           </name>
           <uuid>ba4d36e1-879c-47d8-92f2-6db261ac810e</uuid>
           <name>
-            <value>netconf:10.128.200.1:11113/113</value>
+            <value>netconf:127.0.0.1:11003/113</value>
             <value-name>onos-cp</value-name>
           </name>
         </owned-node-edge-point>
@@ -357,7 +356,7 @@ XML:
           </name>
           <uuid>cafa9714-ede9-4bb7-9476-fb3178d1b43d</uuid>
           <name>
-            <value>netconf:10.128.200.1:11113/204</value>
+            <value>netconf:127.0.0.1:11003/204</value>
             <value-name>onos-cp</value-name>
           </name>
           <mapped-service-interface-point>
@@ -385,7 +384,7 @@ XML:
           </name>
           <uuid>0f132a67-16a2-4b46-a477-2f18f4711e4f</uuid>
           <name>
-            <value>netconf:10.128.200.1:11113/106</value>
+            <value>netconf:127.0.0.1:11003/106</value>
             <value-name>onos-cp</value-name>
           </name>
           <mapped-service-interface-point>
@@ -416,7 +415,7 @@ XML:
           </name>
           <uuid>24f93031-83ed-44a4-9534-79005ef690cb</uuid>
           <name>
-            <value>netconf:10.128.200.1:11113/104</value>
+            <value>netconf:127.0.0.1:11003/104</value>
             <value-name>onos-cp</value-name>
           </name>
         </owned-node-edge-point>
@@ -444,7 +443,7 @@ XML:
           </name>
           <uuid>f782460b-40c6-4e66-8488-4fe1f444be02</uuid>
           <name>
-            <value>netconf:10.128.200.1:11113/105</value>
+            <value>netconf:127.0.0.1:11003/105</value>
             <value-name>onos-cp</value-name>
           </name>
         </owned-node-edge-point>
@@ -472,7 +471,7 @@ XML:
           </name>
           <uuid>181cdc85-8e09-4593-961b-776dae01edd0</uuid>
           <name>
-            <value>netconf:10.128.200.1:11113/215</value>
+            <value>netconf:127.0.0.1:11003/215</value>
             <value-name>onos-cp</value-name>
           </name>
         </owned-node-edge-point>
@@ -497,7 +496,7 @@ XML:
           </name>
           <uuid>f7c00560-005b-4d1b-a547-bef137aa07ec</uuid>
           <name>
-            <value>netconf:10.128.200.1:11113/108</value>
+            <value>netconf:127.0.0.1:11003/108</value>
             <value-name>onos-cp</value-name>
           </name>
           <mapped-service-interface-point>
@@ -525,7 +524,7 @@ XML:
           </name>
           <uuid>6c4e2996-49c7-4d8e-bbbf-b51109415993</uuid>
           <name>
-            <value>netconf:10.128.200.1:11113/101</value>
+            <value>netconf:127.0.0.1:11003/101</value>
             <value-name>onos-cp</value-name>
           </name>
           <mapped-service-interface-point>
@@ -553,7 +552,7 @@ XML:
           </name>
           <uuid>781008bc-dfc9-48cd-abd2-248802fb57a2</uuid>
           <name>
-            <value>netconf:10.128.200.1:11113/205</value>
+            <value>netconf:127.0.0.1:11003/205</value>
             <value-name>onos-cp</value-name>
           </name>
           <mapped-service-interface-point>
@@ -581,7 +580,7 @@ XML:
           </name>
           <uuid>48330525-57db-4385-a963-df914a87e70c</uuid>
           <name>
-            <value>netconf:10.128.200.1:11113/202</value>
+            <value>netconf:127.0.0.1:11003/202</value>
             <value-name>onos-cp</value-name>
           </name>
           <mapped-service-interface-point>
@@ -612,7 +611,7 @@ XML:
           </name>
           <uuid>1aa2a081-fb67-4c34-a2ac-2f9a63cec85c</uuid>
           <name>
-            <value>netconf:10.128.200.1:11113/102</value>
+            <value>netconf:127.0.0.1:11003/102</value>
             <value-name>onos-cp</value-name>
           </name>
         </owned-node-edge-point>
@@ -637,7 +636,7 @@ XML:
           </name>
           <uuid>fd091e51-fee5-4835-a950-4f79304c73d9</uuid>
           <name>
-            <value>netconf:10.128.200.1:11113/107</value>
+            <value>netconf:127.0.0.1:11003/107</value>
             <value-name>onos-cp</value-name>
           </name>
           <mapped-service-interface-point>
@@ -668,7 +667,7 @@ XML:
           </name>
           <uuid>3f0f61d1-e4db-4f8a-8ff4-1f569b6b10be</uuid>
           <name>
-            <value>netconf:10.128.200.1:11113/208</value>
+            <value>netconf:127.0.0.1:11003/208</value>
             <value-name>onos-cp</value-name>
           </name>
         </owned-node-edge-point>
@@ -693,7 +692,7 @@ XML:
           </name>
           <uuid>c622b43a-0de0-4b40-825d-be1063b97683</uuid>
           <name>
-            <value>netconf:10.128.200.1:11113/115</value>
+            <value>netconf:127.0.0.1:11003/115</value>
             <value-name>onos-cp</value-name>
           </name>
           <mapped-service-interface-point>
@@ -724,7 +723,7 @@ XML:
           </name>
           <uuid>8c832fef-9357-476c-bc79-1d5f23221a54</uuid>
           <name>
-            <value>netconf:10.128.200.1:11113/212</value>
+            <value>netconf:127.0.0.1:11003/212</value>
             <value-name>onos-cp</value-name>
           </name>
         </owned-node-edge-point>
@@ -749,7 +748,7 @@ XML:
           </name>
           <uuid>82c71afc-a77b-4b09-a4b5-2e5e16e0211d</uuid>
           <name>
-            <value>netconf:10.128.200.1:11113/206</value>
+            <value>netconf:127.0.0.1:11003/206</value>
             <value-name>onos-cp</value-name>
           </name>
           <mapped-service-interface-point>
@@ -780,7 +779,7 @@ XML:
           </name>
           <uuid>8679c89e-2cf0-4511-8cc9-771aa4e59792</uuid>
           <name>
-            <value>netconf:10.128.200.1:11113/112</value>
+            <value>netconf:127.0.0.1:11003/112</value>
             <value-name>onos-cp</value-name>
           </name>
         </owned-node-edge-point>
@@ -805,7 +804,7 @@ XML:
           </name>
           <uuid>66d32e69-3125-42c4-83e4-1c6f0d78eed1</uuid>
           <name>
-            <value>netconf:10.128.200.1:11113/201</value>
+            <value>netconf:127.0.0.1:11003/201</value>
             <value-name>onos-cp</value-name>
           </name>
           <mapped-service-interface-point>
@@ -833,7 +832,7 @@ XML:
           </name>
           <uuid>6178e023-dcb4-4d48-93ea-af8da59124ad</uuid>
           <name>
-            <value>netconf:10.128.200.1:11113/114</value>
+            <value>netconf:127.0.0.1:11003/114</value>
             <value-name>onos-cp</value-name>
           </name>
           <mapped-service-interface-point>
@@ -865,7 +864,7 @@ XML:
             <service-interface-point-uuid>fd23e24c-7ec7-4908-8dcf-1eacf8039dfd</service-interface-point-uuid>
           </mapped-service-interface-point>
           <name>
-            <value>netconf:10.128.200.1:11113/111</value>
+            <value>netconf:127.0.0.1:11003/111</value>
             <value-name>onos-cp</value-name>
           </name>
         </owned-node-edge-point>
@@ -893,7 +892,7 @@ XML:
           </mapped-service-interface-point>
           <uuid>8e59be5b-8345-4dd0-8190-5016159af6a1</uuid>
           <name>
-            <value>netconf:10.128.200.1:11113/207</value>
+            <value>netconf:127.0.0.1:11003/207</value>
             <value-name>onos-cp</value-name>
           </name>
         </owned-node-edge-point>
@@ -921,7 +920,7 @@ XML:
           </name>
           <uuid>57ff306e-899d-478c-b70a-fca0baf8f8ba</uuid>
           <name>
-            <value>netconf:10.128.200.1:11113/213</value>
+            <value>netconf:127.0.0.1:11003/213</value>
             <value-name>onos-cp</value-name>
           </name>
         </owned-node-edge-point>
@@ -949,7 +948,7 @@ XML:
           </name>
           <uuid>df41fd58-471d-41f7-b702-e3a0d50ae7a2</uuid>
           <name>
-            <value>netconf:10.128.200.1:11113/214</value>
+            <value>netconf:127.0.0.1:11003/214</value>
             <value-name>onos-cp</value-name>
           </name>
         </owned-node-edge-point>
@@ -977,7 +976,7 @@ XML:
           </name>
           <uuid>cdfba56e-b055-4f57-958d-e88c393b22b0</uuid>
           <name>
-            <value>netconf:10.128.200.1:11113/116</value>
+            <value>netconf:127.0.0.1:11003/116</value>
             <value-name>onos-cp</value-name>
           </name>
         </owned-node-edge-point>
@@ -1121,7 +1120,7 @@ XML:
           </name>
           <uuid>5ebafec3-8462-43d7-a65e-e3d3b3d282f5</uuid>
           <name>
-            <value>netconf:10.128.200.1:11112/106</value>
+            <value>netconf:127.0.0.1:11002/106</value>
             <value-name>onos-cp</value-name>
           </name>
           <mapped-service-interface-point>
@@ -1152,12 +1151,12 @@ XML:
           </name>
           <uuid>a0dabc25-5108-4890-882c-8dfd9743e00d</uuid>
           <name>
-            <value>netconf:10.128.200.1:11112/208</value>
+            <value>netconf:127.0.0.1:11002/208</value>
             <value-name>onos-cp</value-name>
           </name>
         </owned-node-edge-point>
         <name>
-          <value>netconf:10.128.200.1:11112</value>
+          <value>netconf:127.0.0.1:11002</value>
           <value-name>device-id</value-name>
         </name>
         <owned-node-edge-point>
@@ -1184,7 +1183,7 @@ XML:
           </name>
           <uuid>4236fd6e-7f4a-4865-bf9e-fb403aa9ac10</uuid>
           <name>
-            <value>netconf:10.128.200.1:11112/110</value>
+            <value>netconf:127.0.0.1:11002/110</value>
             <value-name>onos-cp</value-name>
           </name>
         </owned-node-edge-point>
@@ -1212,7 +1211,7 @@ XML:
             <service-interface-point-uuid>91b4b0f8-c104-4d57-b960-3390fd4054d5</service-interface-point-uuid>
           </mapped-service-interface-point>
           <name>
-            <value>netconf:10.128.200.1:11112/213</value>
+            <value>netconf:127.0.0.1:11002/213</value>
             <value-name>onos-cp</value-name>
           </name>
         </owned-node-edge-point>
@@ -1240,7 +1239,7 @@ XML:
           </mapped-service-interface-point>
           <uuid>d4477d0c-633f-4dc0-9637-5b84638dbd42</uuid>
           <name>
-            <value>netconf:10.128.200.1:11112/102</value>
+            <value>netconf:127.0.0.1:11002/102</value>
             <value-name>onos-cp</value-name>
           </name>
         </owned-node-edge-point>
@@ -1268,7 +1267,7 @@ XML:
           </name>
           <uuid>156bdf74-26bd-4f4c-a895-c06db6e3079e</uuid>
           <name>
-            <value>netconf:10.128.200.1:11112/111</value>
+            <value>netconf:127.0.0.1:11002/111</value>
             <value-name>onos-cp</value-name>
           </name>
         </owned-node-edge-point>
@@ -1296,7 +1295,7 @@ XML:
           </name>
           <uuid>8d0df7fe-19ee-43fe-9121-354712ce407c</uuid>
           <name>
-            <value>netconf:10.128.200.1:11112/112</value>
+            <value>netconf:127.0.0.1:11002/112</value>
             <value-name>onos-cp</value-name>
           </name>
         </owned-node-edge-point>
@@ -1324,7 +1323,7 @@ XML:
           </name>
           <uuid>59147072-6143-4903-bce0-9e2dd8bd716e</uuid>
           <name>
-            <value>netconf:10.128.200.1:11112/204</value>
+            <value>netconf:127.0.0.1:11002/204</value>
             <value-name>onos-cp</value-name>
           </name>
         </owned-node-edge-point>
@@ -1352,7 +1351,7 @@ XML:
           </name>
           <uuid>ec6e62b1-3974-4afa-a3c1-1348126de46a</uuid>
           <name>
-            <value>netconf:10.128.200.1:11112/101</value>
+            <value>netconf:127.0.0.1:11002/101</value>
             <value-name>onos-cp</value-name>
           </name>
         </owned-node-edge-point>
@@ -1380,7 +1379,7 @@ XML:
             <service-interface-point-uuid>f0eb10df-f9c2-4b6c-9e93-4483a50a5180</service-interface-point-uuid>
           </mapped-service-interface-point>
           <name>
-            <value>netconf:10.128.200.1:11112/104</value>
+            <value>netconf:127.0.0.1:11002/104</value>
             <value-name>onos-cp</value-name>
           </name>
         </owned-node-edge-point>
@@ -1405,7 +1404,7 @@ XML:
           </name>
           <uuid>8f50ade7-b056-4ef7-af3f-d820101639bf</uuid>
           <name>
-            <value>netconf:10.128.200.1:11112/105</value>
+            <value>netconf:127.0.0.1:11002/105</value>
             <value-name>onos-cp</value-name>
           </name>
           <mapped-service-interface-point>
@@ -1436,7 +1435,7 @@ XML:
           </mapped-service-interface-point>
           <uuid>baa765b9-5d93-4843-96bf-c40dd8ac4ac2</uuid>
           <name>
-            <value>netconf:10.128.200.1:11112/215</value>
+            <value>netconf:127.0.0.1:11002/215</value>
             <value-name>onos-cp</value-name>
           </name>
         </owned-node-edge-point>
@@ -1464,7 +1463,7 @@ XML:
           </name>
           <uuid>bf25e828-95d1-4412-ad30-eeb0faa9899c</uuid>
           <name>
-            <value>netconf:10.128.200.1:11112/109</value>
+            <value>netconf:127.0.0.1:11002/109</value>
             <value-name>onos-cp</value-name>
           </name>
         </owned-node-edge-point>
@@ -1492,7 +1491,7 @@ XML:
           </mapped-service-interface-point>
           <uuid>79fe7062-1873-4ec7-bef3-c5147441e93f</uuid>
           <name>
-            <value>netconf:10.128.200.1:11112/113</value>
+            <value>netconf:127.0.0.1:11002/113</value>
             <value-name>onos-cp</value-name>
           </name>
         </owned-node-edge-point>
@@ -1517,7 +1516,7 @@ XML:
           </name>
           <uuid>636095d8-5a5c-4fa4-8595-7f70eb15e8d5</uuid>
           <name>
-            <value>netconf:10.128.200.1:11112/116</value>
+            <value>netconf:127.0.0.1:11002/116</value>
             <value-name>onos-cp</value-name>
           </name>
           <mapped-service-interface-point>
@@ -1545,7 +1544,7 @@ XML:
           </name>
           <uuid>fea68cc3-cc7a-4c49-a865-3f23cb4268b2</uuid>
           <name>
-            <value>netconf:10.128.200.1:11112/206</value>
+            <value>netconf:127.0.0.1:11002/206</value>
             <value-name>onos-cp</value-name>
           </name>
           <mapped-service-interface-point>
@@ -1573,7 +1572,7 @@ XML:
           </name>
           <uuid>6d4ec9b8-4979-4384-acfa-0d9ec104c32c</uuid>
           <name>
-            <value>netconf:10.128.200.1:11112/216</value>
+            <value>netconf:127.0.0.1:11002/216</value>
             <value-name>onos-cp</value-name>
           </name>
           <mapped-service-interface-point>
@@ -1604,7 +1603,7 @@ XML:
           </name>
           <uuid>63ee2beb-3155-4495-b845-5053c9cec4e2</uuid>
           <name>
-            <value>netconf:10.128.200.1:11112/115</value>
+            <value>netconf:127.0.0.1:11002/115</value>
             <value-name>onos-cp</value-name>
           </name>
         </owned-node-edge-point>
@@ -1629,7 +1628,7 @@ XML:
           </name>
           <uuid>baadd38d-fe82-4121-8763-9c60a850662f</uuid>
           <name>
-            <value>netconf:10.128.200.1:11112/214</value>
+            <value>netconf:127.0.0.1:11002/214</value>
             <value-name>onos-cp</value-name>
           </name>
           <mapped-service-interface-point>
@@ -1660,7 +1659,7 @@ XML:
           </name>
           <uuid>4526cc01-a783-44d5-9a5e-e5f3c7c5a513</uuid>
           <name>
-            <value>netconf:10.128.200.1:11112/103</value>
+            <value>netconf:127.0.0.1:11002/103</value>
             <value-name>onos-cp</value-name>
           </name>
         </owned-node-edge-point>
@@ -1685,7 +1684,7 @@ XML:
           </name>
           <uuid>2e26878d-f5f9-4908-add8-77c25a34a45a</uuid>
           <name>
-            <value>netconf:10.128.200.1:11112/108</value>
+            <value>netconf:127.0.0.1:11002/108</value>
             <value-name>onos-cp</value-name>
           </name>
           <mapped-service-interface-point>
@@ -1716,7 +1715,7 @@ XML:
           </name>
           <uuid>d1e4b3ca-6a39-4d7f-ba3c-680aae12d2d7</uuid>
           <name>
-            <value>netconf:10.128.200.1:11112/209</value>
+            <value>netconf:127.0.0.1:11002/209</value>
             <value-name>onos-cp</value-name>
           </name>
         </owned-node-edge-point>
@@ -1741,7 +1740,7 @@ XML:
           </name>
           <uuid>0f20527d-4ed2-4735-a5a8-48e8afeb40de</uuid>
           <name>
-            <value>netconf:10.128.200.1:11112/107</value>
+            <value>netconf:127.0.0.1:11002/107</value>
             <value-name>onos-cp</value-name>
           </name>
           <mapped-service-interface-point>
@@ -1772,7 +1771,7 @@ XML:
           </name>
           <uuid>672e99de-f46e-429b-a1ac-ce57ce7fe929</uuid>
           <name>
-            <value>netconf:10.128.200.1:11112/114</value>
+            <value>netconf:127.0.0.1:11002/114</value>
             <value-name>onos-cp</value-name>
           </name>
         </owned-node-edge-point>
@@ -1800,7 +1799,7 @@ XML:
           </name>
           <uuid>97a915d3-42e0-448c-9e6d-f42b5cc827fd</uuid>
           <name>
-            <value>netconf:10.128.200.1:11112/205</value>
+            <value>netconf:127.0.0.1:11002/205</value>
             <value-name>onos-cp</value-name>
           </name>
         </owned-node-edge-point>
@@ -1828,7 +1827,7 @@ XML:
           </mapped-service-interface-point>
           <uuid>0e86365a-1619-4bd9-96dc-79e8d48d50e0</uuid>
           <name>
-            <value>netconf:10.128.200.1:11112/203</value>
+            <value>netconf:127.0.0.1:11002/203</value>
             <value-name>onos-cp</value-name>
           </name>
         </owned-node-edge-point>
@@ -1853,7 +1852,7 @@ XML:
           </name>
           <uuid>8caab636-584e-46c6-a1f0-32d1b1c09ce1</uuid>
           <name>
-            <value>netconf:10.128.200.1:11112/201</value>
+            <value>netconf:127.0.0.1:11002/201</value>
             <value-name>onos-cp</value-name>
           </name>
           <mapped-service-interface-point>
@@ -1884,7 +1883,7 @@ XML:
           </name>
           <uuid>ba4f4d0f-f3f0-4900-8c5d-b9b70ea2b4ba</uuid>
           <name>
-            <value>netconf:10.128.200.1:11112/210</value>
+            <value>netconf:127.0.0.1:11002/210</value>
             <value-name>onos-cp</value-name>
           </name>
         </owned-node-edge-point>
@@ -1913,7 +1912,7 @@ XML:
           </mapped-service-interface-point>
           <uuid>2c0de8d2-f296-4158-ba3a-d2aa5db1af9c</uuid>
           <name>
-            <value>netconf:10.128.200.1:11112/207</value>
+            <value>netconf:127.0.0.1:11002/207</value>
             <value-name>onos-cp</value-name>
           </name>
         </owned-node-edge-point>
@@ -1941,7 +1940,7 @@ XML:
           </name>
           <uuid>a1db51c8-e6f1-4802-8ad1-64e6766d22be</uuid>
           <name>
-            <value>netconf:10.128.200.1:11112/202</value>
+            <value>netconf:127.0.0.1:11002/202</value>
             <value-name>onos-cp</value-name>
           </name>
         </owned-node-edge-point>
@@ -1969,7 +1968,7 @@ XML:
           </name>
           <uuid>ce356474-5bb8-40dd-84c0-b88998bc8ab9</uuid>
           <name>
-            <value>netconf:10.128.200.1:11112/212</value>
+            <value>netconf:127.0.0.1:11002/212</value>
             <value-name>onos-cp</value-name>
           </name>
         </owned-node-edge-point>
@@ -1997,7 +1996,7 @@ XML:
           </name>
           <uuid>2a3e7da4-38f4-4f7b-a86f-a99db4752834</uuid>
           <name>
-            <value>netconf:10.128.200.1:11112/211</value>
+            <value>netconf:127.0.0.1:11002/211</value>
             <value-name>onos-cp</value-name>
           </name>
         </owned-node-edge-point>
@@ -2036,7 +2035,7 @@ XML:
     <layer-protocol-name>DSR</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11112/114</value>
+      <value>netconf:127.0.0.1:11002/114</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -2044,7 +2043,7 @@ XML:
     <layer-protocol-name>DSR</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11113/116</value>
+      <value>netconf:127.0.0.1:11003/116</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -2052,7 +2051,7 @@ XML:
     <layer-protocol-name>PHOTONIC_MEDIA</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11113/210</value>
+      <value>netconf:127.0.0.1:11003/210</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -2060,7 +2059,7 @@ XML:
     <layer-protocol-name>DSR</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11112/111</value>
+      <value>netconf:127.0.0.1:11002/111</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -2068,7 +2067,7 @@ XML:
     <layer-protocol-name>PHOTONIC_MEDIA</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11113/207</value>
+      <value>netconf:127.0.0.1:11003/207</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -2076,7 +2075,7 @@ XML:
     <layer-protocol-name>DSR</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11112/101</value>
+      <value>netconf:127.0.0.1:11002/101</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -2084,7 +2083,7 @@ XML:
     <layer-protocol-name>DSR</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11113/102</value>
+      <value>netconf:127.0.0.1:11003/102</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -2092,7 +2091,7 @@ XML:
     <layer-protocol-name>DSR</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11112/106</value>
+      <value>netconf:127.0.0.1:11002/106</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -2100,7 +2099,7 @@ XML:
     <layer-protocol-name>PHOTONIC_MEDIA</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11112/204</value>
+      <value>netconf:127.0.0.1:11002/204</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -2108,7 +2107,7 @@ XML:
     <layer-protocol-name>PHOTONIC_MEDIA</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11112/211</value>
+      <value>netconf:127.0.0.1:11002/211</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -2116,7 +2115,7 @@ XML:
     <layer-protocol-name>PHOTONIC_MEDIA</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11113/215</value>
+      <value>netconf:127.0.0.1:11003/215</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -2124,7 +2123,7 @@ XML:
     <layer-protocol-name>DSR</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11112/108</value>
+      <value>netconf:127.0.0.1:11002/108</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -2132,7 +2131,7 @@ XML:
     <layer-protocol-name>DSR</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11113/106</value>
+      <value>netconf:127.0.0.1:11003/106</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -2140,7 +2139,7 @@ XML:
     <layer-protocol-name>DSR</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11113/113</value>
+      <value>netconf:127.0.0.1:11003/113</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -2148,7 +2147,7 @@ XML:
     <layer-protocol-name>DSR</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11113/115</value>
+      <value>netconf:127.0.0.1:11003/115</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -2156,7 +2155,7 @@ XML:
     <layer-protocol-name>PHOTONIC_MEDIA</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11112/203</value>
+      <value>netconf:127.0.0.1:11002/203</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -2164,7 +2163,7 @@ XML:
     <layer-protocol-name>PHOTONIC_MEDIA</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11113/216</value>
+      <value>netconf:127.0.0.1:11003/216</value>
     </name>
   </service-interface-point>
   <connectivity-context xmlns="urn:onf:otcc:yang:tapi-connectivity"/>
@@ -2173,7 +2172,7 @@ XML:
     <layer-protocol-name>DSR</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11113/105</value>
+      <value>netconf:127.0.0.1:11003/105</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -2181,7 +2180,7 @@ XML:
     <layer-protocol-name>PHOTONIC_MEDIA</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11112/201</value>
+      <value>netconf:127.0.0.1:11002/201</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -2189,7 +2188,7 @@ XML:
     <layer-protocol-name>PHOTONIC_MEDIA</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11112/206</value>
+      <value>netconf:127.0.0.1:11002/206</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -2197,7 +2196,7 @@ XML:
     <layer-protocol-name>PHOTONIC_MEDIA</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11113/213</value>
+      <value>netconf:127.0.0.1:11003/213</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -2205,7 +2204,7 @@ XML:
     <layer-protocol-name>DSR</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11113/112</value>
+      <value>netconf:127.0.0.1:11003/112</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -2213,7 +2212,7 @@ XML:
     <layer-protocol-name>PHOTONIC_MEDIA</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11112/205</value>
+      <value>netconf:127.0.0.1:11002/205</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -2221,7 +2220,7 @@ XML:
     <layer-protocol-name>DSR</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11113/111</value>
+      <value>netconf:127.0.0.1:11003/111</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -2229,7 +2228,7 @@ XML:
     <layer-protocol-name>DSR</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11112/103</value>
+      <value>netconf:127.0.0.1:11002/103</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -2237,7 +2236,7 @@ XML:
     <layer-protocol-name>PHOTONIC_MEDIA</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11113/214</value>
+      <value>netconf:127.0.0.1:11003/214</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -2245,7 +2244,7 @@ XML:
     <layer-protocol-name>PHOTONIC_MEDIA</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11113/205</value>
+      <value>netconf:127.0.0.1:11003/205</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -2253,7 +2252,7 @@ XML:
     <layer-protocol-name>PHOTONIC_MEDIA</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11112/209</value>
+      <value>netconf:127.0.0.1:11002/209</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -2261,7 +2260,7 @@ XML:
     <layer-protocol-name>PHOTONIC_MEDIA</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11112/213</value>
+      <value>netconf:127.0.0.1:11002/213</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -2269,7 +2268,7 @@ XML:
     <layer-protocol-name>DSR</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11112/102</value>
+      <value>netconf:127.0.0.1:11002/102</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -2277,7 +2276,7 @@ XML:
     <layer-protocol-name>PHOTONIC_MEDIA</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11112/215</value>
+      <value>netconf:127.0.0.1:11002/215</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -2285,7 +2284,7 @@ XML:
     <layer-protocol-name>PHOTONIC_MEDIA</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11112/210</value>
+      <value>netconf:127.0.0.1:11002/210</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -2293,7 +2292,7 @@ XML:
     <layer-protocol-name>PHOTONIC_MEDIA</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11112/207</value>
+      <value>netconf:127.0.0.1:11002/207</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -2301,7 +2300,7 @@ XML:
     <layer-protocol-name>PHOTONIC_MEDIA</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11112/216</value>
+      <value>netconf:127.0.0.1:11002/216</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -2309,7 +2308,7 @@ XML:
     <layer-protocol-name>DSR</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11112/110</value>
+      <value>netconf:127.0.0.1:11002/110</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -2317,7 +2316,7 @@ XML:
     <layer-protocol-name>DSR</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11112/113</value>
+      <value>netconf:127.0.0.1:11002/113</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -2325,7 +2324,7 @@ XML:
     <layer-protocol-name>PHOTONIC_MEDIA</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11113/203</value>
+      <value>netconf:127.0.0.1:11003/203</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -2333,7 +2332,7 @@ XML:
     <layer-protocol-name>PHOTONIC_MEDIA</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11112/208</value>
+      <value>netconf:127.0.0.1:11002/208</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -2341,7 +2340,7 @@ XML:
     <layer-protocol-name>DSR</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11112/115</value>
+      <value>netconf:127.0.0.1:11002/115</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -2349,7 +2348,7 @@ XML:
     <layer-protocol-name>PHOTONIC_MEDIA</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11113/208</value>
+      <value>netconf:127.0.0.1:11003/208</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -2357,7 +2356,7 @@ XML:
     <layer-protocol-name>PHOTONIC_MEDIA</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11113/211</value>
+      <value>netconf:127.0.0.1:11003/211</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -2365,7 +2364,7 @@ XML:
     <layer-protocol-name>PHOTONIC_MEDIA</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11113/202</value>
+      <value>netconf:127.0.0.1:11003/202</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -2373,7 +2372,7 @@ XML:
     <layer-protocol-name>DSR</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11112/105</value>
+      <value>netconf:127.0.0.1:11002/105</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -2381,7 +2380,7 @@ XML:
     <layer-protocol-name>PHOTONIC_MEDIA</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11113/212</value>
+      <value>netconf:127.0.0.1:11003/212</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -2389,7 +2388,7 @@ XML:
     <layer-protocol-name>DSR</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11113/103</value>
+      <value>netconf:127.0.0.1:11003/103</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -2397,7 +2396,7 @@ XML:
     <layer-protocol-name>PHOTONIC_MEDIA</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11113/204</value>
+      <value>netconf:127.0.0.1:11003/204</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -2405,7 +2404,7 @@ XML:
     <layer-protocol-name>DSR</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11113/107</value>
+      <value>netconf:127.0.0.1:11003/107</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -2413,7 +2412,7 @@ XML:
     <layer-protocol-name>PHOTONIC_MEDIA</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11112/202</value>
+      <value>netconf:127.0.0.1:11002/202</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -2421,7 +2420,7 @@ XML:
     <layer-protocol-name>PHOTONIC_MEDIA</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11112/214</value>
+      <value>netconf:127.0.0.1:11002/214</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -2429,7 +2428,7 @@ XML:
     <layer-protocol-name>DSR</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11112/104</value>
+      <value>netconf:127.0.0.1:11002/104</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -2437,7 +2436,7 @@ XML:
     <layer-protocol-name>DSR</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11113/104</value>
+      <value>netconf:127.0.0.1:11003/104</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -2445,7 +2444,7 @@ XML:
     <layer-protocol-name>DSR</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11113/110</value>
+      <value>netconf:127.0.0.1:11003/110</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -2453,7 +2452,7 @@ XML:
     <layer-protocol-name>DSR</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11113/108</value>
+      <value>netconf:127.0.0.1:11003/108</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -2461,7 +2460,7 @@ XML:
     <layer-protocol-name>PHOTONIC_MEDIA</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11112/212</value>
+      <value>netconf:127.0.0.1:11002/212</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -2469,7 +2468,7 @@ XML:
     <layer-protocol-name>DSR</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11112/109</value>
+      <value>netconf:127.0.0.1:11002/109</value>
     </name>
   </service-interface-point>
   <service-interface-point>
@@ -2477,7 +2476,7 @@ XML:
     <layer-protocol-name>DSR</layer-protocol-name>
     <name>
       <value-name>onos-cp</value-name>
-      <value>netconf:10.128.200.1:11113/101</value>
+      <value>netconf:127.0.0.1:11003/101</value>
     </name>
   </service-interface-point>
 </context>

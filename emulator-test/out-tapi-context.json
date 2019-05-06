@@ -6,7 +6,7 @@
         "layer-protocol-name": "PHOTONIC_MEDIA",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11113/206",
+            "value": "netconf:127.0.0.1:11003/206",
             "value-name": "onos-cp"
           }
         ],
@@ -16,7 +16,7 @@
         "layer-protocol-name": "DSR",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11113/114",
+            "value": "netconf:127.0.0.1:11003/114",
             "value-name": "onos-cp"
           }
         ],
@@ -26,7 +26,7 @@
         "layer-protocol-name": "PHOTONIC_MEDIA",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11113/201",
+            "value": "netconf:127.0.0.1:11003/201",
             "value-name": "onos-cp"
           }
         ],
@@ -36,7 +36,7 @@
         "layer-protocol-name": "PHOTONIC_MEDIA",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11113/209",
+            "value": "netconf:127.0.0.1:11003/209",
             "value-name": "onos-cp"
           }
         ],
@@ -46,7 +46,7 @@
         "layer-protocol-name": "DSR",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11112/116",
+            "value": "netconf:127.0.0.1:11002/116",
             "value-name": "onos-cp"
           }
         ],
@@ -56,7 +56,7 @@
         "layer-protocol-name": "DSR",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11112/107",
+            "value": "netconf:127.0.0.1:11002/107",
             "value-name": "onos-cp"
           }
         ],
@@ -66,7 +66,7 @@
         "layer-protocol-name": "DSR",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11112/112",
+            "value": "netconf:127.0.0.1:11002/112",
             "value-name": "onos-cp"
           }
         ],
@@ -76,7 +76,7 @@
         "layer-protocol-name": "DSR",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11113/109",
+            "value": "netconf:127.0.0.1:11003/109",
             "value-name": "onos-cp"
           }
         ],
@@ -86,7 +86,7 @@
         "layer-protocol-name": "DSR",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11112/114",
+            "value": "netconf:127.0.0.1:11002/114",
             "value-name": "onos-cp"
           }
         ],
@@ -96,7 +96,7 @@
         "layer-protocol-name": "DSR",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11113/116",
+            "value": "netconf:127.0.0.1:11003/116",
             "value-name": "onos-cp"
           }
         ],
@@ -106,7 +106,7 @@
         "layer-protocol-name": "PHOTONIC_MEDIA",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11113/210",
+            "value": "netconf:127.0.0.1:11003/210",
             "value-name": "onos-cp"
           }
         ],
@@ -116,7 +116,7 @@
         "layer-protocol-name": "DSR",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11112/111",
+            "value": "netconf:127.0.0.1:11002/111",
             "value-name": "onos-cp"
           }
         ],
@@ -126,7 +126,7 @@
         "layer-protocol-name": "PHOTONIC_MEDIA",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11113/207",
+            "value": "netconf:127.0.0.1:11003/207",
             "value-name": "onos-cp"
           }
         ],
@@ -136,7 +136,7 @@
         "layer-protocol-name": "DSR",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11112/101",
+            "value": "netconf:127.0.0.1:11002/101",
             "value-name": "onos-cp"
           }
         ],
@@ -146,7 +146,7 @@
         "layer-protocol-name": "DSR",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11113/102",
+            "value": "netconf:127.0.0.1:11003/102",
             "value-name": "onos-cp"
           }
         ],
@@ -156,7 +156,7 @@
         "layer-protocol-name": "DSR",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11112/106",
+            "value": "netconf:127.0.0.1:11002/106",
             "value-name": "onos-cp"
           }
         ],
@@ -166,7 +166,7 @@
         "layer-protocol-name": "PHOTONIC_MEDIA",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11112/204",
+            "value": "netconf:127.0.0.1:11002/204",
             "value-name": "onos-cp"
           }
         ],
@@ -176,7 +176,7 @@
         "layer-protocol-name": "PHOTONIC_MEDIA",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11112/211",
+            "value": "netconf:127.0.0.1:11002/211",
             "value-name": "onos-cp"
           }
         ],
@@ -186,7 +186,7 @@
         "layer-protocol-name": "PHOTONIC_MEDIA",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11113/215",
+            "value": "netconf:127.0.0.1:11003/215",
             "value-name": "onos-cp"
           }
         ],
@@ -196,7 +196,7 @@
         "layer-protocol-name": "DSR",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11112/108",
+            "value": "netconf:127.0.0.1:11002/108",
             "value-name": "onos-cp"
           }
         ],
@@ -206,7 +206,7 @@
         "layer-protocol-name": "DSR",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11113/106",
+            "value": "netconf:127.0.0.1:11003/106",
             "value-name": "onos-cp"
           }
         ],
@@ -216,7 +216,7 @@
         "layer-protocol-name": "DSR",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11113/113",
+            "value": "netconf:127.0.0.1:11003/113",
             "value-name": "onos-cp"
           }
         ],
@@ -226,7 +226,7 @@
         "layer-protocol-name": "DSR",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11113/115",
+            "value": "netconf:127.0.0.1:11003/115",
             "value-name": "onos-cp"
           }
         ],
@@ -236,7 +236,7 @@
         "layer-protocol-name": "PHOTONIC_MEDIA",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11112/203",
+            "value": "netconf:127.0.0.1:11002/203",
             "value-name": "onos-cp"
           }
         ],
@@ -246,7 +246,7 @@
         "layer-protocol-name": "PHOTONIC_MEDIA",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11113/216",
+            "value": "netconf:127.0.0.1:11003/216",
             "value-name": "onos-cp"
           }
         ],
@@ -256,7 +256,7 @@
         "layer-protocol-name": "DSR",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11113/105",
+            "value": "netconf:127.0.0.1:11003/105",
             "value-name": "onos-cp"
           }
         ],
@@ -266,7 +266,7 @@
         "layer-protocol-name": "PHOTONIC_MEDIA",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11112/201",
+            "value": "netconf:127.0.0.1:11002/201",
             "value-name": "onos-cp"
           }
         ],
@@ -276,7 +276,7 @@
         "layer-protocol-name": "PHOTONIC_MEDIA",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11112/206",
+            "value": "netconf:127.0.0.1:11002/206",
             "value-name": "onos-cp"
           }
         ],
@@ -286,7 +286,7 @@
         "layer-protocol-name": "PHOTONIC_MEDIA",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11113/213",
+            "value": "netconf:127.0.0.1:11003/213",
             "value-name": "onos-cp"
           }
         ],
@@ -296,7 +296,7 @@
         "layer-protocol-name": "DSR",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11113/112",
+            "value": "netconf:127.0.0.1:11003/112",
             "value-name": "onos-cp"
           }
         ],
@@ -306,7 +306,7 @@
         "layer-protocol-name": "PHOTONIC_MEDIA",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11112/205",
+            "value": "netconf:127.0.0.1:11002/205",
             "value-name": "onos-cp"
           }
         ],
@@ -316,7 +316,7 @@
         "layer-protocol-name": "DSR",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11113/111",
+            "value": "netconf:127.0.0.1:11003/111",
             "value-name": "onos-cp"
           }
         ],
@@ -326,7 +326,7 @@
         "layer-protocol-name": "DSR",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11112/103",
+            "value": "netconf:127.0.0.1:11002/103",
             "value-name": "onos-cp"
           }
         ],
@@ -336,7 +336,7 @@
         "layer-protocol-name": "PHOTONIC_MEDIA",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11113/214",
+            "value": "netconf:127.0.0.1:11003/214",
             "value-name": "onos-cp"
           }
         ],
@@ -346,7 +346,7 @@
         "layer-protocol-name": "PHOTONIC_MEDIA",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11113/205",
+            "value": "netconf:127.0.0.1:11003/205",
             "value-name": "onos-cp"
           }
         ],
@@ -356,7 +356,7 @@
         "layer-protocol-name": "PHOTONIC_MEDIA",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11112/209",
+            "value": "netconf:127.0.0.1:11002/209",
             "value-name": "onos-cp"
           }
         ],
@@ -366,7 +366,7 @@
         "layer-protocol-name": "PHOTONIC_MEDIA",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11112/213",
+            "value": "netconf:127.0.0.1:11002/213",
             "value-name": "onos-cp"
           }
         ],
@@ -376,7 +376,7 @@
         "layer-protocol-name": "DSR",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11112/102",
+            "value": "netconf:127.0.0.1:11002/102",
             "value-name": "onos-cp"
           }
         ],
@@ -386,7 +386,7 @@
         "layer-protocol-name": "PHOTONIC_MEDIA",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11112/215",
+            "value": "netconf:127.0.0.1:11002/215",
             "value-name": "onos-cp"
           }
         ],
@@ -396,7 +396,7 @@
         "layer-protocol-name": "PHOTONIC_MEDIA",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11112/210",
+            "value": "netconf:127.0.0.1:11002/210",
             "value-name": "onos-cp"
           }
         ],
@@ -406,7 +406,7 @@
         "layer-protocol-name": "PHOTONIC_MEDIA",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11112/207",
+            "value": "netconf:127.0.0.1:11002/207",
             "value-name": "onos-cp"
           }
         ],
@@ -416,7 +416,7 @@
         "layer-protocol-name": "PHOTONIC_MEDIA",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11112/216",
+            "value": "netconf:127.0.0.1:11002/216",
             "value-name": "onos-cp"
           }
         ],
@@ -426,7 +426,7 @@
         "layer-protocol-name": "DSR",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11112/110",
+            "value": "netconf:127.0.0.1:11002/110",
             "value-name": "onos-cp"
           }
         ],
@@ -436,7 +436,7 @@
         "layer-protocol-name": "DSR",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11112/113",
+            "value": "netconf:127.0.0.1:11002/113",
             "value-name": "onos-cp"
           }
         ],
@@ -446,7 +446,7 @@
         "layer-protocol-name": "PHOTONIC_MEDIA",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11113/203",
+            "value": "netconf:127.0.0.1:11003/203",
             "value-name": "onos-cp"
           }
         ],
@@ -456,7 +456,7 @@
         "layer-protocol-name": "PHOTONIC_MEDIA",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11112/208",
+            "value": "netconf:127.0.0.1:11002/208",
             "value-name": "onos-cp"
           }
         ],
@@ -466,7 +466,7 @@
         "layer-protocol-name": "DSR",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11112/115",
+            "value": "netconf:127.0.0.1:11002/115",
             "value-name": "onos-cp"
           }
         ],
@@ -476,7 +476,7 @@
         "layer-protocol-name": "PHOTONIC_MEDIA",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11113/208",
+            "value": "netconf:127.0.0.1:11003/208",
             "value-name": "onos-cp"
           }
         ],
@@ -486,7 +486,7 @@
         "layer-protocol-name": "PHOTONIC_MEDIA",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11113/211",
+            "value": "netconf:127.0.0.1:11003/211",
             "value-name": "onos-cp"
           }
         ],
@@ -496,7 +496,7 @@
         "layer-protocol-name": "PHOTONIC_MEDIA",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11113/202",
+            "value": "netconf:127.0.0.1:11003/202",
             "value-name": "onos-cp"
           }
         ],
@@ -506,7 +506,7 @@
         "layer-protocol-name": "DSR",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11112/105",
+            "value": "netconf:127.0.0.1:11002/105",
             "value-name": "onos-cp"
           }
         ],
@@ -516,7 +516,7 @@
         "layer-protocol-name": "PHOTONIC_MEDIA",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11113/212",
+            "value": "netconf:127.0.0.1:11003/212",
             "value-name": "onos-cp"
           }
         ],
@@ -526,7 +526,7 @@
         "layer-protocol-name": "DSR",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11113/103",
+            "value": "netconf:127.0.0.1:11003/103",
             "value-name": "onos-cp"
           }
         ],
@@ -536,7 +536,7 @@
         "layer-protocol-name": "PHOTONIC_MEDIA",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11113/204",
+            "value": "netconf:127.0.0.1:11003/204",
             "value-name": "onos-cp"
           }
         ],
@@ -546,7 +546,7 @@
         "layer-protocol-name": "DSR",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11113/107",
+            "value": "netconf:127.0.0.1:11003/107",
             "value-name": "onos-cp"
           }
         ],
@@ -556,7 +556,7 @@
         "layer-protocol-name": "PHOTONIC_MEDIA",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11112/202",
+            "value": "netconf:127.0.0.1:11002/202",
             "value-name": "onos-cp"
           }
         ],
@@ -566,7 +566,7 @@
         "layer-protocol-name": "PHOTONIC_MEDIA",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11112/214",
+            "value": "netconf:127.0.0.1:11002/214",
             "value-name": "onos-cp"
           }
         ],
@@ -576,7 +576,7 @@
         "layer-protocol-name": "DSR",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11112/104",
+            "value": "netconf:127.0.0.1:11002/104",
             "value-name": "onos-cp"
           }
         ],
@@ -586,7 +586,7 @@
         "layer-protocol-name": "DSR",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11113/104",
+            "value": "netconf:127.0.0.1:11003/104",
             "value-name": "onos-cp"
           }
         ],
@@ -596,7 +596,7 @@
         "layer-protocol-name": "DSR",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11113/110",
+            "value": "netconf:127.0.0.1:11003/110",
             "value-name": "onos-cp"
           }
         ],
@@ -606,7 +606,7 @@
         "layer-protocol-name": "DSR",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11113/108",
+            "value": "netconf:127.0.0.1:11003/108",
             "value-name": "onos-cp"
           }
         ],
@@ -616,7 +616,7 @@
         "layer-protocol-name": "PHOTONIC_MEDIA",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11112/212",
+            "value": "netconf:127.0.0.1:11002/212",
             "value-name": "onos-cp"
           }
         ],
@@ -626,7 +626,7 @@
         "layer-protocol-name": "DSR",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11112/109",
+            "value": "netconf:127.0.0.1:11002/109",
             "value-name": "onos-cp"
           }
         ],
@@ -636,7 +636,7 @@
         "layer-protocol-name": "DSR",
         "name": [
           {
-            "value": "netconf:10.128.200.1:11113/101",
+            "value": "netconf:127.0.0.1:11003/101",
             "value-name": "onos-cp"
           }
         ],
@@ -832,7 +832,7 @@
             {
               "name": [
                 {
-                  "value": "netconf:10.128.200.1:11113",
+                  "value": "netconf:127.0.0.1:11003",
                   "value-name": "device-id"
                 }
               ],
@@ -865,7 +865,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11113/216",
+                      "value": "netconf:127.0.0.1:11003/216",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -899,7 +899,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11113/211",
+                      "value": "netconf:127.0.0.1:11003/211",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -933,7 +933,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11113/103",
+                      "value": "netconf:127.0.0.1:11003/103",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -967,7 +967,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11113/210",
+                      "value": "netconf:127.0.0.1:11003/210",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -1001,7 +1001,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11113/110",
+                      "value": "netconf:127.0.0.1:11003/110",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -1035,7 +1035,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11113/209",
+                      "value": "netconf:127.0.0.1:11003/209",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -1069,7 +1069,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11113/203",
+                      "value": "netconf:127.0.0.1:11003/203",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -1103,7 +1103,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11113/109",
+                      "value": "netconf:127.0.0.1:11003/109",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -1137,7 +1137,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11113/113",
+                      "value": "netconf:127.0.0.1:11003/113",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -1171,7 +1171,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11113/204",
+                      "value": "netconf:127.0.0.1:11003/204",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -1205,7 +1205,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11113/106",
+                      "value": "netconf:127.0.0.1:11003/106",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -1239,7 +1239,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11113/104",
+                      "value": "netconf:127.0.0.1:11003/104",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -1273,7 +1273,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11113/105",
+                      "value": "netconf:127.0.0.1:11003/105",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -1307,7 +1307,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11113/215",
+                      "value": "netconf:127.0.0.1:11003/215",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -1341,7 +1341,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11113/108",
+                      "value": "netconf:127.0.0.1:11003/108",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -1375,7 +1375,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11113/101",
+                      "value": "netconf:127.0.0.1:11003/101",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -1409,7 +1409,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11113/205",
+                      "value": "netconf:127.0.0.1:11003/205",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -1443,7 +1443,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11113/202",
+                      "value": "netconf:127.0.0.1:11003/202",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -1477,7 +1477,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11113/102",
+                      "value": "netconf:127.0.0.1:11003/102",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -1511,7 +1511,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11113/107",
+                      "value": "netconf:127.0.0.1:11003/107",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -1545,7 +1545,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11113/208",
+                      "value": "netconf:127.0.0.1:11003/208",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -1579,7 +1579,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11113/115",
+                      "value": "netconf:127.0.0.1:11003/115",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -1613,7 +1613,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11113/212",
+                      "value": "netconf:127.0.0.1:11003/212",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -1647,7 +1647,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11113/206",
+                      "value": "netconf:127.0.0.1:11003/206",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -1681,7 +1681,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11113/112",
+                      "value": "netconf:127.0.0.1:11003/112",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -1715,7 +1715,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11113/201",
+                      "value": "netconf:127.0.0.1:11003/201",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -1749,7 +1749,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11113/114",
+                      "value": "netconf:127.0.0.1:11003/114",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -1783,7 +1783,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11113/111",
+                      "value": "netconf:127.0.0.1:11003/111",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -1817,7 +1817,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11113/207",
+                      "value": "netconf:127.0.0.1:11003/207",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -1851,7 +1851,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11113/213",
+                      "value": "netconf:127.0.0.1:11003/213",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -1885,7 +1885,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11113/214",
+                      "value": "netconf:127.0.0.1:11003/214",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -1919,7 +1919,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11113/116",
+                      "value": "netconf:127.0.0.1:11003/116",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -1931,7 +1931,7 @@
             {
               "name": [
                 {
-                  "value": "netconf:10.128.200.1:11112",
+                  "value": "netconf:127.0.0.1:11002",
                   "value-name": "device-id"
                 }
               ],
@@ -1964,7 +1964,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11112/106",
+                      "value": "netconf:127.0.0.1:11002/106",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -1998,7 +1998,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11112/208",
+                      "value": "netconf:127.0.0.1:11002/208",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -2032,7 +2032,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11112/110",
+                      "value": "netconf:127.0.0.1:11002/110",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -2066,7 +2066,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11112/213",
+                      "value": "netconf:127.0.0.1:11002/213",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -2100,7 +2100,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11112/102",
+                      "value": "netconf:127.0.0.1:11002/102",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -2134,7 +2134,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11112/111",
+                      "value": "netconf:127.0.0.1:11002/111",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -2168,7 +2168,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11112/112",
+                      "value": "netconf:127.0.0.1:11002/112",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -2202,7 +2202,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11112/204",
+                      "value": "netconf:127.0.0.1:11002/204",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -2236,7 +2236,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11112/101",
+                      "value": "netconf:127.0.0.1:11002/101",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -2270,7 +2270,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11112/104",
+                      "value": "netconf:127.0.0.1:11002/104",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -2304,7 +2304,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11112/105",
+                      "value": "netconf:127.0.0.1:11002/105",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -2338,7 +2338,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11112/215",
+                      "value": "netconf:127.0.0.1:11002/215",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -2372,7 +2372,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11112/109",
+                      "value": "netconf:127.0.0.1:11002/109",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -2406,7 +2406,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11112/113",
+                      "value": "netconf:127.0.0.1:11002/113",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -2440,7 +2440,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11112/116",
+                      "value": "netconf:127.0.0.1:11002/116",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -2474,7 +2474,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11112/206",
+                      "value": "netconf:127.0.0.1:11002/206",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -2508,7 +2508,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11112/216",
+                      "value": "netconf:127.0.0.1:11002/216",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -2542,7 +2542,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11112/115",
+                      "value": "netconf:127.0.0.1:11002/115",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -2576,7 +2576,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11112/214",
+                      "value": "netconf:127.0.0.1:11002/214",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -2610,7 +2610,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11112/103",
+                      "value": "netconf:127.0.0.1:11002/103",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -2644,7 +2644,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11112/108",
+                      "value": "netconf:127.0.0.1:11002/108",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -2678,7 +2678,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11112/209",
+                      "value": "netconf:127.0.0.1:11002/209",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -2712,7 +2712,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11112/107",
+                      "value": "netconf:127.0.0.1:11002/107",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -2746,7 +2746,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11112/114",
+                      "value": "netconf:127.0.0.1:11002/114",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -2780,7 +2780,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11112/205",
+                      "value": "netconf:127.0.0.1:11002/205",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -2814,7 +2814,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11112/203",
+                      "value": "netconf:127.0.0.1:11002/203",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -2848,7 +2848,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11112/201",
+                      "value": "netconf:127.0.0.1:11002/201",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -2882,7 +2882,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11112/210",
+                      "value": "netconf:127.0.0.1:11002/210",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -2916,7 +2916,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11112/207",
+                      "value": "netconf:127.0.0.1:11002/207",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -2950,7 +2950,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11112/202",
+                      "value": "netconf:127.0.0.1:11002/202",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -2984,7 +2984,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11112/212",
+                      "value": "netconf:127.0.0.1:11002/212",
                       "value-name": "onos-cp"
                     }
                   ],
@@ -3018,7 +3018,7 @@
                       "value-name": "odtn-connection-id"
                     },
                     {
-                      "value": "netconf:10.128.200.1:11112/211",
+                      "value": "netconf:127.0.0.1:11002/211",
                       "value-name": "onos-cp"
                     }
                   ],
