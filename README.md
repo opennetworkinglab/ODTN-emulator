@@ -1,7 +1,7 @@
 # ODTN-emulator
 Emulator's implementation based on [Netopeer2](https://github.com/CESNET/Netopeer2) in [ODTN project](https://www.opennetworking.org/odtn/). The steps listed below show a simple tutorial for this emulator. For more details, please see [ODTN Wiki Page](https://wiki.onosproject.org/display/ODTN/ODTN).
 
-The directory `netconf-test` is used to test if the emulator works well.
+The directory `emulator-test` is used to test if the emulator and the controller work well.
 
 ## 1. Run the emulators
 
