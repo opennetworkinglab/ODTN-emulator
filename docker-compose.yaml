@@ -8,3 +8,7 @@ services:
     build: ./emulator-oc-cassini
     ports:
       - "11003:830"
+  tapi_ols:
+    build: ./emulator-tapi-2.1
+    ports:
+      - "11001:1234"

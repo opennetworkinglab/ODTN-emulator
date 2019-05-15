@@ -1,9 +1,32 @@
 # ODTN-emulator
-Emulator's implementation based on [Netopeer2](https://github.com/CESNET/Netopeer2) in [ODTN project](https://www.opennetworking.org/odtn/). The steps listed below show a simple tutorial for this emulator. For more details, please see [ODTN Wiki Page](https://wiki.onosproject.org/display/ODTN/ODTN).
+There are two kinds of emulators, i.e., the OpenConfig model under directory `emulator-oc-cassini` and the TAPI model under directory `emulator-tapi-2.1`. In this demo, the former describes the line-side and client-side of the terminal device in Open Line System (OLS), and the latter describes the middle components between optical device in OLS.
+
+You can run the command `docker-compose up -d` to start two OpenConfig emulators (open ports 11002 and 11003) and one TAPI emulator (open port 11001). Then you will get the docker images and containers as listed:
+```
+$ docker images
+REPOSITORY                           TAG                                IMAGE ID            CREATED             SIZE
+odtn-emulator_tapi_ols               latest                             b6540c1c0d88        8 minutes ago       764MB
+odtn-emulator_openconfig_cassini_1   latest                             1a789e9a45d1        12 days ago         1.05GB
+odtn-emulator_openconfig_cassini_2   latest                             1a789e9a45d1        12 days ago         1.05GB
+
+$ docker ps -a
+CONTAINER ID        IMAGE                                COMMAND                  CREATED             STATUS                      PORTS                                      NAMES
+654ac9ec3f2a        odtn-emulator_tapi_ols               "sh /root/entry.sh"      8 minutes ago       Up 8 minutes                0.0.0.0:11001->1234/tcp                    odtn-emulator_tapi_ols_1
+b2c396623866        odtn-emulator_openconfig_cassini_2   "sh /root/push-data.…"   12 days ago         Up 8 minutes                22/tcp, 8080/tcp, 0.0.0.0:11003->830/tcp   odtn-emulator_openconfig_cassini_2_1
+2ae3f13b1275        odtn-emulator_openconfig_cassini_1   "sh /root/push-data.…"   12 days ago         Up 8 minutes                22/tcp, 8080/tcp, 0.0.0.0:11002->830/tcp   odtn-emulator_openconfig_cassini_1_1
+```
+
+## I. TAPI emulator
+The implemention of TAPI emulator is based on the [TAPI2.1 emulator instruction](https://docs.google.com/document/d/1YvtFbmir9jxbDp1hJHtYr9tPtDz6_tsxx9xkmG689Ik/edit). The link `http://localhost:11001/swagger.json` returns the available rest APIs.
+
+
+## II. OpenConfig emulator
+
+OpenConfig Emulator's implementation based on [Netopeer2](https://github.com/CESNET/Netopeer2) in [ODTN project](https://www.opennetworking.org/odtn/). The steps listed below show a simple tutorial for this emulator. For more details, please see [ODTN Wiki Page](https://wiki.onosproject.org/display/ODTN/ODTN).
 
 The directory `emulator-test` is used to test if the emulator and the controller work well.
 
-## 1. Run the emulators
+### 1. Run the emulators
 
 The image could be built by yourself through the command listed below:
 
@@ -20,7 +43,7 @@ docker run -it -d --name openconfig_cassini_1 -p 11002:830 boyuanyan/oc-cassini:
 docker run -it -d --name openconfig_cassini_2 -p 11003:830 boyuanyan/oc-cassini:0.2
 ```
 
-## 2. Start onos and activate odtn-service locally
+### 2. Start onos and activate odtn-service locally
 
 ```shell
 cd ${ONOS_ROOT}
@@ -29,7 +52,7 @@ bazel build onos
 bazel run onos-local -- clean
 ```
 
-## 3. Push node and link information
+### 3. Push node and link information
 
 ```shell
 # Two nodes with total 32 ports
@@ -41,7 +64,7 @@ onos-netcfg localhost link.json
 execute-tapi-post-call.py 127.0.0.1 tapi-connectivity:create-connectivity-service line-side
 ```
 
-## 4. Create/delete the line-side/client-side connectivities
+### 4. Create/delete the line-side/client-side connectivities
 
 ```shell
 # Python2.7
@@ -56,7 +79,7 @@ execute-tapi-post-call.py 127.0.0.1 tapi-connectivity:create-connectivity-servic
 execute-tapi-delete-call 127.0.0.1 both
 ```
 
-## Notes about modification in yang files
+### Notes about modification in yang files
 1. Although openconfig yang models are defined with YANG 1.0, we still add module prefix before identity reference as YANG 1.1 requires. Please see https://github.com/openconfig/public/issues/223.
 2. There are operational data ("config false") and configurable data ("config true"). The operational data can not be pushed into sysrepo datastore directly via XML file, but depend on some simple C API. To simplify, the operational data in openconfig-platform.yang, openconfig-platform-transceiver.yang, and openconfig-terminal-device.yang are converted into configurational data. The code block in `push-data.sh` is listed below:
 
