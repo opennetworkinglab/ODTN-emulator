@@ -831,4 +831,28 @@ module openconfig-transport-types {
       physical components in the physical inventory model.";
   }
 
+    grouping min-max-power-precision2-dbm {
+        description 
+            "Common grouping for dBm with 2 decimal precision. 
+            Values include the minimum and maxminum of the available 
+            power range.";
+
+        leaf min {
+          type decimal64 {
+            fraction-digits 2;
+          }
+          units dBm;
+          description
+            "The minimum value of the power.";
+        }
+
+        leaf max {
+          type decimal64 {
+            fraction-digits 2;
+          }
+          units dBm;
+          description
+            "The maximum value of the power.";
+        }
+    }
 }

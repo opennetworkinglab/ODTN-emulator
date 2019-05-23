@@ -37,10 +37,16 @@ sysrepoctl --install --yang=openconfig-transport-line-protection.yang --owner=ro
 # Push openconfig-platform and openconfig-terminal-device data into sysrepo
 cd /root/config
 /root/sysrepo/build/examples/application_example openconfig-platform &
+sleep 2
 sysrepocfg --import=init-components.xml --format=xml openconfig-platform
 /root/sysrepo/build/examples/application_example openconfig-terminal-device &
+sleep 2
 sysrepocfg --import=init-terminal-device.xml --format=xml openconfig-terminal-device
 
 # Start Netconf Server
 netopeer2-server
+
+# Push power configuration
+sleep 5
+netconf-console --host 127.0.0.1 --port 830 -u root -p root --rpc=/root/script/config-power.xml
 tail -f

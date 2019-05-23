@@ -18,7 +18,7 @@ b2c396623866        odtn-emulator_openconfig_cassini_2   "sh /root/push-data.…
 
 ## I. TAPI emulator
 The implemention of TAPI emulator is based on the [TAPI2.1 emulator instruction](https://docs.google.com/document/d/1YvtFbmir9jxbDp1hJHtYr9tPtDz6_tsxx9xkmG689Ik/edit). The link `http://localhost:11001/swagger.json` returns the available rest APIs.
-
+You can also type this address at [swagger petstore](https://petstore.swagger.io/) to see the formatted output.
 
 ## II. OpenConfig emulator
 
@@ -94,7 +94,7 @@ sed -i '/config false;/d' openconfig-terminal-device.yang
 
 ```shell
 # yang/openconfig-odtn/import-yangs.sh
-sed -i '467,486d' openconfig-platform-transceiver.yang
+sed -i '481,500d' openconfig-platform-transceiver.yang
 ```
 4. The parsing for `index` leafref in the leaf `logical-channel` of grouping `terminal-logical-chan-assignment-config` fails. So we modify this leafref as 'type uint32;' in `push-data.sh`.
 ```shell
@@ -102,4 +102,67 @@ sed -i '467,486d' openconfig-platform-transceiver.yang
 # Change a leafref to leaf with type uint32, because of parsing errors
 sed -i '487,491d' openconfig-terminal-device.yang
 sed -i '486a type uint32;' openconfig-terminal-device.yang
+```
+5. PowerConfig extension.
+
+* openconfig-transport-types.yang
+```yang
+// grouping definition
+    grouping min-max-power-precision2-dbm {
+        description 
+            "Common grouping for dBm with 2 decimal precision. 
+            Values include the minimum and maxminum of the available 
+            power range."
+
+        leaf min {
+          type decimal64 {
+            fraction-digits 2;
+          }
+          units dBm;
+          description
+            "The minimum value of the power.";
+        }
+
+        leaf max {
+          type decimal64 {
+            fraction-digits 2;
+          }
+          units dBm;
+          description
+            "The maximum value of the power.";
+        }
+    }
+// grouping definition
+```
+* openconfig-terminal-device.yang
+```yang
+import openconfig-transport-types { prefix oc-opt-types; }
+...
+  grouping optical-power-state {
+    description
+      "Reusable leaves related to optical power state -- these
+      are read-only state values. If avg/min/max statistics are
+      not supported, the target is expected to just supply the
+      instant value";
+...
+// add power definition
+    container input-power-range {
+        description 
+            "The acceptable range of input optical power level for
+            optical transmission.";
+        uses oc-opt-types:min-max-power-precision2-dbm
+    }
+
+    container target-power-range {
+        description 
+            "The acceptable range of output optical power level for
+            optical transmission.";
+        uses oc-opt-types:min-max-power-precision2-dbm
+    }
+// add power definition
+...
+  }
+...
+
+
 ```

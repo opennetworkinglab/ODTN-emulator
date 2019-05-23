@@ -1,7 +1,7 @@
 FROM ubuntu:18.04
 COPY yang /root/yang
 COPY config /root/config
-COPY push-data.sh /root/push-data.sh
+COPY script /root/script
 RUN apt-get update && apt-get upgrade -y \
     && apt-get install software-properties-common build-essential openssl libssl-dev libpcre3 libpcre3-dev git make cmake bison flex pkg-config graphviz doxygen valgrind zlib1g zlib1g-dev libev-dev libavl-dev libprotobuf-c-dev protobuf-c-compiler swig python-dev lua5.2 vim net-tools libcurl4-openssl-dev man -y \
     && echo "export LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib" >> ~/.bashrc \
@@ -35,8 +35,10 @@ RUN apt-get update && apt-get upgrade -y \
     && ssh-keygen -t rsa -b 2048 -f /etc/ssh/ssh_host_rsa_key \
     && sh -c 'echo root:root | chpasswd' \
     && cd /root/yang/openconfig-odtn && sh import-yangs.sh \
+    && cd /root/script && python get-pip.py \
+    && pip install netconf-console
 EXPOSE 830
 EXPOSE 22
 EXPOSE 8080
 WORKDIR /root
-ENTRYPOINT ["sh", "/root/push-data.sh"]
+ENTRYPOINT ["sh", "/root/script/push-data.sh"]

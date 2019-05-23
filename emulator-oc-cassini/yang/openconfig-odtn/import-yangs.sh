@@ -8,8 +8,8 @@ cd /root/yang/openconfig-odtn
 # Before importing, you need to remove the last augment block for
 # "/oc-if:interfaces/oc-if:interface/oc-if:state" in openconfig-platform-transceiver.yang.
 # Because it will cause parsing errors.
-# line number between [467, 486]
-sed -i '467,486d' openconfig-platform-transceiver.yang
+# line number between [481, 500]
+sed -i '481,500d' openconfig-platform-transceiver.yang
 # You can also use the command below, but it's not recommended.
 # ls | xargs -I {} sysrepoctl --install --yang={} --owner=root:root --permissions=666
 sysrepoctl --install --yang=ietf-interfaces.yang --owner=root:root --permissions=666

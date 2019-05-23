@@ -82,6 +82,20 @@ module openconfig-platform-transceiver {
       not supported, the target is expected to just supply the
       instant value";
 
+    container input-power-range {
+        description 
+            "The acceptable range of input optical power level for
+            optical transmission.";
+        uses oc-opt-types:min-max-power-precision2-dbm;
+    }
+
+    container target-power-range {
+        description 
+            "The acceptable range of output optical power level for
+            optical transmission.";
+        uses oc-opt-types:min-max-power-precision2-dbm;
+    }
+
     container output-power {
       description
         "The output optical power of a physical channel in units
