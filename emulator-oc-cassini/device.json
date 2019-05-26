@@ -13,6 +13,19 @@
         "idle-timeout" : "0"
       }
     },
+    "netconf:127.0.0.1:11001" : {
+      "basic" : {
+        "name":"tapi",
+        "driver":"ols"
+      },
+      "netconf" : {
+        "ip" : "127.0.0.1",
+        "port" : "11001",
+        "username" : "root",
+        "password" : "root",
+        "idle-timeout" : "0"
+      }
+    },
     "netconf:127.0.0.1:11003" : {
       "basic" : {
         "name":"cassini1",

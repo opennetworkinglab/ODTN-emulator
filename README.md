@@ -163,10 +163,9 @@ import openconfig-transport-types { prefix oc-opt-types; }
 ...
   }
 ...
+```
 
 6. TAPI `list` statement error fix
 In `emulator-tapi-2.1/tapi/tapi-photonic-media@2018-10-16.yang`, the `list` statements don't contain `key` statement. According to the upgrading 
 file `tapi-photonic-media@2019-03-31.yang` defined in https://github.com/OpenNetworkingFoundation/TAPI, we add six `key` statements and build a 
 new file `tapi-photonic-media-new.yang` to replace the original one.
-
-```
