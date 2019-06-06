@@ -26,7 +26,7 @@
       "basic": {
         "driver": "ols"
       }
-    }
+    },
     "netconf:127.0.0.1:11003" : {
       "basic" : {
         "name":"cassini1",
