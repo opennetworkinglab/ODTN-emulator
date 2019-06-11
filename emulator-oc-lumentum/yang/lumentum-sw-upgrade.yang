@@ -1,0 +1,410 @@
+module lumentum-sw-upgrade {
+
+  namespace "http://www.lumentum.com/lumentum-sw-upgrade";
+  prefix "lswuprd";
+
+  import lumentum-ote-types { prefix "lotet"; }
+
+  organization "Lumentum Operations LLC";
+  contact "support@lumentum.com";
+  description
+    "This module describes the operation and control for software upgrades.
+
+     ---------------------------------------------------------------------------
+     This document and its contents are proprietary and confidential to Lumentum
+     Operations LLC, and/or its parent, subsidiary and/or affiliate entities.
+     Neither this document, nor any part of it, may be disclosed or conveyed to,
+     used or copied by or for, any third party without the prior written consent
+     of Lumentum. LUMENTUM, and the LUMENTUM & DESIGN are trademarks of Lumentum
+     Operations LLC. Copyright 2016 Lumentum Operations LLC. All rights
+     reserved. The use of a copyright notice on this document shall not be taken
+     to indicate that it has been published.
+     ---------------------------------------------------------------------------
+
+    ";
+
+  revision 2016-11-02 {
+    description 
+      "Added detail to the Upgrade-Command-Response enumeration.";
+    reference "None";
+  }
+
+  revision 2016-10-31 {
+    description 
+      "Created state leaf for active-bank.";
+    reference "None";
+  }
+
+  revision 2016-09-27 {
+    description 
+      "Increased the string length for file-name and entity-description.";
+    reference "None";
+  }
+
+  revision 2016-06-01 {
+    description "Initial revision.";
+    reference "None";
+  }
+
+  /*
+   * extension statements
+   */
+
+  /*
+   * feature statements
+   */
+
+  /*
+   * identity statements
+   */
+
+  /*
+   * typedef statements
+   */
+
+  typedef Software-Load-Name {
+    type string {
+      length "1..32";
+    }
+    description
+      "Definition for the software load name.";
+  }
+
+  typedef Upgrade-Command {
+    type enumeration {
+      enum install {
+        description
+          "The install-command is valid when the upgrade-progress-state is at 
+           synced-state. This command installs the loads into appropriate 
+           banks of the system, cards, and devices. The following steps are 
+           included:
+           - locates and validates the load-file
+           - validates the upgrade path against the currently running software
+             running on the devices
+           - loads the software onto the devices and cards. If the card and
+             device supports dual banks, it utilizes the standby bank.";
+      }
+      enum execute {
+        description
+          "The execute-command is valid when the upgrade-progress-state is at
+           installed-state. This command causes the software loaded by the
+           install-command to be executed. A restart is typically done during this
+           command.";
+      }
+      enum sync {
+        description
+          "The sync-command is valid when the upgrade-progress-state is at
+           executed-state. This command is run to synchronize all dual-bank
+           and move the upgrade-engine to a completed state. After this command
+           is executed, the previous installed load can not be recovered.";
+      }
+      enum revert {
+        description
+          "The revert-command is valid in any upgrade-progress-state. The
+           purpose of this command is to return the upgrade-engine to an idle/
+           synced-state. Typically this command is used to revert back to the
+           previous load. This command may involve a restart depending on
+           the current upgrade-progress-state.";
+      }
+    }
+    description
+      "The commands that can be sent to the upgrade engine.";
+  }
+
+  typedef Upgrade-Progress-State {
+    type enumeration {
+      enum synced {
+        description
+          "The upgrade has completed and all components and banks have the 
+           latest software load.";
+      }
+      enum installing {
+        description 
+          "The install-command has been accepted and in progress.";
+      }
+      enum installed {
+        description
+          "The install-command has completed with all devices containing the new 
+           load in their spare banks. Next command for normal upgrades is the
+           execute-command.";
+      }
+      enum executing {
+        description
+          "The execute-command has been accepted and in progress. NOTE: This may
+           cause a warm restart as the purpose of the command is to run the 
+           new load.";
+      }
+      enum unsynced {
+        description
+          "The execute-command has completed with all devices running the new 
+           load. Next command for normal upgrades is the sync-command.";
+      }
+      enum syncing {
+        description
+          "The sync-command has been accepted and is in progress.";
+      }
+      enum reverting {
+        description
+          "The revert-command has been accepted and is in progress.";
+      }
+    }
+    description
+      "Values for the states of the upgrade-engine.";
+  }
+
+  typedef Upgrade-Engine-Status {
+    type enumeration {
+      enum idle {
+        description
+          "The last upgrade command has successfully completed.";
+      }
+      enum busy {
+        description
+          "The previously issued upgrade command is still in progress.";
+      }
+      enum invalid-sequence {
+        description
+          "The upgrade command sent is not valid in the current upgrade state.";
+      }
+      enum timeout {
+        description
+          "An internal timeout has occurred during the upgrade command. The 
+           command can be attempted again or reverted using the revert-command.";
+      }
+      enum incompatible-load-file {
+        description
+          "The file provided to the upgrade engine is either not an upgrade file
+           or is incompatible with this card.";
+      }
+      enum load-file-not-found {
+        description
+          "The file provided to the upgrade engine is specified incorrectly or
+           is not available in the upload directory.";
+      }
+      enum inconsistent-state {
+        description
+          "Some of the system is in an inconsistent state to proceed with the 
+           upgrade request. Revert the upgrade to get the system into a 
+           consistent state.";
+      }
+      enum file-not-written {
+        description
+          "An internal error has occurred while trying to write one of the files
+           or upgrade images.";
+      }
+    }
+    description
+      "Values for the status of the upgrade-engine.";
+  }
+
+  typedef Upgrade-Command-Response {
+    type enumeration {
+      enum accepted {
+        description
+          "The command issued was accepted and processing started.";
+      }
+      enum busy {
+        description
+          "The command issued can not be processed because the upgrade engine
+           is currently busy with another command.";
+      }
+      enum invalid-sequence {
+        description
+          "The command issued is not valid in the current state.";
+      }
+    }
+    description
+      "Values for the immediate response to a command sent to the upgrade
+       engine.";
+  }
+
+  /*
+   * grouping statements
+   */
+
+  // Upgrade-Engine groupings
+
+  grouping Upgrade-Engine-Status {
+    description
+      "Parameters related to the upgrade engine.";
+
+    leaf upgrade-engine-status {
+      type Upgrade-Engine-Status;
+      description
+        "The current status of the upgrade engine within the context of the
+         upgrade-progress-state.";
+    }
+
+    leaf upgrade-progress-state {
+      type Upgrade-Progress-State;
+      description
+        "The upgrade-engine utilizes a state-machine to track it's progress.
+         This is the current state within the state-machine.";
+    }
+  } // Upgrade-Engine-Status
+
+  grouping Upgrade-Command-Status {
+    description
+      "Parameters related to the last-command sent to the upgrade engine.";
+    leaf last-command {
+      type Upgrade-Command;
+      description
+        "The last command sent to the upgrade-engine.";
+    }
+    /*
+    leaf user {
+      description
+        "The user-identity of the last-command issued.";
+    }
+    */
+  } // Upgrade-Command-Status
+
+  // Upgrade-Entity groupings
+
+
+  grouping Upgrade-Entities-Status {
+    description
+      "Top level grouping for all upgradeable entities.";
+
+    container upgrade-entities {
+      list upgrade-entity {
+        key dn;
+        description
+          "Each entry in this list is upgradeable and this entry indicates the
+           upgrade status of this entity.";
+        
+        leaf dn {
+          type lotet:Distinguished-Name;
+          description
+            "DN of the upgradeable entity.";
+        }
+
+        leaf entity-description {
+          type string {
+            length "1..64";
+          }
+          description
+            "This field is a string providing a description about the
+             contained entity. Typically this adjunct information is product
+             specific and provides some context for the entity.";
+        }
+
+        leaf active-bank {
+            type enumeration {
+              enum bank-a {
+                description
+                  "The entity is running from bank A or is a single-bank device.";
+              }
+              enum bank-b {
+                description
+                  "The entity is running from bank B.";
+              }
+            }
+          description
+            "Indicates the currently active bank.  See description of Upgrade-Command
+             for more detail on how the active and standby banks are used.";
+        }
+
+        leaf currently-running-load {
+          type Software-Load-Name;
+          description
+            "Indicates the current load running on the entity.";
+        }
+
+        leaf application-load-bank-a {
+          type Software-Load-Name;
+          description
+            "The name of the application load in Bank A.";
+        }
+  
+        leaf application-load-bank-b {
+          type Software-Load-Name;
+          description
+            "The name of the application load in Bank B. If this device is not
+             a dual bank device then this parameter would not be reported.";
+        }
+        
+      }
+      description
+        "This provides top level container for the list of all upgradeable
+         entities.";
+    }
+  }
+
+
+  /*
+   * data definition statements
+   */
+
+  container software-upgrade-engine {
+    description
+      "The top-level software-upgrade-engine entity.";
+    container state {
+      config false;
+      description
+        "Read-only state of the upgrade engine.";
+      uses Upgrade-Engine-Status;
+      uses Upgrade-Command-Status;
+      uses Upgrade-Entities-Status;
+    }
+  } // software-upgrade-engine
+
+  /*
+   * augment statements
+   */
+
+  /*
+   * rpc statements
+   */
+
+  rpc execute-upgrade-command {
+    description
+      "Sent to the upgrade engine to indicate the next upgrade-command to 
+       execute. Commands are run in the background if the response indicates
+       no error.";
+    input {
+      leaf command {
+        type Upgrade-Command;
+        mandatory true;
+        description
+          "The upgrade command to be executed.";
+      }
+ 
+      leaf file-name {
+        type string {
+          length "1..64";
+        }
+        must "../command=install" {
+          description
+            "The file-name is only required during the install command.";
+        }
+        description
+          "The file-name to be used for the install command.";
+      }
+    }
+    output {
+      leaf response {
+        type Upgrade-Command-Response;
+        description
+          "Indicates the immediate response to the command. If this response
+           indicates 'accepted', the command continues to be processed in the
+           background.";
+      }
+    }
+  } // execute-upgrade-command
+
+  /*
+   * notification statements
+   */
+
+  notification upgrade-notification {
+    description 
+      "This notification is used to report on state changes to the upgrade
+       engine. Commands are sent to the upgrade engine and processed in the 
+       background. Notifications are the key mechanism for determining when
+       the command has completed and the current status.";
+    uses Upgrade-Engine-Status;
+    uses Upgrade-Command-Status;
+  } // upgrade-notification
+  
+} // lumentum-sw-upgrade

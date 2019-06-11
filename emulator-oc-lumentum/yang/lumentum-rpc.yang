@@ -1,0 +1,116 @@
+module lumentum-rpc {
+
+  namespace "http://www.lumentum.com/lumentum-rpc";
+  prefix "lumr";
+
+  import lumentum-types { prefix "lumt"; }
+
+  organization "Lumentum Operations LLC";
+  contact "support@lumentum.com";
+  description
+   "This module desribes operations and controls related to RPCs. 
+
+    ---------------------------------------------------------------------------
+    This document and its contents are proprietary and confidential to Lumentum
+    Operations LLC, and/or its parent, subsidiary and/or affiliate entities.
+    Neither this document, nor any part of it, may be disclosed or conveyed to,
+    used or copied by or for, any third party without the prior written consent
+    of Lumentum. LUMENTUM, and the LUMENTUM & DESIGN are trademarks of Lumentum
+    Operations LLC. (c) 2017 Lumentum Operations LLC. All rights reserved. The
+    use of a copyright notice on this document shall not be taken to indicate
+    that it has been published.
+    ---------------------------------------------------------------------------
+
+   ";
+
+  revision 2017-04-06 {
+    description 
+      "Delete rpc-info leaf for list background-rpc.";
+    reference "None";
+  }
+
+  revision 2017-02-27 {
+    description "Initial revision.";
+    reference "None";
+  }
+
+  /*
+   * extension statements
+   */
+
+  /*
+   * feature statements
+   */
+
+  /*
+   * identity statements
+   */
+
+  /*
+   * typedef statements
+   */
+
+  /*
+   * grouping statements
+   */
+
+  /*
+   * data definition statements
+   */
+
+  container background-rpc-list {
+    config false;
+    description
+      "This is the  list of currently active background RPCs. A background-RPC 
+       is a process or task started by an RPC but continues after the RPC 
+       responds. This list contains the status of those background RPCs.An 
+       entry containing management information applicable to a particular 
+       background-rpc-list.";
+
+    list background-rpc { 
+      key rpc-identifier;
+      uses lumt:Background-RPC-Status;
+      description
+        "Definition for individual background-rpc.";
+
+    } // background-rpc
+  } // background-rpc-list
+
+  /*
+   * augment statements
+   */
+
+  /*
+   * rpc statements
+   */
+
+  rpc cancel-background-rpc {
+    description
+      "This provides a mechanism to cancel or kill a currently active 
+       background-RPC. Not all background-RPCs support this RPC.";
+    input {
+      leaf rpc-identifier {
+        type lumt:RPC-Identifier;
+        description
+          "Identifier of the background-rpc-list.";
+      }
+    }
+    output {
+      uses lumt:RPC-Status {
+        description
+          "Cancel operations are always synchronous so they will report a status
+           of either SUCCESS or FAILED. If the cancel-background-rpc responds with 
+           SUCCESS, then a corresponding notification will also occur indicating 
+           the operation was cancelled. If the cancel-background-rpc responds with 
+           FAILED, then the original operation will continue to execute. The 
+           cancel-background-rpc will respond with SUCCESS if the rpc-identifier 
+           is not found in the list of active background-rpcs.";
+      }
+    }
+  }
+
+  /*
+   * notification statements
+   */
+  
+} // lumentum-background-rpc-list

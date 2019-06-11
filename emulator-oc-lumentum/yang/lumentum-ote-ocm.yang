@@ -1,0 +1,180 @@
+module lumentum-ote-ocm {
+  namespace "http://www.lumentum.com/lumentum-ote-ocm";
+
+  prefix "loteo";
+
+  import lumentum-ote-types { prefix "lotet"; }
+  import lumentum-alarms { prefix "luma"; }
+
+  organization "Lumentum Operations LLC";
+  contact "support@lumentum.com";
+
+  description 
+    "This module contains the definition files for an OCM entity within ote.
+     The (Flex) OCM is a piece of hardware that can integrate the optical power of
+     incident light at the across user-defined flexible bandwidth sizes.
+
+     ---------------------------------------------------------------------------
+     This document and its contents are proprietary and confidential to Lumentum
+     Operations LLC, and/or its parent, subsidiary and/or affiliate entities.
+     Neither this document, nor any part of it, may be disclosed or conveyed to,
+     used or copied by or for, any third party without the prior written consent
+     of Lumentum. LUMENTUM, and the LUMENTUM & DESIGN are trademarks of Lumentum
+     Operations LLC. Copyright 2016 Lumentum Operations LLC. All rights
+     reserved. The use of a copyright notice on this document shall not be taken
+     to indicate that it has been published.
+     ---------------------------------------------------------------------------
+ 
+     ";
+
+  revision 2016-11-09 {
+    description 
+      "Initial revision.";
+    reference "None";
+  }
+  
+  /*
+   * extension statements
+   */
+
+  /*
+   * feature statements
+   */
+
+  /*
+   * identity statements
+   */
+
+  /*
+   * Alarms for the OCM
+   */
+
+  identity temperature-oor {
+    base luma:alarm-identity;
+    description
+      "This alarm indicates that the temperature of OCM has gone outside 
+       of the configured range. To clear this alarm the operator must 
+       restore the operating environment temperature to its normal operating 
+       level.";
+  }
+
+  /*
+   * typedef statements
+   */
+
+  /*
+   * grouping statements
+   */
+
+  grouping Ocm-Config {
+    description
+      "Config paramaters associated with edfa.";
+
+    uses lotet:Custom-Name;
+
+	leaf maximum-hysteresis {
+      type lotet:Temperature-Deg-C-Hysteresis;
+      description
+        "Temperature delta under the maximum threshold that must be achieved
+         for fault clearance.";
+    }
+
+	leaf maximum-threshold {
+      type lotet:Temperature-Deg-C;
+      description
+        "Temperature  at which ascending temperature values trigged the
+         fault raising.";
+    }
+                
+    leaf minimum-hysteresis {
+      type lotet:Temperature-Deg-C-Hysteresis;
+      description
+        "Temperature delta over the minimum threshold that must be achieved
+         for fault clearance.";
+    }
+       
+    leaf minimum-threshold {
+      type lotet:Temperature-Deg-C;
+      description
+        "Temperature at which descending temperature values trigged the
+         fault raising.";
+    }
+      
+  } // Ocm-Config
+  
+  grouping Ocm-State {
+    description
+      "State parameters associated with OCM.";
+    
+    leaf temperature {
+      type lotet:Temperature-Deg-C;
+      description
+        "The current temperature in degrees celcius of the OCM.";
+    }
+
+  } // Ocm-State
+
+  grouping Ocm-Top {
+	
+    container config {
+    	uses Ocm-Config;
+        description "Configurable items of the OCM.";
+    }
+
+    container state {
+      config false;
+      uses Ocm-State;
+      description "Operational state data of the OCM.";
+    }
+
+    description
+      "Provides a definition for the top-level for an OCM entity.";
+
+  } // Ocm-Top
+  
+  grouping Ocm-Entities {
+	description
+      "This provides a grouping definition for the list of all card
+       entities.";
+
+    container ocms {
+      description
+        "Top level container for the list of ocm.";
+
+      list ocm {
+        key "dn";
+  
+        description
+          "An entry containing management information applicable to a
+           particular ocm.";
+   
+        leaf dn {
+          type lotet:Distinguished-Name;
+          description
+            "DN of the ocm.";
+        }
+
+        uses Ocm-Top;
+      } // ocm
+    } // ocms
+  } // Ocm-Entities
+  
+  /*
+   * data definition statements
+   */
+   uses Ocm-Entities;
+
+  /*
+   * augment statements
+   */
+
+  /*
+   * rpc statements
+   */
+
+  /*
+   * notification statements
+   */
+
+
+} // lumentum-ote-ocm

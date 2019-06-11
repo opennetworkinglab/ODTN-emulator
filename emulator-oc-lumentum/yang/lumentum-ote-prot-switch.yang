@@ -1,0 +1,344 @@
+module lumentum-ote-prot-switch {
+  namespace "http://www.lumentum.com/lumentum-ote-prot-switch";
+  prefix "loteps";
+
+  import lumentum-ote-types { prefix "lotet"; }
+  import lumentum-alarms { prefix "luma"; }
+
+  organization "Lumentum Operations LLC";
+  contact "support@lumentum.com";
+  description
+    "This module describes the operation and control for a protection switch.
+     The behaviour of the switching engine follows a 1+1 protection switch. 
+ 
+     ---------------------------------------------------------------------------
+     This document and its contents are proprietary and confidential to Lumentum
+     Operations LLC, and/or its parent, subsidiary and/or affiliate entities.
+     Neither this document, nor any part of it, may be disclosed or conveyed to,
+     used or copied by or for, any third party without the prior written consent
+     of Lumentum. LUMENTUM, and the LUMENTUM & DESIGN are trademarks of Lumentum
+     Operations LLC. Copyright 2016-2017 Lumentum Operations LLC. All rights
+     reserved. The use of a copyright notice on this document shall not be taken
+     to indicate that it has been published.
+     ---------------------------------------------------------------------------
+
+    ";
+
+  revision 2017-06-21 {
+    description
+      "Add support for meta-information like configuration ranges.";
+    reference "None";
+  }
+
+  revision 2017-06-07 {
+    description
+      "Remove default-keywords as they are not supported in this
+       implementation.";
+    reference "None";
+  }
+
+  revision 2016-11-30 {
+    description 
+      "Add a leaf to report the time remaining for an active revertive timer.";
+    reference "None";
+  }
+
+  revision 2016-09-27 {
+    description 
+      "1) Renamed the operationalState in Protection-Switch-State to 
+          operational-state to conform with other modules.
+       2) removed the value-definition in Protection-Switch-State 
+          operational-state.";
+    reference "None";
+  }
+
+  revision 2016-06-01 {
+    description "Initial revision.";
+    reference "None";
+  }
+
+  /*
+   * extension statements
+   */
+
+  /*
+   * feature statements
+   */
+
+  /*
+   * identity statements
+   */
+
+  /*
+   * Alarms for Protection Switch
+   */
+  
+  identity protection-switch-alarm {
+    base luma:alarm-identity;
+    description
+      "Definition base for all protection switching alarms.";
+  }
+  
+  identity active-link-failure {
+    base protection-switch-alarm;
+    description
+      "Raised when the currently active link (working or protected) is experiencing an opticalLOS
+       condition. It indicates that the switch is set to a path where there is no optical
+       signal.";
+  }
+
+  /*
+   * typedef statements
+   */
+
+  /*
+   * grouping statements
+   */
+  
+  grouping Protection-Switch-Config {
+    description
+      "Config paramaters associated with the protection switch.";
+
+    leaf maintenance-state {
+      type lotet:Maintenance-State; 
+      description 
+        "Maintenance state of the protection switch.";
+    }
+
+    leaf revertive-mode {
+      type lotet:Enable-Disable;
+      description
+        "If revertive mode is enabled, the switch will return to the working port if 
+         no fault exists on the working port for the revertive timeout period. If revertive
+         mode is disabled, the switch will remain on the protected port as long as no 
+         fault exists on the protected port.";
+    }
+
+    leaf revertive-timeout {
+      type uint32 { range "5..3600"; }
+      description
+        "Applies when revertiveMode is enabled. This parameter indicates how long to
+         wait in seconds after the working port fault has cleared before switching from
+         the protecting port.";
+    }
+  
+    leaf force-switch-command {
+      type enumeration {
+        enum none { 
+          value 1; 
+          description 
+            "No switch command in effect. The switching engine is operating normally.";
+        }
+        enum force-to-working { 
+          value 2;
+          description
+            "The switch is forced to the working-channel. It will stay in this position
+             until this command is changed.";
+        }
+        enum force-to-protecting {
+          value 3;
+          description
+            "The switch is forced to the protecting-channel. It will stay in this position
+             until this command is changed.";
+        }
+      }
+      description
+        "This is used to override the behaviour of the switching engine.";
+    }
+  } // grouping Protection-Switch-Config
+
+  grouping Protection-Switch-Config-Metadata {
+    description
+      "Config paramaters associated with the protection switch.";
+
+    container revertive-timeout {
+      uses lotet:Integer-Metadata;
+      description
+        "Metadata information for the revertive-timeout parameter.";
+    }
+
+  } // grouping Protection-Switch-Config-Metadata
+  
+  grouping Protection-Switch-Inventory {
+    description
+      "Inventory (non-config and non-varying) parameters associated
+       with the protection switch";
+
+    uses lotet:Product-Specific-Description {
+      description
+        "The entity-description indicates the path on which this protection-switch
+         is located.";
+    }
+
+       
+  } // Protection-Switch-Inventory
+  
+  grouping Protection-Switch-State {
+    description
+      "State parameters associated with protection switch";
+
+    leaf operational-state {
+      type enumeration {
+        enum normal { 
+          description 
+            "Normal working service."; 
+        }
+        enum maintenance { 
+          description 
+            "maintenanceState is out-of-service"; 
+        }
+        enum forceCommandToWorking { 
+          description
+            "The switch has been forced by command to the working port."; 
+        }
+        enum forceCommandToProtecting { 
+          description
+            "The switch has been forced by command to the protecting port."; 
+        }
+        enum signalFailOnProtecting { 
+          description
+            "The switch is on the working port and the protected port has failed.";
+        }
+        enum signalFailOnWorking { 
+          description
+            "The switch is on the protecting port and the working port has failed."; 
+        }
+        enum doNotRevert { 
+          description
+            "The switch is on the protecting port and no fault on the working 
+             port. Because revertive mode is not enabled, the switch stays on 
+             the protecting port."; 
+        }
+        enum waitToRevert { 
+          description
+            "The switch is on the protecting port and no fault on the working 
+             port. When the revertive timeout period expires, a switch to the 
+             working port will occur."; 
+        }
+      }
+      description 
+        "Current operational state of the protection switch.";
+    } // operational-state
+
+    leaf switch-position {
+      type enumeration {
+        enum working    { value 1; description "The working channel."; }
+        enum protecting { value 2; description "The protecting channel."; }
+      }
+      description
+        "Current position of the switch.";
+    } // switch-position
+
+    leaf revertive-timer {
+      type uint32 { range "0..600"; }
+      description
+        "Applies when operational-state is waitToRevert.  This parameter reports how
+         many seconds until the switch will revert to the working position.  Reports
+         0 when the timer is not active.";
+    }
+  } // Protection-Switch-State
+
+  grouping Protection-Switch-Top {
+    description
+      "The protection switch top-level entity.";
+
+    container config {
+      description "Configurable items of the protection switch.";
+      uses Protection-Switch-Config;
+    } 
+    
+    container state {
+      config false;
+      description "Operational state data of the protection switch.";
+      uses Protection-Switch-Inventory;
+      uses Protection-Switch-State;
+    }
+  } // Protection-Switch-Top
+
+  grouping Protection-Switch-Top-Metadata {
+    description
+      "The protection switch metadata top-level entity.";
+
+    container config {
+      description "Metadata for configurable items of the protection switch.";
+      uses Protection-Switch-Config-Metadata;
+    }
+
+  } // Protection-Switch-Top-Metadata
+
+  grouping Protection-Switch-Entities {
+    container protection-switches {
+      description
+        "Top-level container for the protection switches.";
+
+      list protection-switch {
+        key dn;
+        description
+          "An entry containing a protection switch top entity.";
+  
+  
+        leaf dn {
+          type lotet:Distinguished-Name;
+          description
+            "DN of the protection switch entity.";
+        }
+  
+        uses Protection-Switch-Top;
+      }
+    }
+
+    description
+      "This provides a top-level grouping for the list of all protection switch
+       entities.";
+  }
+
+  grouping Protection-Switch-Entities-Metadata {
+    container protection-switches-metadata {
+      config false;
+      description
+        "Top-level container for the protection switches metadata.";
+
+      list protection-switch-metadata {
+        key dn;
+        description
+          "An entry containing a protection switch entity's metadata.";
+
+
+        leaf dn {
+          type lotet:Distinguished-Name;
+          description
+            "DN of the protection switch entity.";
+        }
+
+        uses Protection-Switch-Top-Metadata;
+      }
+    }
+
+    description
+      "This provides a top-level grouping for the list of all protection switch
+       entities metadata.";
+  }
+
+  /*
+   * data definition statements
+   */
+
+  uses Protection-Switch-Entities;
+  uses Protection-Switch-Entities-Metadata {
+    if-feature lotet:include-metadata;
+  }
+
+  /*
+   * augment statements
+   */
+
+  /*
+   * rpc statements
+   */
+
+  /*
+   * notification statements
+   */
+  
+  
+} // lumentum-ote-prot-switch

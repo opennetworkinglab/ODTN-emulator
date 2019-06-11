@@ -1,0 +1,138 @@
+
+module lumentum-dci {
+  namespace "http://www.lumentum.com/lumentum-dci";
+  prefix "lotedci";
+  
+  import lumentum-ote-equipment { prefix "loteq"; }
+  import lumentum-ote-ne { prefix "lotene"; }
+
+  organization "Lumentum Operations LLC";
+  contact "support@lumentum.com";
+  description
+    "This module provides the product-specifics for the Data-Center-
+     Interconnect (DCI) family.
+
+     This module is run on a server with the following features enabled/disabled:
+     - slots-supported:         disabled
+     - entity-containment:      disabled
+     - wavelength-provisioning: disabled
+     - wavelength-switching:    disabled
+
+     ---------------------------------------------------------------------------
+     This document and its contents are proprietary and confidential to Lumentum
+     Operations LLC, and/or its parent, subsidiary and/or affiliate entities.
+     Neither this document, nor any part of it, may be disclosed or conveyed to,
+     used or copied by or for, any third party without the prior written consent
+     of Lumentum. LUMENTUM, and the LUMENTUM & DESIGN are trademarks of Lumentum
+     Operations LLC. Copyright 2016-2017 Lumentum Operations LLC. All rights
+     reserved. The use of a copyright notice on this document shall not be taken
+     to indicate that it has been published.
+     ---------------------------------------------------------------------------
+
+     ";
+
+  revision 2017-05-25 {
+    description "Added new card type otewpp-terminal-ocm-prot-otdr";
+    reference "None";
+  }
+  
+  revision 2016-01-01 {
+    description "Initial revision.";
+    reference "None";
+  }
+
+
+
+  /*
+   * extension statements
+   */
+
+  /*
+   * feature statements
+   */
+
+  /*
+   * identity statements
+   */
+
+  identity ne-product-dci {
+    base lotene:ne-product-type;
+    description
+      "This indicates that an NE is of the DCI product family and the details 
+       in the remainder of this module apply to this product.";
+  }
+
+  identity dci-terminal {
+    base loteq:card-type-identity;
+    description
+      "This represents the basic DCI coherent terminal.";
+  }
+
+  identity dci-terminal-ocm {
+    base loteq:card-type-identity;
+    description
+      "This represents the DCI coherent terminal including the OCM circuitry.";
+  }
+
+  identity dci-terminal-prot {
+    base loteq:card-type-identity;
+    description
+      "This represents the DCI coherent terminal including the protection 
+       switch circuitry.";
+  }
+
+  identity dci-terminal-ocm-prot {
+    base loteq:card-type-identity;
+    description
+      "This represents the DCI coherent terminal including the OCM and 
+       protection switching circuitry.";
+  }
+
+  identity dci-line-amp {
+    base loteq:card-type-identity;
+    description
+      "This represents the DCI integrated line amplifier.";
+  }
+
+  identity roadm-1x20-ocm-line-amp {
+	    base loteq:card-type-identity;
+	    description
+	      "This represents the 1x20 Roadm including the OCM and line amplifier.";
+  }
+
+  identity otewpp-terminal-ocm-prot-otdr {
+	    base loteq:card-type-identity;
+	    description
+	      "This represents a line-protected terminal amplifier card with OCM and 
+	      OTDR modules which is managed by a pluggable processor as a controller.";
+  }
+
+  /*
+   * typedef statements
+   */
+
+  /*
+   * grouping statements
+   */
+
+  /*
+   * data definition statements
+   */
+
+  /*
+   * augment statements
+   */
+
+  /*
+   * rpc statements
+   */
+
+  /*
+   * notification statements
+   */
+
+  /*
+   * Deviation statements
+   */
+  
+} // lumentum-ote-dci

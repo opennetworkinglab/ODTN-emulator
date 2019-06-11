@@ -1,0 +1,357 @@
+module lumentum-alarms {
+  namespace "http://www.lumentum.com/lumentum-alarms";
+  prefix luma;
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  organization "Lumentum Operations LLC";
+  contact "support@lumentum.com";
+
+  description
+    "This module is an interface for managing alarms. It is a subset
+     of the much larger ietf-alarms module defined in 
+     draft-vallin-alarm-yang-module-00.
+
+     ---------------------------------------------------------------------------
+     This document and its contents are proprietary and confidential to Lumentum
+     Operations LLC, and/or its parent, subsidiary and/or affiliate entities.
+     Neither this document, nor any part of it, may be disclosed or conveyed to,
+     used or copied by or for, any third party without the prior written consent
+     of Lumentum. LUMENTUM, and the LUMENTUM & DESIGN are trademarks of Lumentum
+     Operations LLC. Copyright 2016-2017 Lumentum Operations LLC. All rights 
+     reserved. The use of a copyright notice on this document shall not be taken 
+     to indicate that it has been published.
+     ---------------------------------------------------------------------------
+ 
+     ";
+
+  revision 2017-02-27 {
+    description "Added the active-alarm-list.";
+    reference "None";
+  }
+     
+  revision 2016-09-27 {
+    description "Added root-cause-resources to the alarm.";
+    reference "None";
+  }
+
+  revision 2016-01-01 {
+    description "Initial revision.";
+    reference "None";
+  }
+
+  identity alarm-identity {
+    description
+      "Base identity for alarm types.  A unique identification of the
+       alarm, not including the resource.  Different resources can
+       share alarm types.  If the resource reports the same alarm
+       type, it is to be considered to be the same alarm.  The alarm
+       type is a simplification of the different X.733 and 3GPP alarm
+       IRP alarm correlation mechanisms and it allows for
+       hierarchical extensions.
+
+       A string-based qualifier can be used in addition to the
+       identity in order to have different alarm types based on
+       information not known at design-time, such as values in
+       textual SNMP Notification var-binds.
+
+       Standards and vendors can define sub-identities to clearly
+       identify specific alarm types.
+
+       This identity is abstract and shall not be used for alarms.";
+  }
+       
+  /*
+   * Common types
+   */
+
+  typedef Resource {
+    type instance-identifier;
+    description
+      "The reference to the YANG entity to which this alarm
+       applies.";
+  }
+
+  typedef Alarm-Text {
+    type string {
+      length "1..64";
+    }
+    description
+      "The string used to inform operators about the alarm.";
+  }
+  
+  typedef Severity  {
+    
+    type enumeration { 
+      enum minor {
+        value 3;
+        description
+          "The 'minor' severity level indicates the existence of a
+           non-service affecting fault condition and that corrective
+           action should be taken in order to prevent a more serious
+           (for example, service affecting) fault. Such a severity
+           can be reported, for example, when the detected alarm
+           condition is not currently degrading the capacity of the
+           resource.";
+      }
+      /*
+      enum "warning" (value 4) to be added in the future.
+
+          "The warning severity level indicates the detection of
+           a potential or impending service affecting fault, before
+           any significant effects have been felt. Action should be
+           taken to further diagnose (if necessary) and correct the
+           problem in order to prevent it from becoming a more
+           serious service affecting fault.";
+      */
+      enum major {
+        value 5;
+        description
+          "The 'major' severity level indicates that a service
+           affecting condition has developed and an urgent
+           corrective action is required. Such a severity can be
+           reported, for example, when there is a severe
+           degradation in the capability of the resource
+           and its full capability must be restored.";
+      }
+      enum critical {
+        value 6;
+        description
+          "The 'critical' severity level indicates that a service
+           affecting condition has occurred and an immediate
+           corrective action is required. Such a severity can be
+           reported, for example, when a resource becomes totally
+           out of service and its capability must be restored.";
+      }
+    }
+
+    description 
+      "The severity level of the alarm.
+      
+       This enumeration is sparsely populated so as to match
+       the values defined in ietf-alarms.";
+  } // typedef Severity
+  
+
+  typedef Severity-With-Clear  {
+    type union {
+      type enumeration {
+        enum cleared {
+          value 1;
+          description
+            "The alarm is cleared by the instrumentation.";
+        }
+      }
+      type Severity;
+    }
+    description
+      "The severity level of the alarm including clear.
+       This is used only in state changes for an alarm.";
+  }
+
+  
+  /* Alarm type */
+  typedef Alarm-Type-Id {
+    type identityref {
+      base alarm-identity;
+    }
+    description
+      "Identifies an alarm type. The description of the alarm type id
+       MUST indicate if the alarm type is abstract or not. An
+       abstract alarm type is used as a base for other alarm type ids
+       and will not be used as a value for an alarm or be present in
+       the alarm inventory.";
+  }
+
+  /*
+   * Groupings
+   */
+
+  grouping Common-Alarm-Parameters {
+    description
+      "Common parameters for an alarm.
+
+       This grouping is used both in the alarm list and in the
+       notification representing an alarm state change.";
+
+    leaf resource {
+      type Resource;
+      mandatory true;
+      description
+        "The alarming resource..";
+    }
+
+    leaf alarm-type-id {
+      type Alarm-Type-Id;
+      mandatory true;
+      description
+        "This leaf provides a unique identification of the alarm type.";
+    }
+
+    leaf root-cause-resources {
+      type string {
+        length "0..16";
+      }
+      description
+        "Resources that are candidates for causing the alarm.
+
+         In the case of Lumentum's usage:
+         - the root-cause is a number representing the root fault condition
+         - a value is provided for a raised alarm, blank when the alarm is 
+           cleared
+         - when a fault is present it's format is Fault.<nnn>, where <nnn> is
+           the fault code number";
+    }
+
+  } // grouping Common-Alarm-Parameters
+
+  grouping Alarm-Status-Change-Parameters {
+    description
+      "Parameters for an alarm state change.
+
+       This grouping is used both in the alarm list's
+       status-change list and in the notification representing an
+       alarm state change.";
+
+    leaf event-time {
+      type yang:date-and-time;
+      mandatory true;
+      description
+        "The time the status of the alarm changed.  The value
+         represents the time the real alarm state change appeared
+         in the resource and not when it was added to the
+         alarm list.";
+    }
+    
+    leaf perceived-severity {
+      type Severity-With-Clear;
+      mandatory true;
+      description
+        "The severity of the alarm as defined by X.733.  Note
+         that this may not be the original severity since the alarm
+         may have changed severity.";
+      reference
+        "ITU Recommendation X.733, 'Information Technology - Open
+         Systems Interconnection - System Management: Alarm Reporting
+         Function', 1992";
+    }
+    
+    leaf alarm-text {
+      type Alarm-Text;
+      mandatory true;
+      description
+        "A user friendly text describing the alarm state change.";
+      reference
+        "Additional Text from ITU Recommendation X.733, 'Information
+          Technology
+          - Open Systems Interconnection - System Management: Alarm
+          Reporting Function', 1992";
+    }
+  } // grouping Alarm-Status-Change-Parameters
+
+  grouping Alarm-List {
+    description
+      "A list of alarms.";
+
+    leaf number-of-alarms {
+      type yang:gauge32;
+      description
+        "This object shows the total number of currently
+         alarms, i.e., the total number of entries
+         in the alarm list.";
+    }
+
+    leaf last-changed {
+      type yang:date-and-time;
+      description
+        "A timestamp when the active alarm list was last
+         changed. The value can be used by a manager to
+         initiate an alarm resynchronization procedure.";
+    }
+
+    list alarm {
+      key "resource alarm-type-id";
+
+      description
+        "The list of alarms.  Each entry in the list holds one
+         alarm for a given alarm type and device, managed object.
+         An alarm can be updated from the underlying device or
+         by the user. These changes are reflected in different
+         lists below the corresponding alarm.";
+
+      uses Common-Alarm-Parameters;
+      
+      leaf is-cleared {
+        type boolean;
+        mandatory true;
+        description
+          "Indicates the clearance state of the alarm.  An alarm
+           might toggle from active alarm to cleared alarm and back
+           to active again.  This leaf reflects the perceived
+           severity in the latest entry in the status-change
+           list.";
+      }
+
+      leaf last-status-change {
+        type yang:date-and-time;
+        mandatory true;
+        description
+          "A timestamp when the status-change list was last changed. If no
+           previous status-change has occurred, the date is set to 1970-01-01.";
+      }
+
+      leaf last-perceived-severity {
+        type Severity;
+        mandatory true;
+        description
+          "The severity of the last status-change that reported a severity that
+           is not equal to cleared.";
+      }
+
+      leaf last-alarm-text {
+        type Alarm-Text;
+        mandatory true;
+        description
+          "The Alarm-Text of the last status-change that reported a severity 
+           that is not equal to cleared.";
+      }
+    } // list alarm
+    
+  }
+
+
+  /*
+   * The alarms data tree
+   */
+
+  container alarm-list {
+    config false;
+    description
+      "Contains a list of all alarms in the system. Each alarm indicates 
+       if it is raised or cleared.";
+    uses Alarm-List;
+  } // container alarm-list
+
+  container active-alarm-list {
+    config false;
+    description
+      "Contains a list of the currently active or raised alarms in the system.";
+    uses Alarm-List;
+  } // container active-alarm-list
+
+  /*
+   * Notifications
+   */
+
+  notification alarm-notification {
+    description
+      "This notification is used to report a state change for an
+       alarm.  The same notification is used for sending a newly
+       raised alarm, a cleared alarm.";
+
+    uses Common-Alarm-Parameters;
+    uses Alarm-Status-Change-Parameters; 
+  }
+} // module lumentum-alarms

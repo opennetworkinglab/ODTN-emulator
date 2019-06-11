@@ -1,0 +1,208 @@
+
+module lumentum-ote-ne {
+  namespace "http://www.lumentum.com/lumentum-ote-ne";
+  prefix "lotene";
+
+  import ietf-yang-types { prefix yang; }
+  import lumentum-ote-types { prefix "lotet"; }
+
+  organization "Lumentum Operations LLC";
+  contact "support@lumentum.com";
+  description
+    "This module describes the operation and control for a network element
+     (NE).
+ 
+     ---------------------------------------------------------------------------
+     This document and its contents are proprietary and confidential to Lumentum
+     Operations LLC, and/or its parent, subsidiary and/or affiliate entities.
+     Neither this document, nor any part of it, may be disclosed or conveyed to,
+     used or copied by or for, any third party without the prior written consent
+     of Lumentum. LUMENTUM, and the LUMENTUM & DESIGN are trademarks of Lumentum
+     Operations LLC. Copyright 2016-2017 Lumentum Operations LLC. All rights
+     reserved. The use of a copyright notice on this document shall not be taken
+     to indicate that it has been published.
+     ---------------------------------------------------------------------------
+
+     ";
+
+  revision 2017-04-19 {
+    description "Add leaf cli-over-ssh.";
+    reference "None.";
+  }
+
+  revision 2017-02-15 {
+    description "Removed the Custom Name.";
+    reference "None.";
+  }
+
+  revision 2016-01-01 {
+    description "Initial revision.";
+    reference "None.";
+  }
+
+  /*
+   * extension statements
+   */
+
+  /*
+   * feature statements
+   */
+
+  /*
+   * identity statements
+   */
+
+  identity ne-type {
+    description
+      "Base type for NE type. This type is to be extended to introduce new
+       types of NEs.";
+  }
+
+  identity multi-chassis-ne {
+    base ne-type;
+    description
+      "The multi-chassis-ne NE describes one or more chassis comprising a single
+       NE. In the case of multiple chassis, one of the chassis acts as the 
+       controller for the collection. 
+
+       The lumentum-ote-equipment module defines the chassis collection. The 
+       entity chassis[1] takes on the roll of controller for the collection.";
+  }
+
+  identity ne-product-type {
+    description
+      "Base type for NE product type. This defines further the NE type based
+       on the product or product-family. It is useful for quickly identifying
+       the entities within a particular product.";
+  }
+
+  /*
+   * typedef statements
+   */
+
+  typedef NE-Type {
+    type identityref {
+      base ne-type;
+    }
+    description
+      "The typedef definition for the ne-type identity.";
+  }
+
+  typedef NE-Product-Type {
+    type identityref {
+      base ne-product-type;
+    }
+    description
+      "The typedef definition for the ne-product-type identity.";
+  }
+
+  /*
+   * grouping statements
+   */
+
+  grouping Network-Element-Config {
+    description
+      "Configuration parameters associated with the NE.";
+
+    leaf cli-over-ssh {
+      type lotet:Enable-Disable;
+      description
+        "If cli over ssh is disabled, ssh logins on port 22 will not be allowed.
+         Note this does not close port 22.";
+    }
+
+  } // Network-Element-Config
+
+  grouping Network-Element-Inventory {
+    description
+      "Inventory (non-config and non-varying) parameters associated
+       with the NE";
+
+    leaf ne-type {
+      type NE-Type;
+      description
+        "Indicates the type of the NE.";
+    }
+
+    leaf ne-product-type {
+      type NE-Product-Type;
+      description
+        "Indicates the product or product-family of this NE.";
+    }
+
+    leaf unique-system-id {
+      type yang:mac-address;
+      description
+        "A system identifier guaranteed to be unique in a network.";
+    }
+
+  } // Network-Element-Inventory
+
+  grouping Network-Element-State {
+    description
+      "State parameters associated with the NE.";
+
+  } // Network-Element-State
+
+  grouping Network-Element-Top {
+    description
+      "Top-level for the ne entity.";
+    
+  	container config {
+      uses Network-Element-Config;
+      description "Configuration items.";
+    }
+
+    container state {
+      config false;
+      uses Network-Element-State;
+      uses Network-Element-Inventory;
+      description "Operational state data for the entity.";
+    }
+   
+  } // Network-Element-Top
+
+  grouping Network-Element-Entities {
+    container network-elements {
+      description
+        "The network-element list. While this is a list, only 1 NE is created
+         per server. A list is used for consistency with DN-keys.";
+      
+      list network-element {
+        key dn;
+        description 
+          "An entry containing a network-element entity.";
+
+        leaf dn {
+          type lotet:Distinguished-Name;
+          description
+            "DN of the network-element entity.";
+        }
+
+        uses Network-Element-Top;
+      }
+    }
+
+    description 
+      "Definition for the grouping holding the NE entities.";
+  } // Network-Element-Entity
+
+  /*
+   * data definition statements
+   */
+
+  uses Network-Element-Entities;
+
+  /*
+   * augment statements
+   */
+
+  /*
+   * rpc statements
+   */
+
+  /*
+   * notification statements
+   */
+  
+} // lumentum-ote-ne

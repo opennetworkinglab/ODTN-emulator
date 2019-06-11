@@ -1,0 +1,249 @@
+module lumentum-ote-ne-ip-service {
+
+  namespace "http://www.lumentum.com/lumentum-ote-ne-ip-service";
+  prefix "lotenip";
+
+  import ietf-yang-types { prefix yang; }
+  import ietf-inet-types { prefix inet; }
+  import lumentum-ote-ne { prefix "lotene"; }
+
+  organization "Lumentum Operations LLC";
+  contact "support@lumentum.com";
+  description
+   "This module describes the operation and control for ip-service entities.
+
+    ---------------------------------------------------------------------------
+    This document and its contents are proprietary and confidential to Lumentum
+    Operations LLC, and/or its parent, subsidiary and/or affiliate entities.
+    Neither this document, nor any part of it, may be disclosed or conveyed to,
+    used or copied by or for, any third party without the prior written consent
+    of Lumentum. LUMENTUM, and the LUMENTUM & DESIGN are trademarks of Lumentum
+    Operations LLC. (c) 2016-2017 Lumentum Operations LLC. All rights reserved. 
+    The use of a copyright notice on this document shall not be taken to 
+    indicate that it has been published.
+    ---------------------------------------------------------------------------
+   ";
+
+  revision 2017-06-07 {
+    description
+      "Remove default-keywords as they are not supported in this
+      implementation";
+    reference "None";
+  }
+
+  revision 2017-02-27 {
+    description "Add IPv6.";
+    reference "None";
+  }
+
+  revision 2016-06-01 {
+    description "Initial revision.";
+    reference "None";
+  }
+
+  /*
+   * extension statements
+   */
+
+  /*
+   * feature statements
+   */
+
+  /*
+   * identity statements
+   */
+
+  // Alarms for ip-service
+
+  /*
+   * typedef statements
+   */
+
+  /*
+   * grouping statements
+   */
+
+  grouping IPv4-Service-Config {
+    description
+      "Config paramaters associated with IPv4.";
+
+    leaf ip-address {
+      type inet:ipv4-address-no-zone;
+      must "count(../ip-netmask)>0" {
+        description
+          "The ip-address and ip-netmask must be specified together.";
+      }
+      description
+        "The IPv4 address.";
+    }
+   
+    leaf ip-netmask {
+      type yang:dotted-quad;
+      must "count(../ip-address)>0" {
+        description
+          "The ip-address and ip-netmask must be specified together.";
+      }
+      description
+        "The subnet mask.";
+    }
+
+    leaf gateway-address {
+      type inet:ipv4-address-no-zone;
+      description
+        "The gateway address.";
+    }
+
+    leaf dhcp-enabled {
+      type boolean;
+      description
+        "DHCP is used to obtain an IP address. When this parameter is FALSE
+         the above provisioned ip-address is used.";
+    }
+
+  } // IPv4-Service-Config
+
+  grouping IPv6-Service-Config {
+    description
+      "Config paramaters associated with IPv6.";
+
+    leaf enabled {
+      type boolean;
+      description
+        "Controls whether IPV6 is enabled or disabled. When enabled, the node
+         is connected to an IPv6 stack and can send/receive IPv6 packets.";
+    }
+
+    leaf ip-address {
+      type inet:ipv6-address-no-zone;
+      must "count(../prefix-length)>0" {
+        description
+          "The ip-address and prefix must be specified together.";
+      }
+      description
+        "The IPv6 address.";
+    }
+
+    leaf prefix-length {
+      type uint8 {
+        range "0..128";
+      }
+      must "count(../ip-address)>0" {
+        description
+          "The ip-address and prefix must be specified together.";
+      }
+      description
+        "The length of the subnet prefix.";
+    }
+   
+    leaf gateway-address {
+      type inet:ipv6-address-no-zone;
+      description
+        "The gateway address.";
+    }
+      
+  } // IPv6-Service-Config
+
+  grouping IPv6-Service-State {
+    description
+      "State paramaters associated with IPv6.";
+
+    leaf link-local-ip-address {
+      type inet:ipv6-address-no-zone;
+      description
+        "The IPv6 link-local address assigned.";
+    }
+
+    leaf link-local-prefix-length {
+      type uint8 {
+        range "0..128";
+      }
+      description
+        "The length of the link-local prefix.";
+    }
+
+  } // IPv6-Service-State
+
+  grouping IP-Service-Inventory {
+    description
+      "Inventory (non-config and non-varying) parameters associated
+       with the ip-service";
+
+    leaf mac-address {
+      type yang:mac-address;
+      description
+        "The mac-address attached to the ip-service.";
+    }
+  } // IP-Service-Inventory
+
+  grouping IP-Service-Top {
+
+    container ip-service {
+      container config {
+        description "Configurable items of the ip-service.";
+
+        container ipv4 {
+          description
+            "Parameters for the IPv4 address family.";
+          uses IPv4-Service-Config;
+        }
+
+        container ipv6 {
+          description
+            "Parameters for the IPv6 address family.";
+          uses IPv6-Service-Config;
+        }
+      }
+  
+      container state {
+        config false;
+        description "Operational state data of the ip-service.";
+
+        container ipv4 {
+          description
+            "Parameters for the IPv4 address family.";
+          uses IPv4-Service-Config;
+        }
+
+        container ipv6 {
+          description
+            "Parameters for the IPv6 address family.";
+          uses IPv6-Service-Config;
+          uses IPv6-Service-State;
+        }
+     
+        uses IP-Service-Inventory;
+      }
+
+      description
+        "Container for all the ip-service parameters.";
+    }
+
+    description
+      "Provides a definition for the top-level for a ip-service entity.";
+
+  } // IP-Service-Top
+
+  /*
+   * data definition statements
+   */
+
+  /*
+   * augment statements
+   */
+
+  augment "/lotene:network-elements/lotene:network-element" {
+    description
+      "Extend the NE to support IP services.";
+    uses IP-Service-Top;
+  }
+
+
+  /*
+   * rpc statements
+   */
+
+  /*
+   * notification statements
+   */
+  
+} // lumentum-ote-ne-ip-service

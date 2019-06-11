@@ -1,0 +1,320 @@
+module lumentum-ote-monitored-channel {
+
+  namespace "http://www.lumentum.com/lumentum-ote-monitored-channel";
+  prefix "lotemc";
+
+  import lumentum-ote-types { prefix "lotet"; }
+  import lumentum-alarms { prefix "luma"; }
+
+  organization "Lumentum Operations LLC";
+  contact "support@lumentum.com";
+
+  description
+   "A wavelength channel is characterized by a wavelength band having a start 
+    and end frequency. Once provisioned, this channel can have information 
+    reported about it like optical power. Also, this channel is what is 
+    switched at a ROADM node.
+ 
+    A monitored-channel is a wavelength channel that can also support raising of
+    alarms when optical powers cross provisioned thresholds.
+
+    The named-monitored-channels list and the monitored-channels list are
+    two ways to represent monitored channels. The unnamed monitored-channel is
+    used in fixed-grid products where channels are statically defined. 
+    named-monitored-channels are used in flexible grid products where channels 
+    are dynamically provisioned. A product would support one of these lists, not
+    both.
+
+    A channel can contain sub-channels (carriers) within it that are not 
+    switchable. The support for carriers is indicated by the multi-carrier
+    feature.
+
+    ---------------------------------------------------------------------------
+    This document and its contents are proprietary and confidential
+    to Lumentum Operations LLC, and/or its parent, subsidiary and/or
+    affiliate entities. Neither this document, nor any part of it,
+    may be disclosed or conveyed to, used or copied by or for, any
+    third party without the prior written consent of Lumentum. LUMENTUM,
+    and the LUMENTUM & DESIGN are trademarks of Lumentum Operations
+    LLC. Copyright 2016-2017 Lumentum Operations LLC. All rights reserved.
+    The use of a copyright notice on this document shall not be taken
+    to indicate that it has been published. 
+    ---------------------------------------------------------------------------
+    ";
+
+  revision 2017-06-21 {
+    description 
+      "Add named-monitored-channels and support for multiple carriers.";
+    reference "None";
+  }
+
+  revision 2017-02-27 {
+    description "Add group-reference for monitored channel.";
+    reference "None";
+  }
+
+  revision 2016-06-01 {
+    description "Initial revision.";
+    reference "None";
+  }
+
+  /*
+   * extension statements
+   */
+
+  /*
+   * feature statements
+   */
+
+  feature named-monitored-channel {
+    description
+      "The named-monitored-channel and unnamed-mmonitored-channel features
+       are mutually exlusive.  A product would normally support one of these 
+       features and not both.
+
+       A named-monitored-channel is intended to be used in products that 
+       dynamically create monitored-channels.";
+  }
+
+  feature unnamed-monitored-channel {
+    description
+      "The named-monitored-channel and unnamed-mmonitored-channel features
+       are mutually exlusive.  A product would normally support one of these 
+       features and not both.
+
+       An unnamed monitored-channel is intended to be used in products that 
+       have a fixed channel-plan and therefore do not create channels 
+       dynamically.";
+  }
+
+  feature multi-carrier {
+    description
+      "The multi-carrier feature provides for specifying multiple sub-channels 
+       or carriers within a channel.";
+  }
+
+  /*
+   * identity statements
+   */
+
+  // Alarms
+  identity input-low-degrade {
+    base luma:alarm-identity;
+    description
+      "Input channel power degraded. Indicates that the measured optical input 
+       power has dropped below the user-configurable 
+       input-low-degrade-threshold value.";
+  }
+
+  identity input-overload {
+    base luma:alarm-identity;
+    description
+      "Input channel power overload. Indicates that the measured optical input 
+       power has increased above the user-configurable input-overload-threshold
+       value.";
+  }
+
+  identity optical-los {
+    base luma:alarm-identity;
+    description
+      "Loss of channel optical power. Indicates that the measured optical input
+       power has dropped below the user-configurable optical-los-threshold 
+       value.";
+  }
+
+  /*
+   * typedef statements
+   */
+
+  /*
+   * grouping statements
+   */
+
+  grouping Monitored-Power-Frequency-State {
+    description "State parameters for Monitored Channels";
+    uses lotet:Monitored-Power-State;
+    leaf measured-frequency {
+      type lotet:Dwdm-Frequency-Range-Ghz;
+      description
+        "Channel measured center frequency";
+    }
+    leaf valid-data {
+      type boolean;
+      description
+        "True if measured values are valid.";
+    }
+  }
+
+  grouping Monitored-Channel-Config {
+    description
+      "Config parameters associated with the channel.";
+    uses lotet:Custom-Name;
+    uses lotet:Maintenance-State-Attributes;
+    uses lotet:Monitored-Input-Power-Config;
+    uses lotet:Channel-Wavelength-Specification-Attributes;
+  }
+
+  grouping Monitored-Channel-Inventory {
+    description
+      "Inventory (non-config and non-varying) parameters associated with the 
+       channel";
+    uses lotet:Product-Specific-Description {
+      description
+        "The entity-description indicates which port within the service this 
+         is.";
+    }
+    leaf port-reference {
+      type lotet:Distinguished-Name;
+      description
+        "The port associated with the channel.";
+    }
+  }
+
+  grouping Monitored-Channel-State {
+    description
+      "State parameters associated with the channel";
+    uses Monitored-Power-Frequency-State;
+    uses lotet:Channel-Wavelength-Specification-Attributes;
+  }
+
+  grouping Monitored-Channel-Top {
+    description
+      "Provides a definition for the top-level for a channel entity.";
+    container config {
+      description "Configurable items of the channel.";
+      uses Monitored-Channel-Config;
+    }
+
+    container state {
+      config false;
+      description "Operational state data of the channel.";
+      uses Monitored-Channel-Inventory;
+      uses Monitored-Channel-State;
+    }
+  }
+
+  grouping Named-Monitored-Carrier-Entities {
+    description
+      "Top level grouping for multiple carrier entities.";
+    
+    container monitored-carriers {
+      description
+        "Container for the list of monitored carriers.";
+      list monitored-carrier {
+        key name;
+        description 
+          "An list entry containing management information applicable to a 
+           specific carrier.";
+
+        leaf name {
+          type string {
+            length "1..64";
+          }
+          description
+            "The name of the carrier entity.";
+        }
+
+        uses Monitored-Channel-Top;
+      }
+    }
+  }
+
+  grouping Monitored-Channel-Entities {
+    description
+      "Top level grouping for channel entities.";
+
+    container monitored-channels {
+      list monitored-channel {
+        key dn;
+        description
+          "An entry containing management information applicable to a particular
+           channel.";
+
+        leaf dn {
+          type lotet:Distinguished-Name;
+          description
+            "DN of the channel.";
+        }
+
+        leaf group-reference {
+          type lotet:Distinguished-Name;
+          description
+            "The DN of the higher-level entity that this monitored-channel is
+             contained within. This is used in the creation of sub-tree filters
+             to get all monitored-channels for a specific port.";
+        }
+
+        uses Monitored-Channel-Top;
+      }
+
+      description
+            "This provides top level container for the list of all channel
+            entities.";
+    }
+  }
+
+  grouping Named-Monitored-Channel-Entities {
+    description
+      "Top level grouping for named-monitored-channel entities.";
+
+    container named-monitored-channels {
+      list monitored-channel {
+        key "name group-reference";
+        description
+          "An entry containing management information applicable to a particular
+           named monitored channel. The key or index into this list is the
+           combination of group-reference/port and customer-supplied channel
+           name.";
+
+        leaf name {
+          type string {
+            length "1..64";
+          }
+          description
+            "The name of the channel. This name is a customer-supplied 
+             identifier for the channel.";
+        }
+
+        leaf group-reference {
+          type lotet:Distinguished-Name;
+          description
+            "The DN of the higher-level entity that this monitored-channel is
+             contained within. An example of the group-reference is the port
+             entity in which the wavelength channel is monitored.
+             to get all monitored-channels for a specific port.";
+        }
+
+        uses Monitored-Channel-Top;
+        uses Named-Monitored-Carrier-Entities {
+          if-feature multi-carrier;
+        }
+      }
+
+      description
+        "This provides top level container for the list of all channel
+         entities.";
+    }
+  }
+
+  /*
+   * data definition statements
+   */
+  uses Monitored-Channel-Entities {
+    if-feature unnamed-monitored-channel;
+  }
+  uses Named-Monitored-Channel-Entities {
+    if-feature named-monitored-channel;
+  }
+
+  /*
+   * augment statements
+   */
+
+  /*
+   * rpc statements
+   */
+
+  /*
+   * notification statements
+   */ }
+

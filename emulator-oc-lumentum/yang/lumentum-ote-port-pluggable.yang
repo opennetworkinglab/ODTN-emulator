@@ -1,0 +1,282 @@
+
+module lumentum-ote-port-pluggable {
+
+  namespace "http://www.lumentum.com/lumentum-ote-port-pluggable";
+  prefix "lotepp";
+
+  import lumentum-ote-types { prefix "lotet"; }
+  import lumentum-alarms { prefix "luma"; }
+  import lumentum-ote-port { prefix "lotep"; }
+
+  organization "Lumentum Operations LLC";
+  contact "support@lumentum.com";
+  description
+    "This module describes the operation and control for a pluggable extension 
+     to the ote-port entity.
+ 
+     ---------------------------------------------------------------------------
+     This document and its contents are proprietary and confidential to Lumentum
+     Operations LLC, and/or its parent, subsidiary and/or affiliate entities.
+     Neither this document, nor any part of it, may be disclosed or conveyed to,
+     used or copied by or for, any third party without the prior written consent
+     of Lumentum. LUMENTUM, and the LUMENTUM & DESIGN are trademarks of Lumentum
+     Operations LLC. Copyright 2016 Lumentum Operations LLC. All rights
+     reserved. The use of a copyright notice on this document shall not be taken
+     to indicate that it has been published.
+     ---------------------------------------------------------------------------
+
+     ";
+
+  revision 2016-06-01 {
+    description "Initial revision.";
+    reference "None";
+  }
+
+  /*
+   * extension statements
+   */
+
+  /*
+   * feature statements
+   */
+
+  /*
+   * identity statements
+   */
+
+  identity port-pluggable {
+    base lotep:port-extension;
+    description "Definition of a port extension supporting pluggables like SFPs.";
+  }
+
+  // Alarm Definitions
+
+  identity pluggable-missing {
+    base luma:alarm-identity;
+    description
+      "Raised when the port does not contain a pluggable.";
+  }
+
+  identity receiver-overload {
+    base luma:alarm-identity;
+    description
+      "Raised when the pluggable raises its RX Power High Alarm 
+       (A2h Byte 113, bit 7).";
+  }
+
+  identity pluggable-fail {
+    base luma:alarm-identity;
+    description
+      "Raised when a pluggable-fail has been detected. This is defined by the
+       Pin 2 (TX Fault), transmitter fault indication.";
+  }
+
+  identity pluggable-comms-failure {
+    base luma:alarm-identity;
+    description
+      "Raised when I2C communication to the pluggable fails.";
+  }
+  
+  identity optical-los {
+    base luma:alarm-identity;
+    description
+      "Raised when loss of signal detected.";
+  }
+
+
+  /*
+   * typedef statements
+   */
+
+  /*
+   * grouping statements
+   */
+
+  /* Optical-Input groupings */
+  grouping Pluggable-Inventory {
+    description
+      "Inventory (non-config and non-varying) parameters associated
+       with the pluggable";
+
+    leaf vendor {
+      type string {
+        length 1..16;
+      }
+      description
+        "Full name of transceiver vendor. 16-octet field that
+        contains ASCII characters, left-aligned and padded on the
+        right with ASCII spaces (20h)";
+      reference 
+        "SFF-8472 Rev 11.1: 'Vendor name' Address A0h:20-35";
+    }
+
+    leaf vendor-part {
+      type string {
+        length 1..16;
+      }
+      description
+        "Transceiver vendor's part number. 16-octet field that
+        contains ASCII characters, left-aligned and padded on the
+        right with ASCII spaces (20h). If part number is undefined,
+        all 16 octets = 0h";
+      reference 
+        "SFF-8472 Rev 11.1: 'Vendor PN' Address A0h:40-55";
+    }
+
+    leaf vendor-rev {
+      type string {
+        length 1..4;
+      }
+      description
+        "Transceiver vendor's revision number. 2-octet field that
+        contains ASCII characters, left-aligned and padded on the
+        right with ASCII spaces (20h)";
+      reference 
+        "SFF-8472 Rev 11.1: 'Vendor rev' Address A0h:56-59";
+    }
+
+    leaf vendor-serial-no {
+      type string {
+        length 1..16;
+      }
+      description
+        "Transceiver serial number. 16-octet field that contains
+        ASCII characters, left-aligned and padded on the right with
+        ASCII spaces (20h). If part serial number is undefined, all
+        16 octets = 0h";
+      reference 
+        "SFF-8472 Rev 11.1: 'Vendor SN' Address A0h:68-83";
+    }
+
+    leaf date-code {
+      type lotet:Simple-Date;
+      description
+        "Representation of the manufacturing date code";
+      reference 
+        "SFF-8472 Rev 11.1: 'Date Code' Address A0h:84-91";
+    }
+
+    leaf max-bitrate {
+      type lotet:Bitrate-MegaBitsPerSec;
+      description
+        "The upper bit rate limit at which the pluggable will still meet its 
+         specifications is specified in units of 1% above the nominal bit rate.
+         A value of zero indicates that this field is not specified.";
+      reference
+        "SFF-8472 Rev 11.1: 'BR, max' Address A0h:66";
+    }
+
+    leaf min-bitrate {
+      type lotet:Bitrate-MegaBitsPerSec;
+      description
+        "The lower bit rate limit at which the pluggable will still meet its 
+         specifications is specified in units of 1% below the nominal bit rate.
+         A value of zero indicates that this field is not specified.";
+      reference
+        "SFF-8472 Rev 11.1: 'BR, min' Address A0h:67";
+    }
+  } // Pluggable-Inventory
+
+  grouping Pluggable-State {
+    description
+      "State parameters associated with the pluggable";
+
+    leaf pluggable-present {
+      type boolean;
+      description
+        "Indicates if the pluggable is present or not. TRUE means the pluggable
+         is present, FALSE otherwise.
+ 
+         If the pluggable is not present, all other parameters are invalid
+         unless otherwise stated.";
+    }
+
+    leaf input-power {
+      type lotet:Optical-Power-Absolute;
+      description
+        "The input power of the pluggable. If the pluggable is disabled or no
+         optical power is detected, this value is set to -55.0.";
+      reference
+        "SFF-8472 Rev 11.1: 'RX Power' Address A2h:104-105";
+    }
+
+    leaf output-power {
+      type lotet:Optical-Power-Absolute;
+      description
+        "The output power of the pluggable. If the pluggable is disabled, this
+         value is set to -55.0.";
+      reference
+        "SFF-8472 Rev 11.1: 'TX Power' Address A2h:102-103";
+    }
+
+    leaf internal-temp {
+      type lotet:Temperature-Deg-C;
+      description
+        "Internally measured temperature in degrees Celsius.";
+      reference
+        "SFF-8472 Rev 11.1: 'Temperature' Address A2h:96-97";
+    }
+
+    leaf actual-bitrate {
+      type lotet:Bitrate-MegaBitsPerSec;
+      description
+        "The bitrate at which the pluggable is currently operating. If the rate
+         can not be determined or not valid, this value is set to 0.";
+    }
+
+    leaf tx-state {
+      type lotet:Enable-Disable;
+      description
+        "Indicates if the pluggables transmitter is disabled. This value is 
+         obtained from the pluggable which may have disabled transmission due 
+         to an internally detected fault condition.";
+      reference
+        "SFF-8472 Rev 11.1: 'TX Disable State' Address A2h:110:bit7";
+    }
+  } // Pluggable-State
+
+  grouping Pluggable-Config {
+    description
+      "Config paramaters associated with the pluggable.";
+  }
+
+  /*
+   * data definition statements
+   */
+
+  /*
+   * augment statements
+   */
+
+  augment "/lotep:physical-ports/lotep:physical-port/lotep:config" {
+    when "count(../lotep:port-extension[normalize-space(text())='port-pluggable'])>0" {
+      description
+        "Add optical input port extensions when the extensions list contains
+         port-pluggable.";
+    }
+    description
+      "Extensions to port for pluggables.";
+    uses Pluggable-Config;
+  }
+
+  augment "/lotep:physical-ports/lotep:physical-port/lotep:state" {
+    when "count(../lotep:port-extension[normalize-space(text())='port-pluggable'])>0" {
+      description
+        "Add optical input port extensions when the extensions list contains
+         port-pluggable.";
+    }
+    description
+      "Extensions to port for pluggables.";
+    uses Pluggable-State;
+    uses Pluggable-Inventory;
+  }
+
+  /*
+   * rpc statements
+   */
+
+  /*
+   * notification statements
+   */
+  
+} // lumentum-ote-port-pluggable

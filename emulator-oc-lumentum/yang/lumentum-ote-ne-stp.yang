@@ -1,0 +1,283 @@
+module lumentum-ote-ne-stp {
+
+  namespace "http://www.lumentum.com/lumentum-ote-ne-stp";
+  prefix "lotenstp";
+
+  import ietf-yang-types { prefix yang; }
+  import lumentum-ote-ne { prefix "lotene"; }
+  import lumentum-ote-types { prefix "lotet"; }
+
+
+  organization "Lumentum Operations LLC";
+  contact "support@lumentum.com";
+  description
+   "This module describes the operation and control for stp entities.
+
+    ---------------------------------------------------------------------------
+    This document and its contents are proprietary and confidential to Lumentum
+    Operations LLC, and/or its parent, subsidiary and/or affiliate entities.
+    Neither this document, nor any part of it, may be disclosed or conveyed to,
+    used or copied by or for, any third party without the prior written consent
+    of Lumentum. LUMENTUM, and the LUMENTUM & DESIGN are trademarks of Lumentum
+    Operations LLC. (c) 2017 Lumentum Operations LLC. All rights reserved. 
+    The use of a copyright notice on this document shall not be taken to 
+    indicate that it has been published.
+    ---------------------------------------------------------------------------
+   ";
+
+  revision 2017-03-29 {
+    description "Initial revision.";
+    reference "None";
+  }
+
+  /*
+   * extension statements
+   */
+
+  /*
+   * feature statements
+   */
+
+  /*
+   * identity statements
+   */
+   
+
+
+  /*
+   * typedef statements
+   */
+
+  typedef Stp-Protocol {
+    type enumeration {
+      enum rstp {
+        description
+          "Rapid Spanning Tree Protocol.";
+      }
+      enum mstp {
+        description
+          "Multiple Spanning Tree Protocol.";
+      }
+      enum rapid-pvst {
+        description
+          "Rapid Per Vlan Spanning Tree Protocol.";
+      }
+    }
+    description
+      "The spanning tree protocol type.";
+  }
+
+
+
+  typedef Stp-Bridge-Priority-Type {
+    type uint32 {                                                     
+      range 1..611440;
+    }
+    description
+      "The manageable component of the Bridge Identifier";
+       reference "IEEE 802.1D 17.13.7 Bridge Identifier Priority";
+  }
+
+
+
+
+  /*
+   * grouping statements
+   */
+
+  
+  grouping Bridge-Config {
+    description
+      "Grouping for bridge";
+
+      leaf enabled {
+        type boolean;
+        description
+          "Bridge level configuration of the STP. 
+           The bridge configuration parameter's change does not require restart.";
+      }
+   
+      leaf bridge-priority {
+        type lotenstp:Stp-Bridge-Priority-Type;
+        description
+          "The manageable component of the Bridge Identifier";
+        reference
+          "IEEE 802.1D 17.13.7 Bridge Identifier Priority";
+      }
+      
+      leaf hello-time {
+        type uint8 {
+          range 1..10;
+        }
+        units "seconds";
+        description
+          "The interval between periodic transmissions of
+           configuration messages by designated ports";
+        reference
+          "IEEE 802.1D 17.13.6 Bridge Hello Time";
+      }
+
+      leaf max-age {
+        type uint8 {
+          range 6..40;
+        }
+        units "seconds";
+        description
+          "The maximum age of the information transmitted by the
+           bridge when it is the root bridge";
+        reference
+          "IEEE 802.1D 17.13.8 Bridge Max Age";
+      }
+
+      leaf forwarding-delay {
+        type uint8 {
+          range 4..30;
+        }
+        units "seconds";
+        description
+          "The delay used by STP bridges to transition root and
+           designated ports to forwarding";
+        reference
+          "IEEE 802.1D 17.13.5 Bridge Forward Delay";
+      }
+
+      leaf hold-count {
+        type uint8 {
+          range 1..10;
+        }
+        description
+          "the maximum number of BPDUs per second that the
+           switch can send from an interface";
+        reference
+          "IEEE 802.1D 17.13.12 Transmit Hold Count";
+      }
+
+
+  }
+
+  grouping Stp-Common-State {
+    description
+      "Grouping for common STP operation data";
+
+      leaf bridge-address {
+        type yang:mac-address;
+        description
+          "A unique 48-bit Universally Administered MAC Address
+           assigned to the bridge";
+        reference
+          "IEEE 802.1D 7.12.5 Unique identification of a bridge";
+      }
+
+      leaf designated-root-priority {
+        type lotenstp:Stp-Bridge-Priority-Type;
+        description
+          "The bridge priority of the root of the spanning
+           tree, as determined by the Spanning Tree Protocol,
+           as executed by this node";
+        reference
+          "IEEE 802.1D 17.13.10 Port Identifier Priority";
+      }
+
+      leaf designated-root-address {
+        type yang:mac-address;
+        description
+          "The bridge address of the root of the spanning
+           tree, as determined by the Spanning Tree Protocol,
+           as executed by this node";
+        reference
+          "IEEE 802.1D 7.12.5 Unique identification of a Bridge ";
+      }
+
+      leaf root-port {
+          type lotet:Distinguished-Name;
+          description
+            "The root port is always the link connected to the root bridge, 
+             or the shortest path to the root bridge.
+             For the LUMENTUM system, this field shall be the DN of the Physical Ethernet Port";
+      }
+
+      leaf root-cost {
+        type uint32;
+        description
+          "The cost of the path to the root as seen from this bridge";
+        reference
+          "IEEE 802.1D 8.5.3.2 Root Path Cost";
+      }
+
+      leaf hold-time {
+        type uint8;
+        description
+          "This time value determines the interval length
+          during which no more than two Configuration bridge
+          PDUs shall be transmitted by this node. This parameter is Read only";
+        reference
+          "IEEE 802.1D 8.5.3.14 Hold Time";
+      }
+
+      leaf topology-changes {
+        type yang:counter64;
+        description
+          "The total number of topology changes detected by
+           this bridge since the management entity was last
+           reset or initialized";
+        reference
+         "IEEE 802.1D 8.5.3.12 Topology Change";
+      }
+
+      leaf time-since-topology-change {
+        type yang:timestamp;
+        description
+          "The time (in hundredths of a second) since the
+           last time a topology change was detected by the
+           bridge entity";
+        reference
+          "IEEE 802.1D 8.5.3.13 Topology Change Time";
+      }
+  }
+  
+
+  grouping Stp-Rstp-Top {
+    description
+      "Top grouping for RSTP configuration and operation data";
+    container stp {
+      description
+        "stp container for config and state.";
+    
+      container config {
+        description
+          "Configuration data for RSTP";
+        uses Bridge-Config;
+      }
+
+      container state {
+        config false;
+
+        description
+          "Operational state data for RSTP";
+
+        uses Bridge-Config;
+        uses Stp-Common-State;
+      }
+      
+    }
+  }
+
+
+    /*
+   * rpc statements
+   */
+
+  /*
+   * notification statements
+   */
+
+
+  augment "/lotene:network-elements/lotene:network-element" {
+    description
+      "Extend the network-element to include STP";
+    uses Stp-Rstp-Top;
+   }
+   
+
+  
+} //lumentum-ote-ne-stp

@@ -1,0 +1,336 @@
+
+module lumentum-ote-port {
+
+  namespace "http://www.lumentum.com/lumentum-ote-port";
+  prefix "lotep";
+
+  import lumentum-ote-types { prefix "lotet"; }
+
+  organization "Lumentum Operations LLC";
+  contact "support@lumentum.com";
+  description
+    "This module describes the operation and control for physical ports. A 
+     physical port is defined by a connector on the faceplate of the card or 
+     pack. 
+
+     The type physical-port is a base definition containing very few 
+     parameters. The physical-port is intended to be augmented with port 
+     extensions which complete the full port instance. For example, a
+     bi-directional optical port would include optical-input and optical-output
+     extensions. 
+
+     This module also includes the OAM managed-port definition. The base
+     physical-port definition does not assume the port is managed.
+
+     Extensions to the port definition come from other modules. The extensions
+     on a specific port are indicated by the list of extensions indicated on 
+     the port via the port-extension list.
+
+     ---------------------------------------------------------------------------
+     This document and its contents are proprietary and confidential to Lumentum
+     Operations LLC, and/or its parent, subsidiary and/or affiliate entities.
+     Neither this document, nor any part of it, may be disclosed or conveyed to,
+     used or copied by or for, any third party without the prior written consent
+     of Lumentum. LUMENTUM, and the LUMENTUM & DESIGN are trademarks of Lumentum
+     Operations LLC. Copyright 2016-2017 Lumentum Operations LLC. All rights
+     reserved. The use of a copyright notice on this document shall not be taken
+     to indicate that it has been published.
+     ---------------------------------------------------------------------------
+
+     ";
+
+  revision 2017-06-21 {
+    description
+      "Add support for meta-information like configuration ranges.";
+    reference "None";
+  }
+
+  revision 2017-06-07 {
+    description
+      "Remove default-keywords as they are not supported in this
+       implementation.";
+    reference "None";
+  }
+
+  revision 2016-01-01 {
+    description "Initial revision.";
+    reference "None";
+  }
+
+  /*
+   * extension statements
+   */
+
+  /*
+   * feature statements
+   */
+
+  /*
+   * identity statements
+   */
+
+  identity port-extension {
+    description 
+      "Base type for port-extension types. Extension-specific modules should
+       add their own extensions to this base.";
+  }
+
+  identity managed-port {
+    base port-extension;
+    description 
+      "Definition of a port extension supporting OAM management. Typically a
+       port supports this capability. An un-managed port will not have any 
+       alarms or faults attributed to it and can not be put in or out of 
+       service.";
+  }
+
+  // Port Operational State values
+
+  identity port-operational-state {
+    description
+      "Base type for the operational-states of the port. Extension-specific
+       modules should add operational-states as required.
+  
+       NOTE: This is an abstract definition and is not a valid value.";
+  }
+
+  identity normal {
+    base port-operational-state;
+    description
+      "The port is providing normal working service.";
+  }
+
+  identity abnormal {
+    base port-operational-state;
+    description
+      "The port is working but with a non-service affecting fault.";
+  }
+
+  identity not-operational {
+    base port-operational-state;
+    description
+      "The port not operational due to a service affecting fault.";
+  }
+
+  identity maintenance {
+    base port-operational-state;
+    description
+      "The port is not operational because it's maintenance state is set to 
+       out-of-service. No alarms will be raised in this state.";
+  }
+
+  /*
+   * typedef statements
+   */
+
+  typedef Port-Extension {
+    type identityref {
+      base port-extension;
+    }
+    description
+      "Identifies the port extension type.";
+  }
+
+  typedef Port-Operational-State {
+    type identityref {
+      base port-operational-state;
+    }
+    description
+      "This type represents the operational state of a port.";
+  }
+
+  /*
+   * grouping statements
+   */
+
+  /* Physical-Port groupings */
+  grouping Physical-Port-Inventory {
+    description
+      "Inventory (non-config and non-varying) parameters associated
+       with physical-port";
+
+    uses lotet:Product-Specific-Description {
+      description
+        "A physical port typically contains a label on the faceplate indicating
+         the purpose of the port. This label or name is what appears in this
+         parameter.";
+    }
+  }
+  grouping Physical-Port-Config {
+    description
+      "Config paramaters associated with physical-port.";
+
+    uses lotet:Custom-Name;
+  }
+  grouping Physical-Port-State {
+    description
+      "State parameters associated with physical-port";
+  }
+  grouping Physical-Port-Top {
+    leaf-list port-extension {
+      type Port-Extension;
+      description
+        "This is a list of the port-extensions this port contains. If a
+         specific extension exists, the port has parameters associated 
+         with that extension.";
+    }
+
+    container config {
+      description "Configurable items of the physical-port.";
+      uses Physical-Port-Config;
+    }
+
+    container state {
+      config false;
+      description "Operational state data of the physical-port.";
+      uses Physical-Port-Inventory;
+      uses Physical-Port-State;
+    }
+
+    description
+      "Provides a definition for the top-level for an physical-port entity.";
+
+  } // Physical-Port-Top
+
+  grouping Physical-Port-Top-Metadata {
+    leaf-list port-extension {
+      type Port-Extension;
+      description
+        "This is a list of the port-extensions this port contains. If a
+         specific extension exists, the port has parameters associated
+         with that extension.";
+    }
+
+    container config {
+      description "Configurable items of the physical-port.";
+    }
+
+    description
+      "Provides a definition for the top-level for an physical-port entity
+       metadata.";
+
+  } // Physical-Port-Top-Metadata
+
+  grouping Physical-Port-Entities {
+    description
+      "Top level grouping for all physical port entities.";
+
+    container physical-ports {
+      list physical-port {
+        key "dn";
+        description
+          "An entry containing management information applicable to a
+           particular physical-port.";
+
+        leaf dn {
+          type lotet:Distinguished-Name;
+          description
+            "DN of the physical port.";
+        }
+    
+        uses Physical-Port-Top;
+      }
+      description
+        "This provides top level container for the list of all physical 
+         ports.";
+    }
+  } // Physical-Port-Entities
+
+  grouping Physical-Port-Entities-Metadata {
+    description
+      "Top level grouping for all physical port entities metadata.";
+
+    container physical-ports-metadata {
+      config false;
+      list physical-port-metadata {
+        key "dn";
+        description
+          "An entry containing management information applicable to a
+           particular physical-port.";
+
+        leaf dn {
+          type lotet:Distinguished-Name;
+          description
+            "DN of the physical port.";
+        }
+
+        uses Physical-Port-Top-Metadata;
+      }
+      description
+        "This provides top level container for the list of all physical
+         ports metadata.";
+    }
+  } // Physical-Port-Entities-Metadata
+
+
+  // Managed Port Extension Groupings
+
+  grouping Managed-Port-Inventory {
+    description
+      "Inventory (non-config and non-varying) parameters associated
+       with managed-port";
+  }
+  grouping Managed-Port-State {
+    description
+      "State parameters associated with managed-port";
+    leaf operational-state {
+      type Port-Operational-State;
+      description
+        "The operational state of the physical port.";
+    }
+  }
+  grouping Managed-Port-Config {
+    description
+      "Config paramaters associated with managed-port.";
+    leaf maintenance-state {
+      type lotet:Maintenance-State;
+      description
+        "Maintenance state of the physical-port.";
+    }
+  }
+
+  /*
+   * data definition statements
+   */
+
+  uses Physical-Port-Entities;
+  uses Physical-Port-Entities-Metadata {
+    if-feature lotet:include-metadata;
+  }
+
+  /*
+   * augment statements
+   */
+
+  augment "/lotep:physical-ports/lotep:physical-port/lotep:config" {
+    when "count(../lotep:port-extension[normalize-space(text())='managed-port'])>0" {
+      description
+        "Add optical output port extensions when the extensions list contains
+         managed-port.";
+    }
+    description
+      "Extensions to port for output-port.";
+    uses Managed-Port-Config;
+  }
+
+  augment "/lotep:physical-ports/lotep:physical-port/lotep:state" {
+    when "count(../lotep:port-extension[normalize-space(text())='managed-port'])>0" {
+      description
+        "Add optical output port extensions when the extensions list contains
+         managed-port.";
+    }
+    description
+      "Extensions to port for input-port.";
+    uses Managed-Port-State;
+    uses Managed-Port-Inventory;
+  }
+
+  /*
+   * rpc statements
+   */
+
+  /*
+   * notification statements
+   */
+  
+} // lumentum-ote-port

@@ -1,0 +1,700 @@
+
+module lumentum-ote-equipment {
+  namespace "http://www.lumentum.com/lumentum-ote-equipment";
+  prefix "loteq";
+
+  import lumentum-ote-types { prefix "lotet"; }
+  import lumentum-types { prefix "lumt"; }
+  import lumentum-alarms { prefix "luma"; }
+
+  organization "Lumentum Operations LLC";
+  contact "support@lumentum.com";
+  description
+    "This sub-module describes the operation and control for a equipment
+     on the node. This includes the following entities: chassis, chassis-slot, 
+     and card. 
+ 
+     An NE consists of 1 or more chassis. 
+ 
+     A chassis typically consists of multiple chassis-slots with cards in those 
+     slots.  This is called a multi-slot chassis.
+ 
+     A degenerative case of the chassis is the single-card variant which 
+     consists of no chassis-slots and the card is fixed within the chassis; like
+     a pizza-box. In this case, some parameters are duplicated in both the 
+     chassis and the card (e.g. serial-no).
+
+     ---------------------------------------------------------------------------
+     This document and its contents are proprietary and confidential to Lumentum
+     Operations LLC, and/or its parent, subsidiary and/or affiliate entities.
+     Neither this document, nor any part of it, may be disclosed or conveyed to,
+     used or copied by or for, any third party without the prior written consent
+     of Lumentum. LUMENTUM, and the LUMENTUM & DESIGN are trademarks of Lumentum
+     Operations LLC. Copyright 2016-2017 Lumentum Operations LLC. All rights
+     reserved. The use of a copyright notice on this document shall not be taken
+     to indicate that it has been published.
+     ---------------------------------------------------------------------------
+
+     ";
+
+  revision 2017-05-16 {
+    description "Added new level enums reformat-all,reformat-except-ip to reset-to-factory-defaults RPC.";
+    reference "None";
+  }
+
+  revision 2017-03-31 {
+    description "Added two new reasons to last-reset-reason for database-restore.";
+    reference "None";
+  }
+
+  revision 2017-03-16 {
+    description "Add support for id-led-state and uptime.";
+    reference "None";
+  }
+
+  revision 2017-02-27 {
+    description 
+      "1) Changes to reset-to-factory-defaults RPC.
+       2) Add backup/restore RPCs.";
+    reference "None";
+  }
+
+  revision 2017-01-18 {
+    description "Add a level leaf  to the reset-to-factory-defaults RPC.";
+    reference "None";
+  }
+
+  revision 2016-09-27 {
+    description "Added two new reasons to last-reset-reason.";
+    reference "None";
+  }
+
+  revision 2016-06-01 {
+    description "Initial revision.";
+    reference "None";
+  }
+
+  /*
+   * extension statements
+   */
+
+  /*
+   * feature statements
+   */
+
+  feature chassis-slots-supported {
+    description
+      "This feature provides support in this module for 1 or more chassis-slots 
+       within a chassis.";
+  }
+
+  /*
+   * identity statements
+   */
+
+  identity chassis-type {
+    description
+      "Base identity for chassis types. This type is to be extended to define
+       new types of chassis.";
+  }
+
+  identity multi-slot-chassis {
+    base chassis-type;
+    description
+      "The multi-slot-chassis is a chassis which consists of at least one 
+       chassis-slot where cards can be inserted.";
+  }
+
+  identity single-card-chassis {
+    base chassis-type;
+    description
+      "Describes a chassis without chassis-slots. Instead the card is fixed 
+       within the chassis. 
+
+       In this case the inventory information for the card and chassis are 
+       the same.";
+  }
+
+  identity adjunct-chassis {
+    base chassis-type;
+    description
+      "Describes a chassis which is an adjunct to the controller chassis and
+       contains no active components, chassis-slots or cards.";
+  }
+
+  identity card-type-identity {
+    description
+      "This is the base definition for a card type. The card type indicates
+       the functionality provided by a card, blade, or pizza-box.
+
+       A new card-type should be derived from this base-definition in the
+       specific to the new definition.
+
+       The typedef Card-Type exists for this base identity to be used as a
+       type definition.";
+  }
+
+  /*
+   * Alarms
+   */
+
+  identity chassis-comms-fail {
+    base luma:alarm-identity;
+    description
+      "Raised in the case that communications with the chassis is lost or can 
+       not be established. This could occur if the chassis is connected 
+       properly.";
+  }
+
+  identity hardware-fail-SA {
+    base luma:alarm-identity;
+    description
+      "Raised when a service-affecting hardware failure has been detected. 
+       Suggested operator action is:
+       1) warm-restart the card
+       2) if the alarm clears after the restart, no further action required
+       3) if the alarm re-raises after the restart, replace the card 
+          immediately";
+  }
+
+  identity hardware-fail-NSA {
+    base luma:alarm-identity;
+    description
+      "Raised when a non-service-affecting hardware failure has been detected. 
+       The alarm-text may provide further information about the nature of the
+       alarm. Suggested operator action is:
+       1) warm-restart the card
+       2) if the alarm clears after the restart, no further action required
+       3) if the alarm re-raises after the restart, replace the card 
+          at the earliest convenience";
+  }
+
+  identity temperature-oor {
+    base luma:alarm-identity;
+    description
+      "This alarm indicates that the temperature of the card has gone outside 
+       of the operator specified thresholds.  Typical causes for this alarm 
+       include, fan failure on the shelf, or a change in operating environment
+       temperature (e.g. HVAC failure in CO).  To clear this fault the operator
+       must restore the operating environment temperature to its normal 
+       operating level.";
+  }
+
+  /*
+   * typedef statements
+   */
+
+  typedef Chassis-Type {
+    type identityref {
+      base chassis-type;
+    }
+    description
+      "Identifies the chassis type.";
+  }
+
+  typedef Card-Type {
+    type identityref {
+      base card-type-identity;
+    }
+    description
+      "Identifies the card-type.";
+  }
+
+  /*
+   * grouping statements
+   */
+  
+  // Card Groupings
+
+  grouping Card-Config {
+    description
+      "Configuration parameters associated with a Card.";
+
+    uses lotet:Custom-Name;
+
+    leaf id-led-state {
+      type lotet:Enable-Disable;
+      description
+        "Used to turn the front panel ID LED on and off.";
+    }
+
+  } // Card-Config
+
+  grouping Card-Inventory {
+    description
+      "Inventory (non-config and non-varying) parameters associated
+       with the card.";
+
+    leaf card-type {
+      type Card-Type;
+      description
+        "Indicates the type of chassis.";
+    }
+
+    uses lotet:Product-Specific-Description {
+      description
+        "The entity-description indicates the function of this card.";
+    }
+
+    uses lotet:Physical-Entity-Inventory;
+
+  } // Card-Inventory
+
+  grouping Card-State {
+    description
+      "State parameters associated with the card.";
+
+    leaf last-reset-reason {
+      type enumeration {
+        enum power-on { 
+          description 
+            "Last restart was a power-up."; 
+        }
+        enum watchdog { 
+          description 
+            "The last restart was a non-traffic affecting restart cause by a 
+             watchdog timeout."; 
+        }
+        enum push-button-warm { 
+          description 
+            "The last restart was a non-traffic affecting restart initiated by a 
+             the push-button being depressed.";
+        }
+        enum push-button-cold {
+          description 
+            "The last restart was a traffic affecting restart initiated by a
+             the push-button being depressed.";
+        }
+        enum system-initiated-warm {
+          description 
+            "The last restart was a non-traffic affecting restart initiated by 
+             the system.";
+        }
+        enum system-initiated-cold {
+          description 
+            "The last restart was a traffic affecting restart initiated by the 
+             system.";
+        }
+        enum user-initiated-warm {
+          description 
+            "The last restart was a non-traffic affecting restart initiated by 
+             the user.";
+        }
+        enum user-initiated-cold {
+          description 
+            "The ast restart was a traffic affecting restart initiated by the 
+             user.";
+        }
+        enum sw-upgrade-initiated-warm {
+          description 
+            "The last restart was a non-traffic affecting restart initiated by the 
+             software upgrade procedure.";
+        }
+        enum sw-upgrade-initiated-cold {
+          description 
+            "The last restart was a traffic affecting restart initiated by the 
+             software upgrade procedure.";
+        }
+        enum database-restore-initiated-warm {
+          description 
+            "The last restart was a non-traffic affecting restart initiated by the 
+             database restore procedure.";
+        }
+        enum database-restore-initiated-cold {
+          description 
+            "The last restart was a traffic affecting restart initiated by the 
+             database restore procedure.";
+        }
+        enum unknown {
+          description
+            "The last restart reason could not be determined.";
+        }
+      }
+      description "Indicates the reason for the last restart or power-up.";
+    } // last-reset-reason
+
+    leaf temperature {
+      type lotet:Temperature-Deg-C;
+      description
+        "Indicates the temperature of the card.";
+    }
+
+    leaf software-load {
+      type string;
+      description
+        "The currently running software load name.";
+    }
+
+    leaf uptime-since-boot {
+      type uint64;
+      units "seconds";
+      description
+        "Elapsed time in seconds since last boot.";
+    }
+
+    leaf uptime-since-mfg {
+      type uint64;
+      units "days";
+      description
+        "Total elapsed runtime on card in days since it was manufactured.";
+    }
+
+  } // Card-State
+
+  grouping Card-Top {
+    description
+      "Top-level for the card entity.";
+    
+    container config {
+      uses Card-Config;
+      description "Configuration items.";
+    }
+
+    container state {
+      config false;
+      uses Card-State;
+      uses Card-Inventory;
+      description "Operational state data for the entity.";
+    }
+  } // Card-Top
+
+  grouping Card-Entities {
+    description
+      "This provides a grouping definition for the list of all card
+       entities.";
+
+    container cards {
+      description
+        "Top level container for the list of cards.";
+
+      list card {
+        key "dn";
+  
+        description
+          "An entry containing management information applicable to a
+           particular card.";
+   
+        leaf dn {
+          type lotet:Distinguished-Name;
+          description
+            "DN of the card.";
+        }
+
+        uses Card-Top;
+      } // card
+    } // cards
+  } // Card-Entities
+
+  
+  // Chassis-Slot Groupings
+
+  grouping Chassis-Slot-Config {
+    description
+      "Configuration parameters associated with a chassis-slot.";
+
+    uses lotet:Custom-Name;
+
+  } // Chassis-Slot-Config
+
+  grouping Chassis-Slot-Inventory {
+    description
+      "Inventory (non-config and non-varying) parameters associated
+       with the chassis-slot.";
+
+    uses lotet:Product-Specific-Description {
+      description
+        "The entity-description indicates the chassis-slot label within the 
+         chassis.";
+    }
+
+  } // Chassis-Slot-Inventory
+
+  grouping Chassis-Slot-State {
+    description
+      "State parameters associated with the chassis-slot.";
+
+  } // Chassis-Slot-State
+
+  grouping Chassis-Slot-Top {
+    description
+      "Top-level for the chassis-slot entity.";
+    
+    container config {
+      uses Chassis-Slot-Config;
+      description "Configuration items.";
+    }
+
+    container state {
+      config false;
+      uses Chassis-Slot-State;
+      uses Chassis-Slot-Inventory;
+      description "Operational state data for the entity.";
+    }
+  } // Chassis-Slot-Top
+
+  grouping Chassis-Slot-Entities {
+    description
+      "This provides a grouping definition for the list of all chassis-slot
+       entities.";
+
+    container chassis-slots {
+      description
+        "Top level container for the list of chassis-slots.";
+
+      list chassis-slot {
+        key "dn";
+  
+        description
+          "An entry containing management information applicable to a
+           particular chassis-slot.";
+   
+        leaf dn {
+          type lotet:Distinguished-Name;
+          description
+            "DN of the chassis-slot.";
+        }
+
+        uses Chassis-Slot-Top;
+      } // chassis-slot
+    } // chassis-slots
+  } // Chassis-Slot-Entities
+
+  // Chassis Groupings
+
+  grouping Chassis-Config {
+    description
+      "Configuration parameters associated with a chassis box.";
+
+    uses lotet:Custom-Name;
+
+  } // Chassis-Config
+
+  grouping Chassis-Inventory {
+    description
+      "Inventory (non-config and non-varying) parameters associated
+       with the chassis";
+
+    leaf chassis-type {
+      type Chassis-Type;
+      description
+        "Indicates the type of chassis.";
+    }
+
+    uses lotet:Product-Specific-Description {
+      description
+        "The entity-description indicates the function of the chassis.";
+    }
+
+    uses lotet:Physical-Entity-Inventory;
+
+  } // Chassis-Inventory
+
+  grouping Chassis-State {
+    description
+      "State parameters associated with the chassis.";
+
+  } // Chassis-State
+
+  grouping Chassis-Top {
+    description
+      "Top-level for the chassis entity.";
+    
+    container config {
+      uses Chassis-Config;
+      description "Configuration items.";
+    }
+
+    container state {
+      config false;
+      uses Chassis-State;
+      uses Chassis-Inventory;
+      description "Operational state data for the entity.";
+    }
+  } // Chassis-Top
+
+  grouping Chassis-Entities {
+    description
+      "This provides a grouping definition for the list of all chassis
+       entities.";
+
+    container chassis-list {
+      description
+        "Top level container for the list of chassis'.";
+
+      list chassis {
+        key "dn";
+  
+        description
+          "An entry containing management information applicable to a
+           particular chassis.";
+   
+        leaf dn {
+          type lotet:Distinguished-Name;
+          description
+            "The DN of the chassis.";
+        }
+
+        uses Chassis-Top;
+      } // chassis-list
+    } // chassis
+  } // Chassis-Entities
+
+  /*
+   * data definition statements
+   */
+  
+  uses Chassis-Entities;
+  uses Chassis-Slot-Entities {
+    if-feature chassis-slots-supported;
+  }
+  uses Card-Entities;
+
+  /*
+   * augment statements
+   */
+
+  /*
+   * rpc statements
+   */
+
+  rpc restart-card {
+    description
+      "Sent to a card to force a restart. Depending on the type of restart,
+       this command can be service affecting.";
+    input {
+      uses lotet:RPC-Distinguished-Name;
+
+      leaf restart-type {
+        type enumeration {
+          enum warm {
+            description
+              "A WARM restart causes the software to be restarted without
+               affecting service.";
+          }
+          enum cold {
+            description
+              "A COLD restart causes the hardware to be reset and the
+               software is restarted. This is a service affecting restart.";
+          }
+        }
+        mandatory true;
+        description
+          "The type of restart to perform on the card.";
+      }
+    }
+  } // restart-card
+
+  rpc reset-to-factory-defaults {
+    description
+      "WARNING: This RPC will likely be traffic-affecting.
+
+       Sent to a card or NE to force the provisioning back to factory defaults.
+       This command is traffic affecting and a COLD restart will result.";
+    input {
+
+      leaf level {
+        type enumeration {
+          enum reset-all {
+            description
+              "This is the most encompassing reset that can be done. All 
+               provisioning including IP-related parameters are reset to their
+               factory defaults.";
+          }
+          enum reset-except-ip {
+            description
+              "All provisioning except IP-related parameters are reset to their
+               factory defaults.";
+          }
+          enum reformat-all {
+            description
+              "Reformat active filesystem partition.";
+          }
+          enum reformat-except-ip {
+            description
+              "Reformat active filesystem partition except IP-related parameters.";
+          }
+        }
+        mandatory true;
+        description
+          "Indicates the level or type of reset that is to be done.";
+      }
+
+      uses lotet:RPC-Distinguished-Name;
+    }
+    
+    output {
+      uses lumt:RPC-Status;
+    }
+  }
+
+  rpc database-backup {
+    description
+      "Create a backup copy of the persistent database in the specified file.
+       The DN of the NE or card needs to be specified.";
+
+    input {
+      uses lotet:RPC-Distinguished-Name;
+      uses lumt:RPC-Filename;
+    }
+
+    output {
+      uses lumt:RPC-Status;
+      uses lumt:RPC-Filename;
+    }
+  }
+
+  rpc database-restore {
+    description
+      "WARNING: This RPC may be traffic affecting.
+
+       Restores the persistent database from a specified backup file. As a part
+       of the restore, a warm-restart is done to enable the newly restored
+       database. In this instance the warm-restart is a best-effort to avoid
+       a traffic-hit. Whether the restore is traffic-affecting or not depends
+       on the data items changed.
+
+       The DN of the NE or card needs to be specified.
+
+       Because a restart is done, this RPC initiates a task and does not
+       complete until after the restart. The status of this background-RPC can
+       be found in the lumentum-background-rpc-list.";
+
+    input {
+      uses lotet:RPC-Distinguished-Name;
+      uses lumt:RPC-Filename;
+    }
+
+    output {
+      uses lumt:RPC-Status {
+        description
+          "The following are some of the failure events that may occur:
+           - incompatible backup file: The backup file was likely created by a
+             software load with a higher load number than the currently running
+             load.
+           - backup file not found
+           - file specified is not a backup file
+           ";
+      }
+    }
+  }
+
+  /*
+   * notification statements
+   */
+
+  notification reset-to-factory-defaults-result {
+     description
+       "Indicates the result of the reset-to-factory-defaults request. Under
+        successful conditions, this notification occurs after the restart and
+        default values applied.";
+     uses lumt:Background-RPC-Status;
+  }
+
+  notification database-restore-result {
+    description
+      "Provides the completion-status of the background database-restore RPC.";
+    uses lumt:Background-RPC-Status;
+  }
+
+  
+} // lumentum-ote-equipment

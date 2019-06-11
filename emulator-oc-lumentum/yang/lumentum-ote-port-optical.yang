@@ -1,0 +1,604 @@
+
+module lumentum-ote-port-optical {
+
+  namespace "http://www.lumentum.com/lumentum-ote-port-optical";
+  prefix "lotepopt";
+
+  import lumentum-ote-types { prefix "lotet"; }
+  import lumentum-alarms { prefix "luma"; }
+  import lumentum-ote-port { prefix "lotep"; }
+
+  organization "Lumentum Operations LLC";
+  contact "support@lumentum.com";
+  description
+    "This module describes the operation and control for the optical extensions
+     for ports. There are two extensions defined in this module, the 
+     optical-input and the optical-output. This allows for a port to be either
+     uni-directional or bi-directional. In the uni-directional case, only one
+     extension would be used, if bi-directional then both extensions would
+     be included.
+ 
+     ---------------------------------------------------------------------------
+     This document and its contents are proprietary and confidential to Lumentum
+     Operations LLC, and/or its parent, subsidiary and/or affiliate entities.
+     Neither this document, nor any part of it, may be disclosed or conveyed to,
+     used or copied by or for, any third party without the prior written consent
+     of Lumentum. LUMENTUM, and the LUMENTUM & DESIGN are trademarks of Lumentum
+     Operations LLC. (c) 2016-2017 Lumentum Operations LLC. All rights reserved.
+     The use of a copyright notice on this document shall not be taken to
+     indicate that it has been published.
+     ---------------------------------------------------------------------------
+     ";
+
+  revision 2017-07-25 {
+    description "Add the optical-power-monitor-band port extension.";
+    reference "None";
+  }
+
+  revision 2017-06-21 {
+    description
+      "Add support for meta-information like configuration ranges.";
+    reference "None";
+  }
+
+  revision 2017-06-07 {
+    description
+      "Change pattern quotes from double to single quotes.";
+    reference "None";
+  }
+
+  revision 2017-04-07 {
+    description "Add the optical-spectral-data port extension.";
+    reference "None";
+  }
+
+  revision 2016-09-27 {
+    description "Added the optical-return-loss alarm.";
+    reference "None";
+  }
+
+  revision 2016-06-01 {
+    description "Initial revision.";
+    reference "None";
+  }
+
+  /*
+   * extension statements
+   */
+
+  /*
+   * feature statements
+   */
+
+  /*
+   * identity statements
+   */
+
+  identity port-optical-input {
+    base lotep:port-extension;
+    description "Definition of a port extension supporting optical input.";
+  }
+
+  identity port-optical-output {
+    base lotep:port-extension;
+    description "Definition of a port extension supporting optical output.";
+  }
+  
+  identity port-optical-output-voa {
+    base lotep:port-extension;
+    description 
+      "Definition of a port extension supporting a VOA on the output.";
+  }
+
+  identity port-optical-return-loss {
+    base lotep:port-extension;
+    description 
+      "Definition of a port extension supporting optical-return-loss 
+       calculations and alarms.";
+  }
+
+  identity port-optical-spectral-data {
+    base lotep:port-extension;
+    description "Definition of a port extension supporting spectral data.";
+  }
+
+  identity port-optical-power-monitor-band {
+    base lotep:port-extension;
+    description "Definition of a port extension supporting Optical Power 
+    Monitor Band referenced to this port.";
+  }
+
+
+  // Alarm Definitions
+
+  identity input-low-degrade {
+    base luma:alarm-identity;
+    description
+      "Indicates that the optical power measured on the RX port has dropped below the
+       user-configurable Input Low Degrade Threshold value.  To clear this fault, an
+       optical input power equal to the Input Low Degrade Threshold plus the Input Low
+       Degrade Hysteresis must be restored at the input port.";
+  }
+
+  identity optical-los {
+    base luma:alarm-identity;
+    description
+      "This fault indicates a Loss of Signal on the input port.  This fault
+       can be caused by either a problem with the transmitter at the far end,
+       a broken or dirty fiber connected to the receive port, or a problem
+       with intermediate fibering.";
+  }
+
+  identity optical-loo {
+    base luma:alarm-identity;
+    description
+      "Raised when the optical output power drops below a threshold.";
+  }
+
+  identity attenuation-unattainable {
+    base luma:alarm-identity;
+    description
+      "Raised when the target-attenuation can not be attained.";
+  }
+  
+  identity optical-return-loss {
+    base luma:alarm-identity;
+    description
+      "The optical-return-loss on the output port has exceeded the  
+       configurable high threshold value. This alarm is raised as part of the
+       laser-safety mechanism so the pump is disabled. Check for a disconnected
+       or broken fiber.";
+  }
+  /*
+   * typedef statements
+   */
+
+  /*
+   * grouping statements
+   */
+
+  /* Optical-Input groupings */
+  grouping Optical-Input-Inventory {
+    description
+      "Inventory (non-config and non-varying) parameters associated
+       with optical-input";
+  }
+  grouping Optical-Input-State {
+    description
+      "State parameters associated with optical-input";
+    leaf input-power {
+      type lotet:Optical-Power-Absolute;
+      description
+        "Indicates the input power for ths optical port.";
+    }
+  }
+  grouping Optical-Input-Config {
+    description
+      "Config paramaters associated with optical-input.";
+
+
+    leaf input-low-degrade-threshold {
+      type lotet:Optical-Power-Absolute;
+      description
+        "The power value in dBm at which a input-low-degrade alarm will be generated.";
+    }
+
+    leaf input-low-degrade-hysteresis {
+      type lotet:Optical-Power-Relative;
+      description
+        "The difference, in dB, between the threshold at which an input-low-degrade
+         alarm is raised and when it is cleared.";
+    }
+
+    leaf optical-los-threshold {
+      type lotet:Optical-Power-Absolute;
+      description
+        "The power value in dBm at which an optical-los alarm will be generated.";
+    }
+
+    leaf optical-los-hysteresis {
+      type lotet:Optical-Power-Relative;
+      description
+        "The difference, in dB, between the threshold at which an optical-los alarm
+         is raised and when it is cleared.";
+    }
+  }
+
+  grouping Optical-Input-Config-Metadata {
+    description
+      "Metadata for the config paramaters associated with optical-input.";
+
+
+    container input-low-degrade-threshold {
+      uses lotet:Optical-Power-Absolute-Metadata;
+      description
+        "Metadata for the input-low-degrade-threshold parameter.";
+    }
+
+    container input-low-degrade-hysteresis {
+      uses lotet:Optical-Power-Relative-Metadata;
+      description
+        "Metadata for the input-low-degrade-hysteresis parameter.";
+    }
+
+    container optical-los-threshold {
+      uses lotet:Optical-Power-Absolute-Metadata;
+      description
+        "Metadata for the optical-los-threshold parameter.";
+    }
+
+    container optical-los-hysteresis {
+      uses lotet:Optical-Power-Relative-Metadata;
+      description
+        "Metadata for the optical-los-hysteresis parameter.";
+    }
+  }
+
+
+  /* Optical-Output groupings */
+  grouping Optical-Output-Inventory {
+    description
+      "Inventory (non-config and non-varying) parameters associated
+       with optical-output";
+  }
+  grouping Optical-Output-State {
+    description
+      "State parameters associated with optical-output";
+    leaf output-power {
+      type lotet:Optical-Power-Absolute;
+      description
+	"Indicates the output power for ths optical port.";
+    }
+  }
+
+  grouping Optical-Output-Config {
+    description
+      "Config paramaters associated with optical-output.";
+
+    leaf optical-loo-threshold {
+      type lotet:Optical-Power-Absolute;
+      description
+        "The power value in dBm at which an optical-loo alarm will be generated.";
+    }
+
+    leaf optical-loo-hysteresis {
+      type lotet:Optical-Power-Relative;
+      description
+        "The difference, in dB, between the threshold at which an optical-loo alarm
+         is raised and when it is cleared.";
+    }
+  }
+
+  grouping Optical-Output-Config-Metadata {
+    description
+      "Metadata for the config paramaters associated with optical-output.";
+
+    container optical-loo-threshold {
+      uses lotet:Optical-Power-Absolute-Metadata;
+      description
+        "Metadata for the optical-loo-threshold parameter.";
+    }
+
+    container optical-loo-hysteresis {
+      uses lotet:Optical-Power-Relative-Metadata;
+      description
+        "Metadata for the optical-loo-threshold parameter.";
+    }
+  }
+
+  /* Optical-Power-Monitor-Bands groupings */
+  grouping Optical-Power-Monitor-Band-Entities {
+    description
+        "Top level grouping for Optical-Power-Monitor-Band entities.";
+
+    container optical-power-monitor-bands {
+      list optical-power-monitor-band {
+        key band-name;
+        description
+                "An entry containing state information applicable to a particular
+                band";
+
+      leaf band-name {
+        type string {
+          length "0..32";
+        }
+          description
+            "Band name for the optical band.";
+      }
+
+        uses Optical-Power-Monitor-Band-State;
+      }
+
+      description
+            "This provides top level container for the list of all Optical-Power-Monitor-Band
+            entities.";
+    }
+  }
+
+  grouping Optical-Power-Monitor-Band-State {
+    description
+      "State parameters associated with optical-power-monitor-band";
+      leaf start-freq {
+        type lotet:Dwdm-Frequency-Range-Ghz;
+          description
+            "The start frequency of the optical band in GHz.";
+      }
+      leaf end-freq {
+        type lotet:Dwdm-Frequency-Range-Ghz;
+          description
+            "The end frequency of the optical band in GHz.";
+      }
+      leaf input-power {
+        type lotet:Optical-Power-Absolute;
+        description
+          "Indicates the input power for the optical band referenced to port.";
+      }
+      leaf output-power {
+        type lotet:Optical-Power-Absolute;
+        description
+          "Indicates the output power for the optical band referenced to port.";
+      }
+  }
+
+
+  /* Output-VOA groupings */
+  grouping Output-VOA-Inventory {
+    description
+      "Inventory (non-config and non-varying) parameters associated
+       with output-VOA";
+  }
+  grouping Output-VOA-State {
+    description
+      "State parameters associated with output-VOA";
+    leaf outvoa-input-power-to-voa {
+      type lotet:Optical-Power-Absolute;
+      description
+        "Provides the input power before the VOA.";
+    }
+    leaf outvoa-actual-attenuation {
+      type lotet:Optical-Power-Relative;
+      description
+        "Specifies the actual attenuation for the VOA.";
+    }
+  }
+  grouping Output-VOA-Config {
+    description
+      "Config paramaters associated with output-VOA";
+    leaf outvoa-target-attenuation {
+      type lotet:Optical-Power-Relative;
+      description
+        "Specifies the target attenuation for the VOA.";
+    }
+  }
+  grouping Output-VOA-Config-Metadata {
+    description
+      "Metadata config paramaters associated with output-VOA";
+    container outvoa-target-attenuation {
+      uses lotet:Optical-Power-Relative-Metadata;
+      description
+        "Metadata for the outvoa-target-attenuation parameter.";
+    }
+  }
+
+  /* Optical-return-loss groupings */
+  grouping Optical-Return-Loss-Inventory {
+    description
+      "Inventory (non-config and non-varying) parameters associated
+       with optical-return-loss.";
+  }
+  grouping Optical-Return-Loss-State {
+    description
+      "State parameters associated with optical-return-loss.";
+    uses lotet:Optical-Return-Loss-State;
+  }
+  grouping Optical-Return-Loss-Config {
+    description
+      "Configuration parameters associated with optical-return-loss.";
+    uses lotet:Optical-Return-Loss-Config;
+  }
+
+  /* Optical-Spectral-Data groupings */
+  grouping Optical-Spectral-Data-State {
+    description
+      "State parameters associated with Optical-Spectral-Data";
+
+    leaf optical-spectral-data-list {
+      type string {
+          pattern '\[\[\d+,-?\d+\.\d+\](,[\n\r \t]*\[\d+,-?\d+\.\d+\])*\]';
+      }
+      description
+        "List of optical powers for each slot. This string contains a JSON 
+         encoded list of slot/power pairs. As an example, a list of 772
+         power values are encoded as:
+
+             [[1,-3.20],[2,-3.11],   [3,-3.23], 
+              [4,-3.20],[5,-10.7],  [6,-3.23],
+              ...      ,[771,-100.0],[772,-100.0]]
+	
+        ";
+    }
+  }
+
+  /*
+   * data definition statements
+   */
+
+  /*
+   * augment statements
+   */
+
+  // Optical-Input augment statements
+
+  augment "/lotep:physical-ports/lotep:physical-port/lotep:config" {
+    when "count(../lotep:port-extension[normalize-space(text())='port-optical-input'])>0" {
+      description
+        "Add optical input port extensions when the extensions list contains
+         port-optical-input.";
+    }
+    description
+      "Extensions to port for input-port.";
+    uses Optical-Input-Config;
+  }
+
+  augment "/lotep:physical-ports-metadata/lotep:physical-port-metadata/lotep:config" {
+    when "count(../lotep:port-extension[normalize-space(text())='port-optical-input'])>0" {
+      description
+        "Add optical input port metadata extensions when the extensions list 
+         contains port-optical-input.";
+    }
+    if-feature lotet:include-metadata;
+    description
+      "Extensions to port for input-port metadata.";
+    uses Optical-Input-Config-Metadata;
+  }
+
+  augment "/lotep:physical-ports/lotep:physical-port/lotep:state" {
+    when "count(../lotep:port-extension[normalize-space(text())='port-optical-input'])>0" {
+      description
+        "Add optical input port extensions when the extensions list contains
+         port-optical-input.";
+    }
+    description
+      "Extensions to port for input-port.";
+    uses Optical-Input-State;
+    uses Optical-Input-Inventory;
+  }
+
+  // Optical-Output augment statements
+
+  augment "/lotep:physical-ports/lotep:physical-port/lotep:config" {
+    when "count(../lotep:port-extension[normalize-space(text())='port-optical-output'])>0" {
+      description
+        "Add optical output port extensions when the extensions list contains
+         port-optical-output.";
+    }
+    description
+      "Extensions to port for output-port.";
+    uses Optical-Output-Config;
+  }
+
+  augment "/lotep:physical-ports-metadata/lotep:physical-port-metadata/lotep:config" {
+    when "count(../lotep:port-extension[normalize-space(text())='port-optical-output'])>0" {
+      description
+        "Add optical output port metadata extensions when the extensions list 
+         contains port-optical-output.";
+    }
+    if-feature lotet:include-metadata;
+    description
+      "Extensions to port for output-port metadata.";
+    uses Optical-Output-Config-Metadata;
+  }
+
+
+  augment "/lotep:physical-ports/lotep:physical-port/lotep:state" {
+    when "count(../lotep:port-extension[normalize-space(text())='port-optical-output'])>0" {
+      description
+        "Add optical output port extensions when the extensions list contains
+         port-optical-output.";
+    }
+    description
+      "Extensions to port for input-port.";
+    uses Optical-Output-State;
+    uses Optical-Output-Inventory;
+  }
+
+  // Output-VOA augment statements
+
+  augment "/lotep:physical-ports/lotep:physical-port/lotep:config" {
+    when "count(../lotep:port-extension[normalize-space(text())='port-optical-output-voa'])>0" {
+      description
+        "Add optical output port extensions when the extensions list contains
+         port-optical-voa.";
+    }
+    description
+      "Extensions to port for output-voa config.";
+    uses Output-VOA-Config;
+  }
+
+  augment "/lotep:physical-ports-metadata/lotep:physical-port-metadata/lotep:config" {
+    when "count(../lotep:port-extension[normalize-space(text())='port-optical-output-voa'])>0" {
+      description
+        "Add optical output port metadata extensions when the extensions list 
+         contains port-optical-voa.";
+    }
+    if-feature lotet:include-metadata;
+    description
+      "Extensions to port for output-voa config metadata.";
+    uses Output-VOA-Config-Metadata;
+  }
+
+  augment "/lotep:physical-ports/lotep:physical-port/lotep:state" {
+    when "count(../lotep:port-extension[normalize-space(text())='port-optical-output-voa'])>0" {
+      description
+        "Add optical output port extensions when the extensions list contains
+         port-optical-voa.";
+    }
+    description
+      "Extensions to port for output-voa state.";
+    uses Output-VOA-State;
+    uses Output-VOA-Inventory;
+  }
+
+  // Optical-Return-Loss augment statements
+ 
+  augment "/lotep:physical-ports/lotep:physical-port/lotep:config" {
+    when "count(../lotep:port-extension[normalize-space(text())='port-optical-return-loss'])>0" {
+      description
+        "Add optical return loss configuration port extensions when the 
+         extensions list contains port-optical-voa.";
+    }
+    description
+      "Extensions to port for optical-return-loss configuration.";
+    uses Optical-Return-Loss-Config;
+  }
+ 
+  augment "/lotep:physical-ports/lotep:physical-port/lotep:state" {
+    when "count(../lotep:port-extension[normalize-space(text())='port-optical-return-loss'])>0" {
+      description
+        "Add optical return loss state port extensions when the extensions 
+         list contains port-optical-voa.";
+    }
+    description
+      "Extensions to port for optical-return-loss state.";
+    uses Optical-Return-Loss-Inventory;
+    uses Optical-Return-Loss-State;
+  }
+
+
+  // Optical-Spectral-Data augment statements
+
+  augment "/lotep:physical-ports/lotep:physical-port/lotep:state" {
+    when "count(../lotep:port-extension[normalize-space(text())='port-optical-spectral-data'])>0" {
+      description
+        "Add optical output port extensions when the extensions list contains
+         optical-spectral-data.";
+    }
+    description
+      "Extensions to port for optical-spectral-data.";
+    uses Optical-Spectral-Data-State;
+  }
+
+
+  // optical-power-monitor-band augment statements
+
+  augment "/lotep:physical-ports/lotep:physical-port/lotep:state" {
+    when "count(../lotep:port-extension[normalize-space(text())='port-optical-power-monitor-band'])>0" {
+      description
+        "Add optical-power-monitor-band port extensions when the extensions list contains
+         optical-power-monitor-band.";
+    }
+    description
+      "Extensions to port for poptical-power-monitor-band.";
+    uses Optical-Power-Monitor-Band-Entities;
+  }
+
+
+  /*
+   * rpc statements
+   */
+
+  /*
+   * notification statements
+   */
+  
+} // lumentum-ote-port-optical

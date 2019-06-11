@@ -1,0 +1,121 @@
+module lumentum-ote-ne-lldp {
+
+  namespace "http://www.lumentum.com/lumentum-ote-ne-lldp";
+  prefix "lotenlldp";
+
+  import lumentum-ote-ne { prefix "lotene"; }
+
+  organization "Lumentum Operations LLC";
+  contact "support@lumentum.com";
+  description
+   "This module describes the operation and control for lldp service.
+
+    ---------------------------------------------------------------------------
+    This document and its contents are proprietary and confidential to Lumentum
+    Operations LLC, and/or its parent, subsidiary and/or affiliate entities.
+    Neither this document, nor any part of it, may be disclosed or conveyed to,
+    used or copied by or for, any third party without the prior written consent
+    of Lumentum. LUMENTUM, and the LUMENTUM & DESIGN are trademarks of Lumentum
+    Operations LLC. (c) 2017 Lumentum Operations LLC. All rights reserved. 
+    The use of a copyright notice on this document shall not be taken to 
+    indicate that it has been published.
+    ---------------------------------------------------------------------------
+   ";
+
+  revision 2017-03-29 {
+    description "Initial revision.";
+    reference "None";
+  }
+
+  /*
+   * extension statements
+   */
+
+  /*
+   * feature statements
+   */
+
+  /*
+   * identity statements
+   */
+
+
+  /*
+   * typedef statements
+   */
+
+  /*
+   * grouping statements
+   */
+
+  grouping Lldp-System-Config {
+    description
+      "Configuration data for system-level local LLDP information.
+       LLDP System configuration change does not require restart.";
+   
+
+    leaf enable {
+      type boolean;
+      description
+        "System level administrative state of the LLDP protocol. 
+         Controls whether LLDP is enabled or disabled. When enabled, 
+         the LLDP is running both RX and TX mode";
+    }
+
+    leaf hello-time {
+      type uint64;
+      units "seconds";
+      description
+        "LLDP TX Interval";
+    }
+
+
+      
+  } // Lldp-System-Config  
+  
+
+
+  grouping Lldp-Top {
+    description
+      "LLDP configuration and operation data.";
+    container lldp {
+      description
+        "LLDP container for config and state.";
+      
+
+      container config { 
+        description "LLDP System config";
+        uses Lldp-System-Config;
+
+      }
+      container state {
+        config false; 
+        description "LLDP System state";
+        uses Lldp-System-Config;
+       
+
+      }
+    }
+    
+  } // Lldp-Top
+
+
+  /*
+   * rpc statements
+   */
+
+  /*
+   * notification statements
+   */
+
+
+  augment "/lotene:network-elements/lotene:network-element" {
+    description
+      "Extend the network element to include LLDP service";
+    uses Lldp-Top;
+
+   }
+   
+
+  
+} //lumentum-ote-ne-lldp

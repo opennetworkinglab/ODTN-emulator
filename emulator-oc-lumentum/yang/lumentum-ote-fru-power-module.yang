@@ -1,0 +1,154 @@
+
+module lumentum-ote-fru-power-module {
+
+  namespace "http://www.lumentum.com/lumentum-ote-fru-power-module";
+  prefix "lotefpm";
+
+  import lumentum-ote-types { prefix "lotet"; }
+  import lumentum-alarms { prefix "luma"; }
+  import lumentum-ote-fru { prefix "lotefru"; }
+
+  organization "Lumentum Operations LLC";
+  contact "support@lumentum.com";
+  description
+   "This module describes the operation and control for fru-power-module entities.
+
+    ---------------------------------------------------------------------------
+    This document and its contents are proprietary and confidential to Lumentum
+    Operations LLC, and/or its parent, subsidiary and/or affiliate entities.
+    Neither this document, nor any part of it, may be disclosed or conveyed to,
+    used or copied by or for, any third party without the prior written consent
+    of Lumentum. LUMENTUM, and the LUMENTUM & DESIGN are trademarks of Lumentum
+    Operations LLC. (c) 2017 Lumentum Operations LLC. All rights reserved. The
+    use of a copyright notice on this document shall not be taken to indicate
+    that it has been published.
+    ---------------------------------------------------------------------------
+
+   ";
+
+  revision 2017-05-25 {
+    description 
+      "Added new leaf module type to FRU-Power-Module-State";
+    reference "None";
+  }
+
+  revision 2017-04-12 {
+    description 
+      "Added input power for Power-Module-State";
+    reference "None";
+  }
+
+  revision 2017-01-17 {
+    description "Initial revision.";
+    reference "None";
+  }
+
+  /*
+   * extension statements
+   */
+
+  /*
+   * feature statements
+   */
+
+  /*
+   * identity statements
+   */
+
+  identity power-module-fru {
+    base lotefru:fru-identity;
+    description
+      "Identifies a power-module FRU.";
+  }
+
+  // Alarms for fru-power-module
+
+  identity input-power-fail {
+    base luma:alarm-identity;
+    description
+      "Raised when no input power is detected on the power-module FRU.
+       Check to see if the power-cable is connected to the FRU or if there is
+       a failure of the power distribution system.";
+  }
+
+  /*
+   * typedef statements
+   */
+
+  /*
+   * grouping statements
+   */
+  grouping FRU-Power-Module-State {
+    description
+      "State parameters associated with the fru-power-module";
+
+    leaf module-type {
+      type enumeration {
+        enum ac {
+          description
+            "Indicates ac power module type.";
+        }
+        enum dc {
+          description
+            "Indicates dc power module type.";
+        }
+      }
+      description
+        "This field informs the power module type.";
+    }
+
+    leaf input-current {
+      type lotet:Current-Amperes;
+      description
+        "The input current for the power module.";
+    }
+
+    leaf input-voltage {
+      type lotet:Voltage;
+      description
+        "The input voltage for the power module.";
+    }
+    
+    leaf input-power {
+      type lotet:Power-Watts;
+      description
+        "The input power for the power module.";
+    }
+
+    leaf warning-indication {
+      type boolean;
+      description
+        "A value of true indicates that the power-supply has identified a 
+         problem but can continue to operate. The warning may develop into
+         a more serious fault.";
+    }
+
+  } //  FRU-Power-Module-State
+
+  /*
+   * data definition statements
+   */
+
+  /*
+   * augment statements
+   */
+
+  augment "/lotefru:frus/lotefru:fru/lotefru:state" {
+    when "../lotefru:fru-type='power-module-fru'" {
+      description
+        "Add power-module-fru-specific information to the FRU.";
+    }
+    description
+      "Augment the FRU with power-module state-specific information.";
+    uses FRU-Power-Module-State;
+  }
+
+  /*
+   * rpc statements
+   */
+
+  /*
+   * notification statements
+   */
+  
+} // lumentum-ote-fru-power-module

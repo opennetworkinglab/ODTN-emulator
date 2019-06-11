@@ -1,0 +1,756 @@
+module lumentum-ote-edfa {
+  namespace "http://www.lumentum.com/lumentum-ote-edfa";
+
+  prefix "lotee";
+
+  import lumentum-ote-types { prefix "lotet"; }
+  import lumentum-alarms { prefix "luma"; }
+
+  organization "Lumentum Operations LLC";
+  contact "support@lumentum.com";
+
+  description 
+    "This module contains the definition files for an EDFA entity within ote.
+     The EDFA is a uni-directional EDFA amplifier which supports different modes
+     of operation.
+
+     ---------------------------------------------------------------------------
+     This document and its contents are proprietary and confidential to Lumentum
+     Operations LLC, and/or its parent, subsidiary and/or affiliate entities.
+     Neither this document, nor any part of it, may be disclosed or conveyed to,
+     used or copied by or for, any third party without the prior written consent
+     of Lumentum. LUMENTUM, and the LUMENTUM & DESIGN are trademarks of Lumentum
+     Operations LLC. Copyright 2016-2017 Lumentum Operations LLC. All rights
+     reserved. The use of a copyright notice on this document shall not be taken
+     to indicate that it has been published.
+     ---------------------------------------------------------------------------
+ 
+     ";
+
+  revision 2017-06-21 {
+    description
+      "Add support for meta-information like configuration ranges.";
+    reference "None";
+  }
+
+  revision 2017-06-07 {
+    description
+      "Remove default-keywords as they are not supported in this 
+      implementation";
+    reference "None";
+  }
+
+  revision 2017-02-09 {
+    description 
+      "Updated attribute specifications for disable-als RPC.";
+    reference "None";
+  }
+
+  revision 2016-11-30 {
+    description 
+      "Added optical-line-failure alarm.";
+    reference "None";
+  }
+
+  revision 2016-10-31 {
+    description 
+      "Replaced force-apr RPC with leaf in Edfa-Config.";
+    reference "None";
+  }
+
+  revision 2016-09-27 {
+    description 
+      "Added laser safety mechanisms; automatic-shutdown and 
+       laser-safety-disabled";
+    reference "None";
+  }
+
+  revision 2016-06-01 {
+    description "Initial revision.";
+    reference "None";
+  }
+  
+  /*
+   * extension statements
+   */
+
+  /*
+   * feature statements
+   */
+
+  /*
+   * identity statements
+   */
+
+  /*
+   * Alarms for EDFA
+   */
+  
+  identity amp-gain-not-achieved {
+    base luma:alarm-identity;
+    description
+      "Raised in constant gain modes only, this alarm indicates that the actual
+       (measured) gain has deviated from the user-provisioned set point by more 
+       than 0.5 dB. The pump laser will not be disabled when this fault is 
+       detected. The alarm is cleared when the measured gain returns to within 
+       0.3 dB of the setpoint.";
+  }
+
+  identity amp-power-not-achieved {
+    base luma:alarm-identity;
+    description
+      "Raised in constant-power modes only, this alarm indicates that the 
+       actual (measured) power has deviated from the user-provisioned power 
+       target by more than 0.5 dB. The pump laser will not be disabled when 
+       this fault is detected. The alarm is cleared when the measured output 
+       power returns to within 0.3 dB of the setpoint.";
+  }
+
+  identity amp-operating-outside-mask {
+    base luma:alarm-identity;
+    description
+      "Raised when the pump is operating outside the recommended mask.
+       The pump laser will not be disabled when this fault is detected. The 
+       alarm is cleared when the pump returns to operationing within the mask.";
+  }
+  
+  identity optical-loo {
+    base luma:alarm-identity;
+    description
+      "Indicates that Loss of Optical Output has been detected on the output 
+       port. The measured optical output power has dropped below a user-
+       configurable low threshold value . The pump laser will not be disabled 
+       when this fault is detected.";
+  }
+  
+  identity optical-return-loss {
+    base luma:alarm-identity;
+    description
+      "The optical-return-loss on the output port has exceeded the  
+       configurable high threshold value. This alarm is raised as part of the
+       laser-safety mechanism so the pump is disabled. Check for a disconnected
+       or broken fiber.";
+  }
+  
+  identity input-overload {
+    base luma:alarm-identity;
+    description
+      "Indicates that the optical power measured on the RX port has exceeded the 
+       Input Overload Threshold value.  To clear this fault, an optical input power 
+       equal to the Input Overload Threshold minus the Input Overload Hysteresis 
+       must be restored at the input port.";
+  }
+  
+  identity input-low-degrade {
+    base luma:alarm-identity;
+    description
+      "Indicates that the optical power measured on the RX port has dropped below the 
+       user-configurable Input Low Degrade Threshold value.  To clear this fault, an 
+       optical input power equal to the Input Low Degrade Threshold plus the Input Low 
+       Degrade Hysteresis must be restored at the input port.";
+  }  
+  
+  identity optical-los {
+    base luma:alarm-identity;
+    description
+      "This fault indicates a Loss of Signal on the input port.  This fault 
+       can be caused by either a problem with the transmitter at the far end, 
+       a broken or dirty fiber connected to the receive port, or a problem 
+       with intermediate fibering.";
+  }
+
+  identity laser-temperature-oor {
+    base luma:alarm-identity;
+    description
+      "This alarm indicates that the temperature of pump laser has gone outside 
+       of the factory-configured range. To clear this alarm the operator must 
+       restore the operating environment temperature to its normal operating 
+       level.";
+  }
+
+  identity laser-aging {
+    base luma:alarm-identity;
+    description
+      "Indicates that the transmit power on the laser is degraded and therefore
+       its end of life is near. This fault is raised based on an indication 
+       that comes directly from the laser module declaring an end-of-life 
+       defect. This fault cannot be cleared and therefore the SFP must be 
+       replaced.";
+  }
+
+  identity laser-fail {
+    base luma:alarm-identity;
+    description
+      "Indicates alarm indicates that the laser has reached its end-of-life 
+       bias current condition. Laser performance can no longer be assured and 
+       a service affecting Tx Fault is imminent. This fault can not be 
+       cleared. The module containing the degraded laser must be replaced.";
+  }
+  
+  identity auto-power-reduction {
+    base luma:alarm-identity;
+    description
+      "Indicates that the amplifier has gone into an eye-safe reduced power 
+       mode (APR).  This mode is triggered by high optical return loss (fiber 
+       break) or by setting the Edfa-Config's force-apr leaf to TRUE.";
+  }
+
+  identity automatic-shutdown {
+    base luma:alarm-identity;
+    description
+      "Raised when the amplifier has been placed into an automatic shutdown
+       state. One condition that causes this is the automatic-line-shutdown
+       (ALS) feature.";
+  }
+
+  identity laser-safety-disabled {
+    base luma:alarm-identity;
+    description
+      "Raised when the auto-line-shutoff feature is manually disabled via
+       the als-disabled-for-maintenance parameter. It indicates that the
+       laser-safety protocols have been turned off.";
+  }
+
+  identity optical-line-failure {
+    base luma:alarm-identity;
+    description
+      "Raised when the amplifier detects that both of the following conditions
+       are in effect: 
+       1) an LOS condition exists on the input port, and 
+       2) the associated OSC-channel raises an Ethernet link-down. 
+       When both these conditions exist, the likely cause is a break or
+       disconnection of the fiber link feeding this amplifier.
+
+       This condition also triggers an automic-line-shutdown (ALS) in the 
+       reverse direction.";
+  }
+
+  /*
+   * typedef statements
+   */
+
+  /*
+   * grouping statements
+   */
+
+  grouping Edfa-Config {
+    description
+      "Config paramaters associated with edfa.";
+
+    leaf maintenance-state {
+      type lotet:Maintenance-State; 
+      description 
+        "Maintenance state of the edfa-line.";
+    }
+
+    uses lotet:Custom-Name;
+    
+    leaf control-mode {
+      type enumeration {
+        enum constant-gain { 
+          description "Value indicates that constant-gain is the control-mode.";
+        }
+        enum constant-power { 
+          description "Value indicates that constant-power is the control-mode.";
+        } 
+      }
+      description 
+        "Constant gain or Constant output power control.";
+    }
+
+    leaf gain-switch-mode {
+      type enumeration {
+        enum low-gain {
+          description "Low-gain mode setting of the gain-switch.";
+        }
+        enum high-gain {
+          description "High-gain mode setting of the gain-switch.";
+        }
+      }
+      description
+        "Indicates the mode of the gain switch. If this parameter is not present
+         the product does not support setting of switch mode. This parameter can
+         only be modified when the amplifier is in out-of-service maintenance 
+         state.";
+    }
+    
+    leaf target-gain {
+      type lotet:Optical-Power-Relative;
+      description
+        "When in constantGain mode, this indicates the target gain in dB the 
+         amplifier is to maintain.";
+    }
+    
+    leaf target-power {
+      type lotet:Optical-Power-Absolute;
+      description
+        "When in constantPower mode, this indicates the target power in dBm 
+         the amplifier is to maintain.";
+    }
+          
+    leaf target-gain-tilt {
+      type lotet:Optical-Power-Relative;
+      description
+        "Indicates the gain tilt applied over the spectrum. This is a a measure 
+         in dB of the gain slope from low to high frequency.  A gain tilt of 
+         0 dB means no tilt.";
+    }
+
+    leaf los-shutdown {
+      type boolean;
+      description
+        "Indicates the behaviour when an LOS condition exists on the input 
+         port. If TRUE, the laser is shutdown when an LOS condition exists.
+         The laser is re-enabled when the LOS condition clears. If FALSE, 
+         the laser remains enabled when an LOS condition exists.";
+    }
+
+    // Output port alarm thresholds
+    
+    leaf optical-loo-threshold {
+      type lotet:Optical-Power-Absolute;
+      description
+        "The power value in dBm at which an optical-loo alarm will be generated."; 
+    }
+    
+    leaf optical-loo-hysteresis {
+      type lotet:Optical-Power-Relative;
+      description
+        "The difference, in dB, between the threshold at which an optical-loo alarm 
+         is raised and when it is cleared.";
+    }
+
+    uses lotet:Optical-Return-Loss-Config;
+    
+    // Input port alarm thresholds
+
+    leaf input-overload-threshold {
+      type lotet:Optical-Power-Absolute;
+      description
+        "The power value in dBm at which a input-overload alarm will be generated.";
+    }
+
+    leaf input-overload-hysteresis {
+      type lotet:Optical-Power-Relative;
+      description
+        "The difference, in dB, between the threshold at which an input-overload
+         alarm is raised and when it is cleared.";
+    }
+    
+    leaf input-low-degrade-threshold {
+      type lotet:Optical-Power-Absolute;
+      description
+        "The power value in dBm at which a input-low-degrade alarm will be generated.";
+    }
+    
+    leaf input-low-degrade-hysteresis {
+      type lotet:Optical-Power-Relative;
+      description
+        "The difference, in dB, between the threshold at which an input-low-degrade
+         alarm is raised and when it is cleared.";
+    }
+    
+    leaf optical-los-threshold {
+      type lotet:Optical-Power-Absolute;
+      description
+        "The power value in dBm at which an optical-los alarm will be generated."; 
+    }
+    
+    leaf optical-los-hysteresis {
+      type lotet:Optical-Power-Relative;
+      description
+        "The difference, in dB, between the threshold at which an optical-los alarm 
+         is raised and when it is cleared.";
+    }
+
+    leaf force-apr {
+      type boolean;
+      description
+        "When TRUE the line is forced into Auto Power Reduction (APR) mode. The
+         line will remain in this mode until force-apr is set back to FALSE.";
+    }
+  } // Edfa-Config
+
+  grouping Edfa-Config-Metadata {
+    description
+      "Metadata for the config parameters associated with edfa.";
+
+    container target-gain {
+      uses lotet:Optical-Power-Relative-Metadata;
+      description
+        "Metadata for the target-gain parameter. The gain-mask metadata should
+         be used for precise operating ranges of the target-gain. This metadata
+         is intended as general ranges.";
+    }
+
+    container target-gain-tilt {
+      uses lotet:Optical-Power-Relative-Metadata;
+      description
+        "Metadata for the target-gain-tilt parameter. The gain-mask metadata 
+         should be used for precise operating ranges of the target-gain-tilt. 
+         This metadata is intended as general ranges.";
+    }
+
+    container optical-loo-threshold {
+      uses lotet:Optical-Power-Absolute-Metadata;
+      description
+        "Metadata for the optical-loo-threshold parameter.";
+    }
+
+    container optical-loo-hysteresis {
+      uses lotet:Optical-Power-Relative-Metadata;
+      description
+        "Metadata for the optical-loo-hysteresis parameter.";
+    }
+
+    container input-overload-threshold {
+      uses lotet:Optical-Power-Absolute-Metadata;
+      description
+        "Metadata for the input-overload-threshold parameter.";
+    }
+
+    container input-overload-hysteresis {
+      uses lotet:Optical-Power-Relative-Metadata;
+      description
+        "Metadata for the input-overload-hysteresis parameter.";
+    }
+
+    container input-low-degrade-threshold {
+      uses lotet:Optical-Power-Absolute-Metadata;
+      description
+        "Metadata for the input-low-degrade-threshold parameter.";
+    }
+
+    container input-low-degrade-hysteresis {
+      uses lotet:Optical-Power-Relative-Metadata;
+      description
+        "Metadata for the nput-low-degrade-hysteresis parameter.";
+    }
+
+    container optical-los-threshold {
+      uses lotet:Optical-Power-Absolute-Metadata;
+      description
+        "Metadata for the optical-los-threshold parameter.";
+    }
+
+    container optical-los-hysteresis {
+      uses lotet:Optical-Power-Relative-Metadata;
+      description
+        "Metadata for the optical-los-hysteresis parameter.";
+    }
+
+  } // Edfa-Config-Metadata
+
+  grouping Edfa-Inventory {
+    description
+      "Inventory (non-config and non-varying) parameters associated with EDFA.";
+  
+    uses lotet:Product-Specific-Description {
+      description
+        "The entity-description indicates the path on which this EDFA is 
+         located.";
+    }
+       
+  } // Edfa-Inventory
+  
+  grouping Edfa-State {
+    description
+      "State parameters associated with edfa";
+      
+    leaf operational-state {
+      type enumeration {
+        enum normal { 
+          description 
+            "Normal working service."; 
+        }
+        enum abnormal { 
+          description 
+            "Working but with a non-service affecting fault.";
+        }
+        enum maintenance { 
+          description
+            "maintenanceState is out-of-service";
+        }
+        enum not-operational { 
+          description 
+            "Not operational due to a service-affecting fault.";
+        }
+        enum auto-power-shutdown { 
+          description
+            "Amplifier is in safety auto shutdown.";
+        }
+      }
+      description 
+        "Current operational state of the edfa-line.";
+    } // operational-state
+    
+    leaf output-power {
+      type lotet:Optical-Power-Absolute;
+      description
+        "The output power in dBm of the amplifier.";
+    }
+    
+    leaf input-power {
+      type lotet:Optical-Power-Absolute; 
+      description
+        "The input power in dBm of the amplifier.";
+    }
+    
+    leaf measured-gain {
+      type lotet:Optical-Power-Relative;        
+      description
+        "This is the measured gain in dB of the amplifier using the same
+         measurement points defined by inputPower and outputPower.";
+    }
+
+    uses lotet:Optical-Return-Loss-State;
+
+    leaf als-disabled-seconds-remaining {
+      type uint16;
+      description
+        "This indicates the time in seconds remaining during which ALS is 
+         disabled. For more information see the disable-als RPC.";
+    }
+
+    container voas {
+      description
+        "A list of the VOAs within the EDFA.";
+
+      list voa {
+        key dn;
+        description
+          "An entry containing information applicable to a particular VOA 
+           within the EDFA.";
+
+        leaf dn {
+          type lotet:Distinguished-Name;
+          description
+            "DN of the voa.";
+        }
+
+        leaf voa-input-power {
+          type lotet:Optical-Power-Absolute;
+          description
+            "The input power at the internal VOA.";
+        }
+    
+        leaf voa-output-power {
+          type lotet:Optical-Power-Absolute;
+          description
+            "The output power at the internal VOA.";
+        }
+
+        leaf voa-attentuation {
+          type lotet:Optical-Power-Relative;
+          description
+            "The attentuation being applied by the VOA.";
+        }
+
+      } // voa
+    } // voas
+
+    container pumps {
+      description
+        "The list of laser pumps within the EDFA.";
+
+      list pump {
+        key dn;
+        description
+          "An entry containing information applicable to a particular laser 
+           pump within the EDFA.";
+
+        leaf dn {
+          type lotet:Distinguished-Name;
+          description
+            "DN of the pump.";
+        }
+
+        leaf pump-current {
+          type lotet:Current-Amperes;
+          description
+            "The measured current drawn by the pump laser.";
+        }
+
+        leaf pump-temperature {
+          type lotet:Temperature-Deg-C;
+          description
+            "The temperature of the pump laser.";
+        }
+
+        leaf tec-current {
+          type lotet:Current-Amperes;
+          description
+            "The measured current drawn by the TEC.";
+        }
+
+        leaf tec-temperature {
+          type lotet:Temperature-Deg-C;
+          description
+            "The temperature of the laser TEC.";
+        }
+
+      } // pump
+    } // pumps
+
+    container erbium-coils {
+      description
+        "The list of erbium coils within the EDFA.";
+
+      list erbium-coil {
+        key dn;
+        description
+          "An entry containing information applicable to a specific erbium
+           coil within the EDFA.";
+
+        leaf dn {
+          type lotet:Distinguished-Name;
+          description
+            "DN of the erbium coil.";
+        }
+
+        leaf erbium-temperature {
+          type lotet:Temperature-Deg-C;
+          description
+            "The temperature of the erbium coil.";
+        }
+      }
+    }
+
+  } // Edfa-State
+
+  grouping Edfa-Top {
+    container config {
+        description "Configurable items of the edfaLine.";
+        uses Edfa-Config;
+    }
+
+    container state {
+      config false;
+      description "Operational state data of the edfaLine.";
+      uses Edfa-Inventory;
+      uses Edfa-State;
+    }
+
+    description
+      "Provides a definition for the top-level for an EDFA entity.";
+
+  } // Edfa-Top
+
+  grouping Edfa-Top-Metadata {
+    container config {
+        description "Metadata for EDFA entity config parameters.";
+        uses Edfa-Config-Metadata;
+    }
+
+    description
+      "Provides a definition for the top-level for an EDFA entity metadata.";
+
+  } // Edfa-Top-Metadata
+
+  grouping Edfa-Entities {
+    description
+      "Top level grouping for the edfa entities.";
+
+    container edfas {
+      list edfa {
+        key dn;
+        description
+          "An entry containing management information applicable to a
+           particular edfa-line.";
+  
+        leaf dn {
+          type lotet:Distinguished-Name;
+          description
+            "DN of the edfa-line.";
+        }
+  
+        uses Edfa-Top;
+  
+      } // edfa
+  
+      description
+        "This provides top level container for the list of all EDFA entities.";
+    }
+  } // Edfa-Entities
+
+  grouping Edfa-Entities-Metadata {
+    description
+      "Top level grouping for the edfa entities metadata.";
+
+    container edfas-metadata {
+      config false;
+      list edfa-metadata {
+        key dn;
+        description
+          "An entry containing metadata applicable to a particular edfa-line.";
+
+        leaf dn {
+          type lotet:Distinguished-Name;
+          description
+            "DN of the edfa-line.";
+        }
+
+        uses Edfa-Top-Metadata;
+
+      } // edfa-metadata
+
+      description
+        "This provides top level container for the list of all EDFA metadata.";
+    }
+  } // Edfa-Entities-Metadata
+
+
+  /*
+   * data definition statements
+   */
+  uses Edfa-Entities;
+  uses Edfa-Entities-Metadata {
+    if-feature lotet:include-metadata;
+  }
+
+  /*
+   * augment statements
+   */
+
+  /*
+   * rpc statements
+   */
+
+  rpc disable-als {
+    description
+      "Use this rpc to temporarily disable the Automatic Line Shutoff (ALS) 
+       feature for maintenance purposes. This rpc takes a timeout value to 
+       indicate how long to disable ALS. After the timeout value expires, ALS is
+       re-enabled. The amount of time remaining before ALS is re-enabled is 
+       indicated by the als-disabled-time-remaining parameter.
+
+       While ALS is disabled, the laser-safety-disabled alarm is raised.
+
+       WARNING: This RPC turns off the laser safety features. It should only be
+                used when the associated ports have been disconnected.";
+
+    input {
+      leaf dn {
+        type lotet:Distinguished-Name;
+        mandatory true;
+        description
+          "DN of the edfa-line.";
+      }
+      leaf timeout-period {
+        type uint16 {
+          range "0..600";
+        }
+        description
+          "Indicates the ALS timeout period in seconds. A value greater than 
+           zero (0) disables ALS for the period specified. If zero (0) is 
+           specified, ALS is re-enabled if it is currently disabled.";
+      }
+    }
+  }
+
+  /*
+   * notification statements
+   */
+
+
+} // lumentum-ote-edfa

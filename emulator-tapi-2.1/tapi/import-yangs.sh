@@ -5,8 +5,8 @@ sed -i '/config false;/d' tapi-photonic-media-new.yang
 
 # Clean the yang space
 sysrepoctl --uninstall --module=iana-if-type --revision=2014-05-08
-sysrepoctl --uninstall --module=ietf-ip revision=2014-06-16
-sysrepoctl --uninstall --module=ietf-interfaces revision=2014-05-08
+sysrepoctl --uninstall --module=ietf-ip --revision=2014-06-16
+sysrepoctl --uninstall --module=ietf-interfaces --revision=2014-05-08
 
 # Install new yang files about tapi
 sysrepoctl --install --yang=tapi-common@2018-10-16.yang --owner=root:root --permissions=666

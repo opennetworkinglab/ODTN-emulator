@@ -1,0 +1,425 @@
+module lumentum-ote-port-ethernet {
+
+  namespace "http://www.lumentum.com/lumentum-ote-port-ethernet";
+  prefix "loteeth";
+
+  import lumentum-alarms { prefix "luma"; }
+  import lumentum-ote-port { prefix "lotep"; }
+    
+  organization "Lumentum Operations LLC";
+  contact "support@lumentum.com";
+  description
+    "This module describes the operation and control for port-ethernet entities.
+
+     ---------------------------------------------------------------------------
+     This document and its contents are proprietary and confidential to Lumentum
+     Operations LLC, and/or its parent, subsidiary and/or affiliate entities.
+     Neither this document, nor any part of it, may be disclosed or conveyed to,
+     used or copied by or for, any third party without the prior written consent
+     of Lumentum. LUMENTUM, and the LUMENTUM & DESIGN are trademarks of Lumentum
+     Operations LLC. Copyright 2016-2017 Lumentum Operations LLC. All rights
+     reserved. The use of a copyright notice on this document shall not be taken
+     to indicate that it has been published.
+     ---------------------------------------------------------------------------
+
+    ";
+
+  revision 2017-06-07 {
+    description
+      "Remove default-keywords as they are not supported in this
+       implementation";
+    reference "None";
+  }
+
+  revision 2017-04-10 {
+    description "Add LLDP and STP support.";
+    reference "None";
+  }
+
+  revision 2016-06-01 {
+    description "Initial revision.";
+    reference "None";
+  }
+
+
+  /*
+   * extension statements
+   */
+
+  /*
+   * feature statements
+   */
+
+  /*
+   * identity statements
+   */
+
+  identity port-ethernet {
+    base lotep:port-extension;
+    description "Definition of a port extension supporting ethernet protocol.";
+  }
+
+  // Alarms for port-ethernet
+
+  identity ethernet-link-down {
+    base luma:alarm-identity;
+    description
+      "Raised when the Ethernet link is down.";
+  }
+
+  /*
+   * typedef statements
+   */
+
+
+
+  typedef Stp-Port-State {
+    type enumeration {
+      enum disabled {
+        description
+          "A port that is manually isolated from the network.";
+      }
+      enum listening {
+        description
+          "Processing BPDUs and building active toplogy.";
+      }
+      enum learning {
+        description
+          "Building bridging tables; no forwarding of data.";
+      }
+      enum forwarding {
+        description
+          "Sending and receiving data, normal operation.";
+      }      
+      enum blocking {
+        description
+          "A port that would cause a loop if it were sending data,
+           so it is only receiving BPDUs, untill a topology change
+           removes the possibliity of a loop.";
+      }
+    }
+    description
+      "The spanning tree protocol type.";
+  }
+
+
+  typedef Stp-Port-Role {
+    type enumeration {
+      enum root {
+        description
+          "The port that receives the best BPDU on a bridge is the
+            root port.";
+      }
+      enum designated {
+        description
+          "A port is designated if it can send the best BPDU on the
+           segment to which it is connected.";
+      }
+      enum alternate {
+        description
+          "An alternate port receives BPDUs from another bridge (2nd place to root), 
+           and is a port blocked.";
+      }
+      enum backup {
+        description
+          "A backup port receives more useful BPDUs from the same
+           bridge it is on and is a port blocked.";
+      }      
+    }
+    description
+      "Spanning Tree Protocol port roles.";
+  }
+
+  typedef Stp-Port-Priority-Type {
+    type uint8 {
+      range 1..240;
+    }
+    description
+      "The manageable component of the Port Identifier,
+      also known as the Port Priority";
+    reference
+      "IEEE 802.1D 17.13.10 Port Identifier Priority";
+  }
+
+
+  /*
+   * grouping statements
+   */
+
+
+  grouping Lldp-Port-Config {
+    description
+      "Config paramaters associated with LLDP. The configuration parameter's change does not require restart.";    
+
+    leaf enabled {
+      type boolean;
+      description
+        "Port level administrative state of the LLDP protocol. 
+         Controls whether LLDP is enabled or disabled on a particular port. 
+         It is independent of the port maintenance state.";
+    }
+      
+  } // Lldp-Port-Config
+
+ 
+  grouping Lldp-Remote-Status {
+    description
+      "LLDP remote entity status.";  
+    leaf remote-system-detected {
+      type boolean; 
+      description
+        "The indication of remote system detection, true if it is detected, false otherwise.";
+    }
+    
+    container lldp-remote-entities
+    {
+      description
+        "Contains LLDP remote entities.";   
+      list lldp-remote-entity {
+        description
+          "LLDP remote entry";
+        key "remote-port-id";
+
+        leaf remote-port-id {
+          type string;
+          description
+          "The name of the connected interface to 'local-interface'.
+           The Port ID identifies the port component of the endpoint identifier associated with the
+           transmitting LLDP agent.
+           For the LUMENTUM system, MAC Address shall be used as port-id.
+           It is only provided when the remote system has been detected.";
+        }
+    
+
+        leaf remote-system-name {
+          type string;
+          description
+            "The system name field shall contain an alpha-numeric string
+             that indicates the system's administratively assigned name.
+             The system name should be the system's fully qualified domain
+             name. If implementations support IETF RFC 3418, the sysName
+             object should be used for this field. 
+             For the LUMENTUM system, hostname shall be used as system name.
+             It is only provided when the remote system has been detected.";
+        }
+    
+        leaf remote-port-description {
+          type string;
+          description
+            "The binary string containing the actual port identifier for
+             the port which this LLDP PDU was transmitted. The source and
+             format of this field is defined by PtopoPortId from RFC2922.
+             For the LUMENTUM system, the interface name shall be used as the port-description.
+             It is only provided when the remote system has been detected.";
+        }
+
+        leaf-list remote-mgmt-address {
+          type string;
+          description
+            "The Management Address identifies a network address associated with the local LLDP agent, 
+             which can be used to reach the agent on the port identified in the Port ID.
+             For the LUMENTUM system, the IP address (IPV4 and/or IPV6) shall be used as the mgmt-address.
+             It is only provided when the remote system has been detected.";
+        }
+      }   
+    }
+  }
+
+
+  grouping Stp-Port-Config {
+    description
+      "Grouping of STP configuration for bridge port.
+       The configuration parameter's change does not require restart.";
+
+    leaf enabled {
+      type boolean;
+      description
+        "System level state of the STP.
+         It is independent of the port maintenance state.";
+    }
+
+    leaf link-cost {
+      type uint32 {
+        range 1..200000000;
+      }
+      description
+        "The port's contribution, when it is the Root Port,
+        to the Root Path Cost for the Bridge";
+      reference
+        "IEEE 802.1D 17.13.11 PortPathCost";
+    }
+
+    leaf port-priority {
+      type Stp-Port-Priority-Type;
+      description
+        "The manageable component of the Port Identifier,
+        also known as the Port Priority.
+         port-priority is for influencing root port selection of downstream switch";
+      reference
+        "IEEE 802.1D 17.13.10 Port Identifier Priority";
+    }
+ 
+  }
+
+
+ grouping Stp-Port-State {
+    description
+      "Grouping of STP operational data for bridge port";
+
+    uses Stp-Port-Config;
+
+    leaf port-role {
+      type Stp-Port-Role;
+      description
+        "The current role of the bridge port";
+      reference
+          "IEEE8021-MSTP-MIB ieee8021MstpPortRole";
+    }
+      
+    leaf port-state {
+      type Stp-Port-State;
+      description
+        "The current state of the bridge port";
+      reference "IEEE 802.1D 8.5.5.2 State";
+    }
+
+
+  }
+
+
+
+  grouping Port-Ethernet-Config {
+    description
+      "Config paramaters associated with the port-ethernet.";
+    leaf auto-negotiate {
+      type boolean;
+      description
+        "Set to TRUE to request the interface to auto-negotiate transmission 
+         parameters with its peer interface.  When set to FALSE, the 
+         transmission parameters are specified manually.";
+      reference
+        "IEEE 802.3-2012 auto-negotiation transmission parameters";
+    }
+    leaf duplex-mode {
+      type enumeration {
+        enum FULL {
+          description "Full duplex mode";
+        }
+        enum HALF {
+          description "Half duplex mode";
+        }
+      }
+      description
+        "When auto-negotiate is TRUE, this optionally sets the duplex mode that 
+         will be advertised to the peer.  If unspecified, the interface should 
+         negotiate the duplex mode directly (typically full-duplex).  When 
+         auto-negotiate is FALSE, this sets the duplex mode on the interface 
+         directly.";
+    }
+    leaf port-speed {
+      type enumeration {
+        enum speed_100Mb {
+          description "100 Mbps Ethernet";
+        }
+        enum speed_1Gb {
+          description "1 Gbps Ethernet";
+        }
+      }
+      description
+        "When auto-negotiate is TRUE, this optionally sets the port-speed mode 
+         that will be advertised to the peer for negotiation.  If unspecified, 
+         it is expected that the interface will select the highest speed 
+         available based on negotiation.  When auto-negotiate is set to FALSE, 
+         sets the link speed to a fixed value -- supported values are defined 
+         by ethernet-speed identities"; }
+
+      container lldp {
+        description "Configurable items of the lldp.";
+        uses Lldp-Port-Config;
+      }
+       
+      container stp {
+        description "Configurable items of the stp.";
+        uses Stp-Port-Config;
+      }
+  } // Port-Ethernet-Config
+
+  grouping Port-Ethernet-Inventory {
+    description
+      "Inventory (non-config and non-varying) parameters associated
+       with the port-ethernet";
+
+  } // Port-Ethernet-Inventory
+
+  grouping Port-Ethernet-State {
+    description
+      "State parameters associated with the port-ethernet";
+    leaf link-state {
+      type enumeration {
+        enum link-up {
+          description "Indicates the link is up.";
+        }
+        enum link-down {
+          description "Indicates the link is down.";
+        }
+      }
+      description
+        "Indicates the state of the Ethernet link.";
+    }
+    
+    container lldp {
+       description "State parameters associated with the lldp";
+       uses Lldp-Port-Config;
+       uses Lldp-Remote-Status;
+    }
+    
+    container stp {
+       description "State parameters associated with the stp";
+       uses Stp-Port-State;
+    }
+  } //  Port-Ethernet-State
+  
+
+
+
+  /*
+   * data definition statements
+   */
+
+  /*
+   * augment statements
+   */
+
+  augment "/lotep:physical-ports/lotep:physical-port/lotep:config" {
+    when "count(../lotep:port-extension[normalize-space(text())='port-ethernet'])>0" {
+      description
+        "Add optical input port extensions when the extensions list contains
+         port-ethernet.";
+    }
+    description
+      "Extensions to port for ethernet-enabled ports.";
+    uses Port-Ethernet-Config;
+  }
+
+  augment "/lotep:physical-ports/lotep:physical-port/lotep:state" {
+    when "count(../lotep:port-extension[normalize-space(text())='port-ethernet'])>0" {
+      description
+        "Add optical input port extensions when the extensions list contains
+         port-ethernet.";
+    }
+    description
+      "Extensions to port for ethernet-enabled ports.";
+    uses Port-Ethernet-State;
+    uses Port-Ethernet-Inventory;
+  }
+
+
+  /*
+   * rpc statements
+   */
+
+  /*
+   * notification statements
+   */
+  
+} // lumentum-ote-port-ethernet

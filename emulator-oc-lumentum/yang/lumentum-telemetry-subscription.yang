@@ -1,0 +1,243 @@
+module lumentum-telemetry-subscription {
+
+  namespace "http://www.lumentum.com/lumentum-telemetry-subscription";
+  prefix "lumts";
+
+  import ietf-inet-types { prefix "inet"; }
+  import lumentum-types { prefix "lumt"; }
+
+  organization "Lumentum Operations LLC";
+  contact "support@lumentum.com";
+  description
+  "This module describes the operation and control for telemetry-subscription entities.
+
+  ---------------------------------------------------------------------------
+  This document and its contents are proprietary and confidential to Lumentum
+  Operations LLC, and/or its parent, subsidiary and/or affiliate entities.
+  Neither this document, nor any part of it, may be disclosed or conveyed to,
+  used or copied by or for, any third party without the prior written consent
+  of Lumentum.LUMENTUM, and the LUMENTUM & DESIGN are trademarks of Lumentum
+  Operations LLC.(c)2017 Lumentum Operations LLC.All rights reserved.The
+  use of a copyright notice on this document shall not be taken to indicate
+  that it has been published.
+  ---------------------------------------------------------------------------
+
+  ";
+
+  revision 2017-05-08 {
+    description "Introduce config node within telemetry-subscriptions.";
+    reference "None";
+  }
+
+  revision 2017-04-21 {
+    description "Initial revision.";
+    reference "None";
+  }
+
+  /*
+   * extension statements
+   */
+
+  /*
+   * feature statements
+   */
+
+  /*
+   * identity statements
+   */
+
+
+  /*
+   * typedef statements
+   */
+
+  typedef Subscriber-Status {
+    type enumeration {
+      enum active   {
+        description
+          "Value indicating that telemetry is sending reports to this subscriber.";
+      }
+      enum disabled {
+        description
+          "Value indicating that telemetry is not sending reports to this subscriber.";
+      }
+      enum expired {
+        description
+          "Value indicating that this subscriber is enabled, but has not been refreshed
+           within the expiry timeout.";
+      }
+    }
+    description
+      "Summarizes the current status of a subscriber.";
+  }
+
+  /*
+   * grouping statements
+   */
+
+  grouping Telemetry-Subscriptions-Config {
+    description
+      "Config parameters associated with all subscriptions.";
+
+      leaf enable-reporting {
+        type lumt:Enable-Disable;
+        description
+          "Global enable/disable for telemetry subscriptions.
+           Disabled indicates that all subscriptions are disabled.
+           Enabled indicates that the individual subscription's enable-reporting is used.";
+      }
+
+      leaf report-interval-seconds {
+        type uint32;
+        description
+          "The interval is the how often to report the telemetry data in seconds.";
+      }
+  }
+
+  grouping Telemetry-Subscription-Config {
+
+    leaf enable-reporting {
+      type lumt:Enable-Disable;
+      description
+        "Disabled subscriptions will not report telemetry to their destination.";
+    }
+
+    description
+      "Config parameters associated with the telemetry-subscription.";
+
+  } // Telemetry-Subscription-Config
+
+  grouping Telemetry-Subscription-State {
+    leaf status {
+      type Subscriber-Status;
+      description
+        "Reports the current status of the subscriber.";
+    }
+
+    leaf seconds-to-expiry {
+      type uint32;
+      description
+        "Reports the number of seconds remaining in the subscription.  Telemetry data
+         will stop when this value reaches 0.  This leaf will not be reported when
+         the expiry timer is disabled.";
+    }
+
+    description
+    "State parameters associated with the telemetry-subscription";
+
+  } //  Telemetry-Subscription-State
+
+  grouping Telemetry-Subscription-Top {
+    leaf destination-address {
+      type inet:ip-address;
+      description
+        "The destination-address for this telemetry-subscription.";
+    }
+
+    leaf destination-port {
+      type uint16;
+      description
+        "The destination-port for this telemetry-subscription.";
+    }
+
+    container config {
+      uses Telemetry-Subscription-Config;
+      description "Configurable items of the telemetry-subscription.";
+
+    }
+
+    container state {
+      config false;
+      description "Operational state data of the telemetry-subscription.";
+      uses Telemetry-Subscription-State;
+    }
+
+    description "Configurable items of the telemetry-subscription.";
+
+  } // Telemetry-Subscription-Top
+
+  grouping Telemetry-Subscription-Entities {
+
+    container telemetry-subscriptions {
+
+      container config {
+        uses Telemetry-Subscriptions-Config;
+        description "Configuration items.";
+      }
+
+      list telemetry-subscription {
+        key "destination-address destination-port";
+        description
+          "An entry containing management information applicable to a
+           particular telemetry-subscription.";
+
+        uses Telemetry-Subscription-Top;
+
+      } // telemetry-subscription
+
+      description
+        "This provides top level container for the list of all telemetry-subscription
+         entities.";
+    }
+    description
+      "Top level grouping for telemetry-subscription entities.";
+
+  } // Telemetry-Subscription-Entities
+
+
+  /*
+   * data definition statements
+   */
+
+  uses Telemetry-Subscription-Entities;
+
+  /*
+   * augment statements
+   */
+
+  /*
+   * rpc statements
+   */
+
+  rpc refresh-subscription {
+    description
+      "Use this rpc to refresh the expiry interval for a given subscriber.";
+
+    input {
+      leaf destination-address {
+        type inet:ip-address;
+        description
+          "The destination-address for this telemetry-subscription.";
+      }
+
+      leaf destination-port {
+        type uint16;
+        description
+          "The destination-port for this telemetry-subscription.";
+      }
+
+      leaf expiry-seconds {
+        type uint32 {
+          range "0..86400";
+        }
+
+        description
+          "Indicates the report-expiry in seconds.  A non-zero value controls the number
+           seconds that telemetry reports will be delivered.  Subscribers must re-register
+           (by sending this RPC) to keep the subscription active.
+           If zero (0) is specified, then the subcriber will never expire.
+           The value of this leaf will be restored on the next restart, even if the
+           subscriber was expired before the restart was initiated.";
+      }
+    }
+
+    output {
+      uses lumt:RPC-Status;
+    }
+  }
+
+  /*
+   * notification statements
+   */
+
+} // lumentum-telemetry-subscription

@@ -1,0 +1,112 @@
+
+module lumentum-ote-fru-fan-module {
+
+  namespace "http://www.lumentum.com/lumentum-ote-fru-fan-module";
+  prefix "loteffm";
+
+  import lumentum-ote-fru { prefix "lotefru"; }
+
+  organization "Lumentum Operations LLC";
+  contact "support@lumentum.com";
+  description
+   "This module describes the operation and control for fru-fan-module entities.
+
+    ---------------------------------------------------------------------------
+    This document and its contents are proprietary and confidential to Lumentum
+    Operations LLC, and/or its parent, subsidiary and/or affiliate entities.
+    Neither this document, nor any part of it, may be disclosed or conveyed to,
+    used or copied by or for, any third party without the prior written consent
+    of Lumentum. LUMENTUM, and the LUMENTUM & DESIGN are trademarks of Lumentum
+    Operations LLC. (c) 2017 Lumentum Operations LLC. All rights reserved. The
+    use of a copyright notice on this document shall not be taken to indicate
+    that it has been published.
+    ---------------------------------------------------------------------------
+
+   ";
+
+  revision 2017-04-12 {
+    description "Initial revision.";
+    reference "None";
+  }
+
+  /*
+   * extension statements
+   */
+
+  /*
+   * feature statements
+   */
+
+  /*
+   * identity statements
+   */
+
+  identity fan-module-fru {
+    base lotefru:fru-identity;
+    description
+      "Identifies a fan-module FRU.";
+  }
+
+  /*
+   * typedef statements
+   */
+
+  /*
+   * grouping statements
+   */
+
+  grouping FRU-Fan-Module-State {
+    description
+      "State parameters associated with the fru-fan-module";
+
+    container fans {
+      description
+        "Top level container for the list of fans in fan module.";
+
+      list fan {
+        description
+          "A list of number of fans in fan module.";
+
+        key "fan-name";
+        leaf fan-name {
+          type string;
+          description
+            "fan name.";
+        }
+
+        leaf fan-speed-rpm {
+          type uint32;
+          description
+            "Current fan speed setting in rotations per minute.";
+        }
+      }
+    }
+  } //  FRU-Fan-Module-State
+
+  /*
+   * data definition statements
+   */
+
+  /*
+   * augment statements
+   */
+
+  augment "/lotefru:frus/lotefru:fru/lotefru:state" {
+    when "../lotefru:fru-type='fan-module-fru'" {
+      description
+        "Add fan-module-fru-specific information to the FRU.";
+    }
+    description
+      "Augment the FRU with fan-module state-specific information.";
+    uses FRU-Fan-Module-State;
+  }
+
+  /*
+   * rpc statements
+   */
+
+  /*
+   * notification statements
+   */
+  
+} // lumentum-ote-fru-fan-module

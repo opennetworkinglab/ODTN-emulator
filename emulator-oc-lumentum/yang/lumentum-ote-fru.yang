@@ -1,0 +1,212 @@
+
+module lumentum-ote-fru {
+  namespace "http://www.lumentum.com/lumentum-ote-fru";
+  prefix "lotefru";
+
+  import lumentum-ote-types { prefix "lotet"; }
+  import lumentum-alarms { prefix "luma"; }
+
+  organization "Lumentum Operations LLC";
+  contact "support@lumentum.com";
+  description
+    "This module describes the operation and control for a field-replaceable-
+     unit (FRU). An FRU may be a fan-module, power-module, or some other modular
+     component.
+ 
+     ---------------------------------------------------------------------------
+     This document and its contents are proprietary and confidential to Lumentum
+     Operations LLC, and/or its parent, subsidiary and/or affiliate entities.
+     Neither this document, nor any part of it, may be disclosed or conveyed to,
+     used or copied by or for, any third party without the prior written consent
+     of Lumentum. LUMENTUM, and the LUMENTUM & DESIGN are trademarks of Lumentum
+     Operations LLC. Copyright 2016-2017 Lumentum Operations LLC. All rights
+     reserved. The use of a copyright notice on this document shall not be taken
+     to indicate that it has been published.
+     ---------------------------------------------------------------------------
+
+    ";
+
+  revision 2017-04-12 {
+    description
+      "1) Move fan-module-fru identity to new module 
+       lumentum-ote-fru-fan-module.
+       2) Added leaf failed to FRU-State.";
+    reference "None";
+  }
+
+  revision 2017-01-18 {
+    description
+      "1) Move power-module-fru identity to new module 
+          lumentum-ote-fru-power-module.
+       2) Add new alarm for FRU communication failure.";
+    reference "None";
+  }
+
+  revision 2016-06-01 {
+    description "Initial revision.";
+    reference "None";
+  }
+
+  /*
+   * extension statements
+   */
+
+  /*
+   * feature statements
+   */
+
+  /*
+   * identity statements
+   */
+
+  identity fru-identity {
+    description
+      "Base type for types of FRUs.";
+  }
+
+  identity fru-missing {
+    base luma:alarm-identity;
+    description
+      "Raised when a FRU is missing. To clear this alarm, a FRU must be 
+       installed.";
+  }
+
+  identity fru-fail {
+    base luma:alarm-identity;
+    description
+      "Raised when a non-recoverable fault is raised with the FRU. To clear
+       this alarm, the FRU must be replaced. The alarm text may provide 
+       further information as to the details of the failure.";
+  }
+
+  identity fru-comms-fail {
+    base luma:alarm-identity;
+    description
+      "Raised when a communication bus to the FRU has failed but the FRU is
+       present in the slot. This alarm is only raised for FRUs that have a
+       communication bus.";
+  }
+
+  /*
+   * typedef statements
+   */
+
+  typedef FRU-type {
+    type identityref {
+      base fru-identity;
+    }
+    description
+      "Identifies the type of FRU for this entity.";
+  }
+
+  /*
+   * grouping statements
+   */
+
+  grouping FRU-Config {
+    description
+      "Configuration parameters associated with a FRU.";
+
+  } // FRU-Config
+
+  grouping FRU-Inventory {
+    description
+      "Inventory (non-config and non-varying) parameters associated
+       with the FRUs";
+
+    uses lotet:Product-Specific-Description {
+      description
+        "Provides an indication of the purpose or label of the FRU.";
+    }
+
+    uses lotet:Physical-Entity-Inventory;
+
+  } // FRU-Inventory
+
+  grouping FRU-State {
+    description
+      "State parameters associated with the FRU.";
+
+    leaf missing {
+      type boolean;
+      description
+        "Indicates if the FRU is present or not (i.e. missing).";
+    }
+
+    leaf failed {
+      type boolean;
+      description
+        "Indicates if FRU failed.";
+    }
+  } // FRU-State
+
+  grouping FRU-Top {
+    description
+      "Top-level for the FRU entity.";
+
+    leaf fru-type {
+      type FRU-type;
+      config false;
+      description
+        "Indicates the type of the FRU.";
+    }
+    
+    container config {
+      uses FRU-Config;
+      description "Configuration items.";
+    }
+
+    container state {
+      config false;
+      uses FRU-State;
+      uses FRU-Inventory;
+      description "Operational state data for the entity.";
+    }
+  } // FRU-Top
+
+  grouping FRU-Entities {
+    description
+      "This provides a grouping definition for the list of all FRU 
+       entities.";
+
+    container frus {
+      description
+        "Top level container for the list of FRUs.";
+
+      list fru {
+        key "dn";
+  
+        description
+          "An entry containing management information applicable to a
+           particular FRU.";
+   
+        leaf dn {
+          type lotet:Distinguished-Name;
+          description
+            "DN of the FRU.";
+        }
+
+        uses FRU-Top;
+      } // fru
+    } // frus
+  } // FRU-Entities
+
+  /*
+   * data definition statements
+   */
+  
+  uses FRU-Entities;
+
+  /*
+   * augment statements
+   */
+
+  /*
+   * rpc statements
+   */
+
+  /*
+   * notification statements
+   */
+  
+} // lumentum-ote-frus

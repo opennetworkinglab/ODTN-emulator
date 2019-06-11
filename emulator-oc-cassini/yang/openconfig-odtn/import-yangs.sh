@@ -1,7 +1,7 @@
 # Clean the yang space
 sysrepoctl --uninstall --module=iana-if-type --revision=2014-05-08
-sysrepoctl --uninstall --module=ietf-ip revision=2014-06-16
-sysrepoctl --uninstall --module=ietf-interfaces revision=2014-05-08
+sysrepoctl --uninstall --module=ietf-ip --revision=2014-06-16
+sysrepoctl --uninstall --module=ietf-interfaces --revision=2014-05-08
 # Install new yang files about openconfig
 cd /root/yang/openconfig-odtn
 

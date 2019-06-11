@@ -1,0 +1,90 @@
+ 
+module lumentum-perfmon {
+
+  namespace "http://www.lumentum.com/lumentum-perfmon";
+  prefix "lperfmon";
+
+
+  import lumentum-types { prefix "lumt"; }
+
+  organization "Lumentum Operations LLC";
+  contact "support@lumentum.com";
+  description
+   "This module describes the operation and control for lumentum-perfmon entities.
+
+    ---------------------------------------------------------------------------
+    This document and its contents are proprietary and confidential to Lumentum
+    Operations LLC, and/or its parent, subsidiary and/or affiliate entities.
+    Neither this document, nor any part of it, may be disclosed or conveyed to,
+    used or copied by or for, any third party without the prior written consent
+    of Lumentum. LUMENTUM, and the LUMENTUM & DESIGN are trademarks of Lumentum
+    Operations LLC. (c) 2017 Lumentum Operations LLC. All rights reserved. The
+    use of a copyright notice on this document shall not be taken to indicate
+    that it has been published.
+    ---------------------------------------------------------------------------
+
+   ";
+
+  revision 2017-01-01 {
+    description "Initial revision.";
+    reference "None";
+  }
+
+  /*
+   * extension statements
+   */
+
+  /*
+   * feature statements
+   */
+
+  /*
+   * identity statements
+   */
+
+
+  /*
+   * typedef statements
+   */
+
+  /*
+   * grouping statements
+   */
+
+  /*
+   * data definition statements
+   */
+
+
+  /*
+   * augment statements
+   */
+
+  /*
+   * rpc statements
+   */
+   rpc pm-clear-untimed {
+     description
+        "aggregate a set of PM's for clearing the data. Applicable to untimed PMs specifically.";
+     input {
+       list collections {
+         description
+           "A list of the untimed PM collections to be cleared.";
+         leaf data-type {
+           type lumt:pm-data-type;           
+           description
+             "The type of performance monitored untimed data to be cleared";
+         }
+       }
+     }
+    output {
+      uses lumt:RPC-Status;
+    }
+   }
+  /*
+   * notification statements
+   */
+  
+} // lumentum-perfmon
+
+    

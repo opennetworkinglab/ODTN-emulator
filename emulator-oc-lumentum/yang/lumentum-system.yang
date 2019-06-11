@@ -1,0 +1,145 @@
+module lumentum-system {
+
+  namespace "http://www.lumentum.com/lumentum-system";
+  prefix "lumsys";
+
+  import lumentum-types { prefix "lumt"; }
+  import ietf-system { prefix "sys"; }
+
+  organization "Lumentum Operations LLC";
+  contact "support@lumentum.com";
+  description
+   "This module describes the operation and control for overall system entities
+    and behaviours.
+
+    ---------------------------------------------------------------------------
+    This document and its contents are proprietary and confidential to Lumentum
+    Operations LLC, and/or its parent, subsidiary and/or affiliate entities.
+    Neither this document, nor any part of it, may be disclosed or conveyed to,
+    used or copied by or for, any third party without the prior written consent
+    of Lumentum. LUMENTUM, and the LUMENTUM & DESIGN are trademarks of Lumentum
+    Operations LLC. (c) 2017 Lumentum Operations LLC. All rights reserved. The
+    use of a copyright notice on this document shall not be taken to indicate
+    that it has been published.
+    ---------------------------------------------------------------------------
+
+   ";
+
+  revision 2017-05-26 {
+    description "Update comments for perfmon logtype enum.";
+    reference "None";
+  }
+
+  /*
+   * extension statements
+   */
+
+  /*
+   * feature statements
+   */
+
+  /*
+   * identity statements
+   */
+
+  /*
+   * typedef statements
+   */
+
+  /*
+   * grouping statements
+   */
+
+  /*
+   * data definition statements
+   */
+
+  /*
+   * augment statements
+   */
+
+  /*
+   * rpc statements
+   */
+
+  rpc log-collection {
+    description
+      "This RPC aggregates a set of logs into a file to be available via
+       SFTP. This RPC blocks until the files have been made available. The 
+       specified filename is available via SFTP for a period of 60 minutes.";
+
+    input {
+      list logs {
+        description
+          "A list of the logs to be collected.";
+        uses lumt:RPC-Filename;
+        leaf log-type {
+          type enumeration {
+            enum diagnostics {
+              description
+                "Diagnostic information for node. This file is to be provided
+                 to the equipment supplier for analyzing field issues.";
+            }
+            enum oamevents {
+              description
+                "Contains a history of OAM events on the node.";
+            }
+            enum security {
+              description
+                "Contains a history of security notices.";
+            }
+            enum perfmon {
+              description
+                "Contains performance monitored files.";
+            }
+          }
+          description
+            "The type of log-file to be collected.";
+        }
+        leaf collection-type {
+          type lumt:pm-collection-type;
+          description
+            "The type of performance monitoring collection to be collection - historical or current";
+        }
+        leaf data-type {
+          type lumt:pm-data-type;
+          description
+            "The type of performance monitored data to be collected.";
+        }
+        leaf interval {
+          type lumt:pm-granularity;
+          description
+            "The time interval of performance monitored data to be collected.";
+        }
+      }
+    }
+
+    output {
+      uses lumt:RPC-Status;
+    }
+  }
+  
+
+  /*
+   * notification statements
+   */
+
+  /*
+   * deviation statements
+   */
+
+  deviation /sys:system-restart {
+    description
+      "The sys:system-restart is not supported. Instead use
+       lumentum-ote-equipment:restart-card.";
+    deviate not-supported;
+  }
+
+  deviation /sys:system-shutdown {
+    description
+      "The sys:system-shutdown is not supported.";
+    deviate not-supported;
+  }
+
+  
+} // lumentum-system

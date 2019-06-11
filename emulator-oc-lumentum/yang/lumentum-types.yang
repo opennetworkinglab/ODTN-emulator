@@ -1,0 +1,272 @@
+
+module lumentum-types {
+  namespace "http://www.lumentum.com/lumentum-types";
+  prefix "lumt";
+
+  organization "Lumentum Operations LLC";
+  contact "support@lumentum.com";
+
+  description
+    "This module contains type-definitions used across Lumentum modules.
+
+     ---------------------------------------------------------------------------
+     This document and its contents are proprietary and confidential to Lumentum
+     Operations LLC, and/or its parent, subsidiary and/or affiliate entities.
+     Neither this document, nor any part of it, may be disclosed or conveyed to,
+     used or copied by or for, any third party without the prior written consent
+     of Lumentum. LUMENTUM, and the LUMENTUM & DESIGN are trademarks of Lumentum
+     Operations LLC. Copyright 2017 Lumentum Operations LLC. All rights
+     reserved. The use of a copyright notice on this document shall not be taken
+     to indicate that it has been published.
+     ---------------------------------------------------------------------------
+
+    ";
+
+  revision 2017-06-07 {
+    description
+      "1) Remove value-keywords from enumerations and add comments
+       2) Change pattern quotes from double to single quotes.";
+    reference "None";
+  }
+
+  revision 2017-04-21 {
+    description "Create typedef for enablement state.";
+    reference "None";
+  }
+
+  revision 2017-04-06 {
+    description "Create rpc-info leaf for Background-RPC-Status.";
+    reference "None";
+  }
+
+  revision 2017-02-27 {
+    description "Initial revision.";
+    reference "None";
+  }
+
+  /*
+   * extension statements
+   */
+
+  /*
+   * feature statements
+   */
+  
+  /*
+   * identity statements
+   */
+
+  /*
+   * typedef statements
+   */
+
+  typedef RPC-Identifier {
+    type uint32;
+    description
+      "A unique identifier to refer to a background-RPC.";
+  }
+
+  typedef RPC-Status-Enum {
+    type enumeration {
+      enum success {
+        description 
+          "The RPC was completed successfully.";
+      }
+      enum accepted {
+        description 
+          "This value is used for RPCs that are processed in the background
+           and are not immediately completed. An accepted RPC indicates that
+           the background processing has successfully started. A subsequent
+           notification of completion will occur.";
+      }
+      enum failed {
+        description
+          "The RPC-request failed or was rejected. In this case the 
+           status-message provides further information about the failure.";
+      }
+      enum cancelled {
+        description
+          "The RPC-request was cancelled by the user.";
+      }
+    }
+    description
+      "Definition for the status values of an RPC.";
+  }
+
+  typedef Enable-Disable {
+    type enumeration {
+      enum enable  { value "1"; description "Value indicating a capability is Enabled."; }
+      enum disable { value "2"; description "Value indicating a capability is Disabled."; }
+    }
+    description
+      "Used for parameters supporting ENABLE/DISABLE values.";
+  }
+  typedef pm-collection-type {
+    type enumeration {
+      enum "current" {
+        value 1;
+        description
+          "current pm values";
+      }
+      enum "historical" {
+        value 2;
+        description
+          "historical binned PMs";
+      }
+    }
+    description
+      "define types of PM collection";
+  }
+
+  typedef pm-data-type {
+    type enumeration {
+      enum "optical" {
+        description "optical pms.";
+      }
+      enum "ethernet" {
+        description "ethernet pms.";
+      }
+    }
+    description
+      "define types of PM data available for retrieval of current or binned data";
+  }
+  typedef pm-granularity {
+    type enumeration {
+      enum "untimed" {
+        value 1;
+        description
+          "This is for current counters on devices that support them.";
+      }
+      enum "1min" {
+        description "1 minute performance monitor bin";
+      }
+      enum "15min" {
+        description "15 minute performance monitor bin";
+      }
+      enum "1Hour" {
+        description "1 hour performance monitor bin";
+      }
+      enum "24Hour" {
+        description "24 hour performance monitor bin";
+      }
+    }
+    description
+      "Granularity of PM bin";
+  }
+  /*
+   * grouping statements
+   */
+
+  grouping RPC-Filename {
+    description
+      "Provides a common definition for RPCs containing a file specification.";
+    leaf filename {
+      type string {
+        length "10..255";
+        pattern '[0-9A-Za-z][0-9A-Za-z_:\.\-]*';
+      }
+      description
+        "The name of the file used in the RPC. The file is either created or
+         used by the RPC. Unless otherwise specified, the file is located in
+         the tempfiles subdirectory within the SFTP base directory.
+
+         NOTE: All files contained in the tempfiles subdirectory are 
+               automatically deleted after 60 minutes.
+         ";
+    }
+  }
+
+  grouping RPC-Status {
+    description
+      "Provides a common definition for RPC status indications in the 
+       response.";
+    leaf rpc-status {
+      type RPC-Status-Enum;
+      mandatory true;
+      description
+        "The status of the RPC request. See the parameters below to 
+        understand which apply to specific status-values.";
+    }
+
+    leaf rpc-status-message {
+      type string;
+      must "../rpc-status=failed" {
+        description
+          "The status-message is only provided when the status of the response
+           has failed.";
+      }
+      description
+        "Gives a more detailed reason for failure";
+    }
+
+    leaf rpc-identifier {
+      type RPC-Identifier;
+      must "../rpc-status=accepted" {
+        description
+          "The rpc-id is only provided when the RPC is accepted and
+           continues processing in the background. This value is used as a key
+           in the ";
+      }
+      description
+        "This parameter is used when RPCs are processed in the background. This
+         reference points to the YANG entity where the status is updated once 
+         the request has completed.";
+    }
+  }
+
+  grouping Background-RPC-Status {
+    description
+      "Some RPCs initiate a background task which continues after the initial
+       response is provided. This is called a background-RPC. This is a common
+       definition for the state of the background-RPC.";
+
+    leaf rpc-identifier {
+      type RPC-Identifier;
+      description
+        "Identifier of the background-rpc-list.";
+    }
+
+    leaf rpc-status {
+      type RPC-Status-Enum;
+      description
+        "The status of the Background-RPC request. See the parameters below 
+        to understand which apply to specific status-values.";
+    }
+
+    leaf rpc-status-message {
+      type string;
+      must "../rpc-status=failed" {
+        description
+          "The status-message is only provided when the status of the 
+           background-RPC has failed.";
+      }
+      description
+        "Gives a more detailed reason for failure";
+    }
+
+    leaf rpc-info {
+      type string;
+      description
+        "An indication of the original RPC request.";
+    }
+  }
+
+
+  /*
+   * data definition statements
+   */
+
+  /*
+   * augment statements
+   */
+
+  /*
+   * rpc statements
+   */
+
+  /*
+   * notification statements
+   */
+
+
+} // lumentum-types

@@ -1,0 +1,461 @@
+module lumentum-ote-connection {
+
+  namespace "http://www.lumentum.com/lumentum-ote-connection";
+  prefix "lotec";
+
+  import lumentum-ote-types { prefix "lotet"; }
+  import lumentum-alarms { prefix "luma"; }
+  import lumentum-ote-port { prefix "lotep"; }
+
+  organization "Lumentum Operations LLC";
+  contact "support@lumentum.com";
+
+  description
+    " 
+    ---------------------------------------------------------------------------
+    This document and its contents are proprietary and confidential
+    to Lumentum Operations LLC, and/or its parent, subsidiary and/or
+    affiliate entities. Neither this document, nor any part of it,
+    may be disclosed or conveyed to, used or copied by or for, any
+    third party without the prior written consent of Lumentum. LUMENTUM,
+    and the LUMENTUM & DESIGN are trademarks of Lumentum Operations
+    LLC. Copyright 2016-2017 Lumentum Operations LLC. All rights reserved.
+    The use of a copyright notice on this document shall not be taken
+    to indicate that it has been published. 
+    ---------------------------------------------------------------------------
+    ";
+
+  revision 2017-02-13 {
+    description 
+      "Added rpc for creating 50 Ghz ITU connection plan";
+    reference "None";
+  }
+  
+  revision 2017-02-03 {
+    description 
+      "Added rpc for creating the connectivity connection; configure-cc-connection";
+    reference "None";
+  }
+  
+  revision 2017-01-25 {
+    description 
+      "Added rpc for delete all connections, delete one connection and add 
+       connection.  Added blocked variable";
+    reference "None";
+  }
+  
+  revision 2016-06-01 {
+    description "Initial revision.";
+    reference "None";
+  }
+
+  /*
+   * extension statements
+   */
+
+  /*
+   * feature statements
+   */
+
+  feature connection-supported {
+    description
+        "This feature means the device supports connections.";
+  }
+
+  feature connection-attenuation-supported {
+    description
+        "This feature means the device supports attenuation of a channel.";
+  }
+
+  feature connection-power-control-supported {
+    description
+        "This feature means the device supports power control of a channel.";
+  }
+
+  feature slot-based-supported {
+    description
+        "This feature means the device is slot based rather than true-flex
+        and supports defining a channel by start and end slot, inclusive.";
+  }
+
+  /*
+   * identity statements
+   */
+
+  // Alarms
+  identity input-low-degrade {
+    base luma:alarm-identity;
+    description
+      "Input channel power degraded.
+      Indicates that the measured optical input power has dropped below the user-
+       configurable input-low-degrade-threshold value.";
+  }
+
+  identity input-overload {
+    base luma:alarm-identity;
+    description
+      "Input channel power overload.
+      Indicates that the measured optical input power has increased above the user-
+       configurable input-overload-threshold value.";
+  }
+
+  identity optical-los {
+    base luma:alarm-identity;
+    description
+      "Loss of channel optical power.
+      Indicates that the measured optical input power has dropped below the user-
+       configurable optical-los-threshold value.";
+  }
+
+
+  identity output-low-degrade {
+    base luma:alarm-identity;
+    description
+      "Output channel power degraded.
+      Indicates that the measured optical output power has dropped below the user-
+       configurable output-low-degrade-threshold value.";
+  }
+
+  identity output-overload {
+    base luma:alarm-identity;
+    description
+      "Output channel power overload.
+      Indicates that the measured optical output power has increased above the user-
+       configurable output-overload-threshold value.";
+  }
+
+  identity optical-loo {
+    base luma:alarm-identity;
+    description
+      "Loss of channel optical power.
+      Indicates that the measured optical output power has dropped below the user-
+       configurable optical-loo-threshold value.";
+  }
+
+  /*
+   * typedef statements
+   */
+
+  /*
+   * grouping statements
+   */
+
+  grouping Attenuated-Attributes {
+    description
+        "Parameters associated with Attenuated objects.";
+    leaf attenuation {
+      type lotet:Optical-Power-Relative;
+      description
+            "For slot attenuation, this is expressed as an offset from the
+            containing channel's attenuation.";
+    }
+    leaf blocked {
+        type boolean;
+        description
+              "Optically blocked.";
+      }
+  }
+
+  grouping Attenuated-Slot-Entities {
+    description
+        "Top level grouping for Attenuated Slot entities.";
+
+    container slots {
+      if-feature slot-based-supported;
+      list slot {
+        key dn;
+        description
+                "An entry containing management information applicable to a particular
+                slot.";
+
+        leaf dn {
+          type lotet:Distinguished-Name;
+          description
+                    "DN of the slot.";
+        }
+
+        leaf attenuation {
+          type lotet:Optical-Power-Relative;
+          description
+                "For slot attenuation, this is expressed as an offset from the
+                containing channel's attenuation.";
+        }
+      }
+
+      description
+            "This provides top level container for the list of all slot entities
+            included within a connection.";
+    }
+  }
+  grouping Connection-Config {
+    description
+        "Config parameters associated with the connection.";
+    uses lotet:Custom-Name;
+    uses lotet:Maintenance-State-Attributes;
+    uses lotet:Channel-Wavelength-Specification-Attributes;
+    uses Attenuated-Attributes;
+    uses Attenuated-Slot-Entities;
+    leaf power-control-enabled {
+      if-feature connection-power-control-supported;
+      type lotet:Enable-Disable;
+      description
+            "Use to enable/disable closed loop control of the connection";
+    }
+    leaf power-target {
+      if-feature connection-power-control-supported;
+      type lotet:Optical-Power-Absolute;
+      description
+            "The closed loop control target power of the connection.";
+    }
+    leaf power-target-tolerance {
+      if-feature connection-power-control-supported;
+      type lotet:Optical-Power-Relative;
+      description
+            "This value represents the tolerance which the power control should
+            try to control the power to.";
+    }
+ 
+    leaf input-port-reference {
+      type leafref {
+        path "/lotep:physical-ports/lotep:physical-port/lotep:dn";
+      }
+      description "The input port for the Connection";
+    }
+    container input-channel-attributes {
+      uses lotet:Monitored-Input-Power-Config;
+      description "Monitored Channel Configuration data";
+    }
+    leaf output-port-reference {
+      type leafref {
+        path "/lotep:physical-ports/lotep:physical-port/lotep:dn";
+      }
+      description "The output port for the Connection";
+    }
+    container output-channel-attributes {
+      uses lotet:Monitored-Output-Power-Config;
+      description "Monitored Channel Configuration data";
+    }
+  }
+
+  grouping Connection-Inventory {
+    description
+        "Inventory (non-config and non-varying) parameters associated
+        with the connection";
+    uses lotet:Product-Specific-Description {
+      description
+            "The entity-description indicates which port within the service
+            this is.";
+    }
+  }
+
+  grouping Connection-State {
+    description
+        "State parameters associated with the connection";
+    uses lotet:Channel-Wavelength-Specification-State;
+    uses Attenuated-Attributes;
+    uses Attenuated-Slot-Entities;
+
+    container input-channel-attributes {
+      uses lotet:Monitored-Power-Frequency-State;
+      description "Monitored Connection State data";
+    }
+    container output-channel-attributes {
+      uses lotet:Monitored-Power-Frequency-State;
+      description "Monitored Connection State data";
+    }
+  }
+
+  grouping Connection-Top {
+    description
+        "Provides a definition for the top-level for a connection entity.";
+    container config {
+      description "Configurable items of the connection.";
+      uses Connection-Config;
+    }
+
+    container state {
+      config false;
+      description "Operational state data of the connection.";
+      uses Connection-Inventory;
+      uses Connection-State;
+    }
+  }
+
+  grouping Connection-Entities {
+    description
+        "Top level grouping for connection entities.";
+
+    container connections {
+      if-feature connection-supported;
+      list connection {
+        key dn;
+        description
+                "An entry containing management information applicable to a particular
+                connection.";
+
+        leaf dn {
+          type lotet:Distinguished-Name;
+          description
+                    "DN of the connection.";
+        }
+
+        uses Connection-Top;
+      }
+
+      description
+            "This provides top level container for the list of all connection
+            entities.";
+    }
+  }
+
+  /*
+   * data definition statements
+   */
+  uses Connection-Entities;
+
+  /*
+   * augment statements
+   */
+
+  /*
+   * rpc statements
+   */
+  rpc itu-50-ghz-channel-plan {
+    description
+      "Request set up an ITU 50GHz channel plan.";
+    input {
+      leaf dn {
+        type lotet:Distinguished-Name;
+        description
+          "DN of the wss.";
+      }
+    }
+  }
+  
+  rpc remove-all-connections {
+    description
+      "Remove all connections from the WSS.";
+    input {
+      leaf dn {
+        type lotet:Distinguished-Name;
+        description
+          "DN of the wss.";
+      }
+    }
+  }
+  
+  rpc delete-connection {
+    description
+      "Request delete a connection.";
+    input {
+      leaf dn {
+        type lotet:Distinguished-Name;
+        description
+          "DN of the connection to be deleted.";
+      }
+    }
+  }
+  
+  rpc add-connection {
+    description
+      "Request the add of a connection.";
+    input {
+      leaf dn {
+        type lotet:Distinguished-Name;
+        mandatory true;
+        description
+          "DN of the connection to setup.";
+      }
+      leaf start-freq {
+        type lotet:Dwdm-Frequency-Range-Ghz;
+          mandatory true;
+          description
+            "The start frequency of the connection in GHz for the connection to be created with.";
+      }
+      leaf end-freq {
+        type lotet:Dwdm-Frequency-Range-Ghz;
+          mandatory true;
+          description
+            "The end frequency of the connection in GHz for the connection to be created with.";
+      }
+      leaf attenuation {
+        type lotet:Optical-Power-Relative;
+        description
+              "The attenuation for the connection to be created with.
+              Uses default value if not specified.";
+      }
+      leaf blocked {
+        type boolean;
+        description
+              "The blocked state for the connection to be created with.
+              Uses default value if not specified.";
+      }
+      leaf maintenance-state {
+        type lotet:Maintenance-State;
+        description "The Maintenance State for the connection to be created with.
+        Uses default value if not specified.";
+      }
+      leaf input-port-reference {
+        type leafref {
+          path "/lotep:physical-ports/lotep:physical-port/lotep:dn";
+        }
+        mandatory true;
+        description "The input port for the connection to be created with.";
+      }
+      leaf output-port-reference {
+        type leafref {
+          path "/lotep:physical-ports/lotep:physical-port/lotep:dn";
+        }
+        mandatory true;
+        description "The output port for the connection to be created with.";
+      }
+          
+      leaf custom-name {
+        type string {
+          length "0..32";
+        }
+          description
+            "Custom name for the connection to be created with.
+             Uses default value if not specified.";
+      }
+    }
+  }
+  
+    rpc configure-cc-connection {
+    description
+      "Configure the CC connection.
+      This automatically setup: 
+      the start/end frequecies, 
+      enable the TOSA";
+    input {
+      leaf dn {
+        type lotet:Distinguished-Name;
+        mandatory true;
+        description
+          "DN of the connection to setup.";
+      }
+      leaf input-port-reference {
+        type leafref {
+          path "/lotep:physical-ports/lotep:physical-port/lotep:dn";
+        }
+        mandatory true;
+        description "The input port for the CC connection.";
+      }
+      leaf output-port-reference {
+        type leafref {
+          path "/lotep:physical-ports/lotep:physical-port/lotep:dn";
+        }
+        mandatory true;
+        description "The output port for the CC connection.";
+      }
+      leaf custom-input-id {
+        type lotet:Identity-Code;
+        description
+          "Identification code that was detected on the optical input.";
+      }
+    }
+  }
+  /*
+   * notification statements
+   */ }
+

@@ -1,0 +1,694 @@
+
+module lumentum-ote-types {
+  namespace "http://www.lumentum.com/lumentum-ote-types";
+  prefix "lotet";
+
+  organization "Lumentum Operations LLC";
+  contact "support@lumentum.com";
+
+  description
+    "This submodule contains type-definitions used across other parts of the
+     OTE module.
+
+     ---------------------------------------------------------------------------
+     This document and its contents are proprietary and confidential to Lumentum
+     Operations LLC, and/or its parent, subsidiary and/or affiliate entities.
+     Neither this document, nor any part of it, may be disclosed or conveyed to,
+     used or copied by or for, any third party without the prior written consent
+     of Lumentum. LUMENTUM, and the LUMENTUM & DESIGN are trademarks of Lumentum
+     Operations LLC. Copyright 2016-2017 Lumentum Operations LLC. All rights
+     reserved. The use of a copyright notice on this document shall not be taken
+     to indicate that it has been published.
+     ---------------------------------------------------------------------------
+
+    ";
+
+  revision 2017-06-21 {
+    description
+      "Add support for meta-information like configuration ranges.";
+    reference "None";
+  }
+
+  revision 2017-06-09 {
+    description
+      "Add system-vendor parameters to the Physical-Entity-Inventory.";
+    reference "None";
+  }
+
+  revision 2017-06-07 {
+    description
+      "Change pattern quotes from double to single quotes.";
+    reference "None";
+  }
+
+  revision 2017-04-24 {
+    description
+      "Increase number of characters allowed in manufacturing-site.";
+    reference "None";
+  }
+
+  revision 2017-04-12 {
+    description
+      "Add Power-Watts type.";
+    reference "None";
+  }
+
+  revision 2017-02-27 {
+    description
+      "1) Minor comment and indentation changes.
+       2) Add RPC-Distinguished-Name grouping.";
+    reference "None";
+  }
+
+  revision 2017-01-18 {
+    description
+      "1) Modify type definition for Current-Amperes.
+       2) Add Voltage type.";
+    reference "None";
+  }
+
+  revision 2016-09-27 {
+    description 
+      "1) removed the entity-containment feature and associated mechanisms.
+       2) increased the range of Bitrate-MegaBitsPerSec.
+       3) changed the Clei-Code and Simple-Date type also support an empty
+          string.
+       4) added contraints to Physical-Entity-Inventory grouping.
+       5) increased the string length for entity-description.";
+    reference "None";
+  }
+
+  revision 2016-06-01 {
+    description "Initial revision.";
+    reference "None";
+  }
+
+  /*
+   * extension statements
+   */
+
+  /*
+   * feature statements
+   */
+  
+  feature slot-based-supported {
+    description
+      "This feature means the device is slot based rather than true-flex
+       and supports defining a channel by start and end slot, inclusive.";
+  }
+
+  feature include-metadata {
+    description
+      "This feature adds metadata information to the YANG modules. This 
+       information appears as a parallel tree structure in the YANG files and
+       instance model. By convention the identifiers for this information have 
+       -metadata as a postfix.
+
+       Unless otherwise indicated, the metadata contains information that does 
+       not change and only needs to be obtained once. The metadata is typically
+       specific to a product and does not change from device to device.
+
+       Metadata can include various information and some examples are:
+       - configuration ranges
+       - default values
+       - maximum list sizes
+       - operating ranges.";
+  }
+
+  /*
+   * identity statements
+   */
+
+  /*
+   * typedef statements
+   */
+
+  typedef Maintenance-State {
+    type enumeration {
+      enum in-service {
+        value "1";
+        description "Entity is in a in-service maintenance state.";
+      }
+      enum out-of-service {
+        value "2";
+        description
+          "Entity is in a out-of-service maintenance state. The entity
+           is functionaly disabled and no alarms are reported.";
+      }
+    }
+    description
+      "Enumeration of valid maintenance states for a managed entity.";
+  }
+
+  typedef Direction {
+      type enumeration {
+        enum input {
+          value "1";
+          description "Input direction.";
+        }
+        enum output {
+          value "2";
+          description
+            "output direction.";
+        }
+      }
+      description
+        "Enumeration of valid maintenance states for a managed entity.";
+    }
+
+
+  typedef Optical-Power-Absolute {
+    type decimal64 {
+      fraction-digits 2;
+      range "-100.00..100.00";
+    }
+    description 
+      "The absolute optical power in dBM.";
+  }
+
+  typedef Optical-Power-Relative {
+    type decimal64 {
+      fraction-digits 2;
+      range "-100.00..100.00";
+    }
+    description
+      "The relative optical power in dB.";
+  }
+
+  typedef Temperature-Deg-C {
+    type decimal64 {
+      fraction-digits 2;
+      range "-100.00..100.00";
+    }
+    description
+      "Temperature in degrees Celcius.";
+  }
+  typedef Temperature-Deg-C-Hysteresis {
+    type decimal64 {
+      fraction-digits 2;
+      range "0.0..100.00";
+    }
+    description
+      "Temperature in degrees Celcius.";
+  }
+
+  typedef Current-Amperes {
+    type decimal64 {
+      fraction-digits 6;
+    }
+    description
+      "Current in Amperes.";
+  }
+
+  typedef Voltage {
+    type decimal64 {
+      fraction-digits 6;
+    }
+    description
+      "Voltage measured in Volts.";
+  }
+
+  typedef Power-Watts {
+    type decimal64 {
+      fraction-digits 6;
+    }
+    description
+      "Power measured in Watts.";
+  }
+
+  typedef Enable-Disable {
+    type enumeration {
+      enum enable  { value "1"; description "Value indicating a capability is Enabled."; }
+      enum disable { value "2"; description "Value indicating a capability is Disabled."; }
+    }
+    description
+      "Used for parameters supporting ENABLE/DISABLE values.";
+  }
+  typedef Dwdm-Frequency-Range-Ghz {
+    type decimal64 { 
+     fraction-digits 3;
+    }
+    description
+      "Represents a DWDM Frequency in GHz. 
+        range 184000.000..196125.000";
+  }
+
+  typedef Bitrate-MegaBitsPerSec {
+    type uint32 { range "0..25500"; }
+    description
+      "Datarate specification based on Megabits per second.";
+  }
+
+  typedef Clei-Code {
+    type string {
+      length "0..10";
+      pattern '[A-Z0-9]{10}';
+    }
+    description
+      "Represents a Telcordia CLEI code.";
+  }
+
+  typedef Identity-Code {
+    type string {
+      length "0..10";
+      pattern '[0-9]{10}';
+    }
+    description
+      "Represents an identity code used for unique IDs within the system";
+  }
+  
+  typedef Simple-Date {
+    type string {
+      length "0..10";
+      pattern '\d{4}-\d{2}-\d{2}';
+     }
+     description
+      "The simple date type is a profile of the ISO 8601 standard for 
+       representation of date using the Gregorian calendar. The format is 
+       YYYY-MM-DD.";
+  }
+
+  typedef Distinguished-Name {
+    type string {
+      length "0..100";
+      pattern '([-\w]+=[\d]+;)*[-\w]+=[\d]+';
+    }
+    description
+      "The distinguished name (DN) is used to provided intuitive naming for 
+       parts the system. The DN provides a hierarchical approach to 
+       addressing and used as table keys. The following are examples:
+         - 'ne=1;chassis=1;card=1;port=3'
+         - 'ne=1;chassis=2;slot=5;card=1;port=5'
+         - 'ne=1;chassis=1;fru=2'";
+
+   reference 
+      "X.500: The Directory --- overview of concepts, models and 
+              services, 1993. CCITT X.500 Series Recommendations.
+       RFC1779: A String Representation of Distinguished Names";
+  }
+
+  /*
+   * grouping statements
+   */
+
+  grouping Optical-Power-Absolute-Metadata {
+    description
+      "This defines the metadata information for the typedef 
+       Optical-Power-Absolute.";
+    leaf minimum {
+      type lotet:Optical-Power-Absolute;
+      description "The minimum provisionable value allowed.";
+    }
+    leaf maximum {
+      type lotet:Optical-Power-Absolute;
+      description "The maximum provisionable value allowed.";
+    }
+    leaf default {
+      type lotet:Optical-Power-Absolute;
+      description 
+        "The default value for the corresponding parameter. The default is the 
+         initial value the corresponding parameter takes on before any 
+         provisioning is applied. For example, this default value is applied
+         after issuing a reset-to-factory-defaults RPC.";
+    }
+  }
+
+  grouping Optical-Power-Relative-Metadata {
+    description
+      "This defines the metadata information for the typedef 
+       Optical-Power-Relative.";
+    leaf minimum {
+      type lotet:Optical-Power-Relative;
+      description "The minimum provisionable value allowed.";
+    }
+    leaf maximum {
+      type lotet:Optical-Power-Relative;
+      description "The maximum provisionable value allowed.";
+    }
+    leaf default {
+      type lotet:Optical-Power-Relative;
+      description 
+        "The default value for the corresponding parameter. The default is the 
+         initial value the corresponding parameter takes on before any 
+         provisioning is applied. For example, this default value is applied
+         after issuing a reset-to-factory-defaults RPC.";
+    }
+  }
+
+  grouping Physical-Entity-Inventory {
+    description 
+      "This type is used to describe the inventory information 
+       (non-config readonly) attributes of a physical entity.";
+
+    leaf serial-no {
+      type string {
+        length "0..35";
+      }
+      description
+        "The serial number of the physical entity.";
+    }
+
+    leaf hardware-rev {
+      type string {
+        length "0..6";
+      }
+      description
+        "The hardware revision.";
+    }
+
+    leaf manufacturing-site {
+      type string {
+        length "0..6";
+      }
+      description
+        "The manufacturing site for the physical entity.";
+    }
+
+    leaf manufacturing-date {
+      type Simple-Date;
+      description
+        "The date of manufacturing.";
+    }
+
+    leaf clei-code {
+      type Clei-Code;
+      description
+        "The optional CLEI code of the physical entity.";
+    }
+
+    leaf marketing-pn {
+      type string {
+        length "0..32";
+      }
+      description
+        "The marketing part number.";
+    }
+
+    leaf marketing-name {
+      type string {
+        length "0..32";
+      }
+      description
+        "The marketing name.";
+    }
+
+    leaf system-vendor-name {
+      type string {
+        length "0..64";
+      }
+      description
+        "The name of the system vendor.";
+    }
+
+    leaf system-vendor-pn {
+      type string {
+        length "0..64";
+      }
+      description
+        "The system vendor part number.";
+    }
+
+  } // Physical-Entity-Inventory
+
+  grouping Product-Specific-Description {
+    description
+      "This grouping contains a product-specific description of the entity
+       within the system.";
+
+    leaf entity-description {
+      type string {
+        length "1..64";
+      }
+      description
+        "This field is a string providing a description about the
+         contained entity. Typically this adjunct information is product
+         specific and provides some context for the entity.
+
+         An example use of this is for a port which appears on the
+         faceplate, this label would indicate the name of the port
+         as it appears on the faceplate.";
+    }
+  } // Product-Specific-Description
+
+  grouping Custom-Name {
+    description
+      "This grouping provides for user specified naming of an entity.";
+   
+    leaf custom-name {
+      type string {
+        length "0..32";
+      }
+      description
+        "This field is provides a mechanism for the user to provide a name or 
+         label to an entity. This is an optional field.";
+    }
+  } // Custom-Name
+   
+  grouping Maintenance-State-Attributes {
+      description
+          "Provides a grouping for the maintenance-state.";
+      leaf maintenance-state {
+        type Maintenance-State;
+        description "Maintenance-State";
+      }
+    }
+
+  grouping Optical-Return-Loss-State {
+    description 
+      "This grouping provides state information for support of 
+       optical-return-loss";
+
+    leaf back-reflection-power {
+      type Optical-Power-Absolute;
+      description
+        "The measured back-reflection power.";
+    }
+
+    leaf optical-return-loss {
+      type Optical-Power-Relative;
+      description
+        "The calculated optical return loss between the output-power
+         and the back-reflection monitor power.";
+    }
+  } // Optical-Return-Loss-State
+
+  grouping Optical-Return-Loss-Config {
+    description 
+      "This grouping provides configuration information for support of 
+       optical-return-loss";
+
+    leaf optical-return-loss-threshold {
+      type Optical-Power-Relative;
+      description
+        "The threshold for raising the optical-return-loss alarm.";
+    }
+
+    leaf optical-return-loss-hysteresis {
+      type Optical-Power-Relative;
+      description
+        "The difference, in dB, between the threshold at which an
+         optical-return-loss alarm is raised and when it is cleared.";
+    }
+  } // Optical-Return-Loss-Config
+ 
+  grouping Channel-Wavelength-Specification-Attributes {
+    description "Parameters for describing a channel.";
+    leaf start-freq {
+      type Dwdm-Frequency-Range-Ghz;
+      description "Channel Start Frequency in GHz";
+    }
+
+    leaf end-freq {
+      type Dwdm-Frequency-Range-Ghz;
+      description "Channel End Frequency in GHz";
+    }
+  }
+
+  grouping Channel-Wavelength-Specification-State {
+    description "State items of a channel, uses Channel-Wavelength-Specification-Attributes.";
+    uses Channel-Wavelength-Specification-Attributes;
+    leaf start-slot-index {
+      if-feature slot-based-supported;
+      type uint16;
+      config false;
+      description
+            "Starting slot index of the channel, inclusive.";
+    }
+    leaf end-slot-index {
+      if-feature slot-based-supported;
+      type uint16;
+      config false;
+      description
+            "End slot index of the channel, inclusive.";
+    }
+  }
+
+  grouping Monitored-Input-Power-Config {
+    description
+      "Provides a definition for the top-level for a Monitored-Input-Power-Config
+      entity.";
+  
+    leaf input-low-degrade-threshold {
+      type Optical-Power-Absolute;
+      description
+        "The threshold for raising the input-low-degrade alarm.";
+    }
+  
+    leaf input-low-degrade-hysteresis {
+      type Optical-Power-Relative;
+      description
+        "The difference, in dB, between the threshold at which an 
+         input-low-degrade alarm is raised and when it is cleared.";
+    }
+        
+    leaf optical-los-threshold {
+      type lotet:Optical-Power-Absolute;
+      description
+        "The power value in dBm at which an optical-los alarm will be generated.";
+    }
+
+    leaf optical-los-hysteresis {
+      type lotet:Optical-Power-Relative;
+      description
+        "The difference, in dB, between the threshold at which an optical-los
+         alarm is raised and when it is cleared.";
+    }
+
+    leaf input-overload-threshold {
+      type lotet:Optical-Power-Absolute;
+      description
+        "The power value in dBm at which an input-overload alarm will be generated.";
+    }
+
+    leaf input-overload-hysteresis {
+      type lotet:Optical-Power-Relative;
+      description
+        "The difference, in dB, between the threshold at which an input-overload
+         alarm is raised and when it is cleared.";
+    }
+
+  }
+
+
+  grouping Monitored-Output-Power-Config {
+    description
+      "Provides a definition for the top-level for a Monitored-Output-Power-Config
+      entity.";
+  
+    leaf output-low-degrade-threshold {
+      type Optical-Power-Absolute;
+      description
+        "The threshold for raising the output-low-degrade alarm.";
+    }
+  
+    leaf output-low-degrade-hysteresis {
+      type Optical-Power-Relative;
+      description
+        "The difference, in dB, between the threshold at which an 
+         output-low-degrade alarm is raised and when it is cleared.";
+    }        
+
+    leaf optical-loo-threshold {
+      type lotet:Optical-Power-Absolute;
+      description
+        "The power value in dBm at which an optical-loo alarm will be generated.";
+    }
+
+    leaf optical-loo-hysteresis {
+      type lotet:Optical-Power-Relative;
+      description
+        "The difference, in dB, between the threshold at which an optical-loo
+         alarm is raised and when it is cleared.";
+    }
+
+    leaf output-overload-threshold {
+      type lotet:Optical-Power-Absolute;
+      description
+        "The power value in dBm at which an output-overload alarm will be generated.";
+    }
+
+    leaf output-overload-hysteresis {
+      type lotet:Optical-Power-Relative;
+      description
+        "The difference, in dB, between the threshold at which an output-overload
+         alarm is raised and when it is cleared.";
+    }
+
+  }
+
+  grouping Monitored-Power-State {
+    description
+      "Provides a definition for the top-level for a Monitored-Power-State
+      entity.";
+    leaf power {
+      type Optical-Power-Absolute;
+      description "Measured Optical power";
+    }
+  }
+
+  grouping Monitored-Power-Frequency-State {
+    description "State parameters for Monitored Channels";
+    uses Monitored-Power-State;
+    leaf measured-frequency {
+      type Dwdm-Frequency-Range-Ghz;
+      description
+            "Channel measured center frequency";
+    }
+    leaf valid-data {
+      type boolean;
+      description
+            "True if measured values are valid.";
+    }
+  }
+
+  grouping RPC-Distinguished-Name {
+    description
+      "Provides a common definition for RPCs containing a DN.";
+    leaf dn {
+      type lotet:Distinguished-Name;
+      mandatory true;
+      description
+        "DN of the entity being operated on.";
+    }
+  }
+
+  grouping Integer-Metadata {
+    description
+      "This defines the metadata information for an integer
+       parameter.";
+    leaf minimum {
+      type int64;
+      description "The minimum provisionable value allowed.";
+    }
+    leaf maximum {
+      type int64;
+      description "The maximum provisionable value allowed.";
+    }
+    leaf default {
+      type int64;
+      description
+        "The default value for the corresponding parameter. The default is the
+         initial value the corresponding parameter takes on before any
+         provisioning is applied. For example, this default value is applied
+         after issuing a reset-to-factory-defaults RPC.";
+    }
+  }
+
+  /*
+   * data definition statements
+   */
+
+  /*
+   * augment statements
+   */
+
+  /*
+   * rpc statements
+   */
+
+  /*
+   * notification statements
+   */
+
+
+} // lumentum-ote-types
