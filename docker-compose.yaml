@@ -11,4 +11,4 @@ services:
   tapi_ols:
     build: ./emulator-tapi-2.1
     ports:
-      - "11001:1234"
+      - "11000:1234"
