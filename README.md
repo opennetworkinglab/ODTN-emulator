@@ -50,7 +50,7 @@ bazel build onos
 bazel run onos-local -- clean
 ```
 
-### 3. Push node and link information
+## III. Push node and link information
 
 ```shell
 # The Cassini node owns 32 ports including 16 client-side ports and 16 line-side ports.
@@ -60,7 +60,7 @@ onos-netcfg localhost topo/with-rest-tapi/device.json
 onos-netcfg localhost topo/with-rest-tapi/link.json
 ```
 
-### 4. Create/delete the line-side/client-side connectivities
+## IV. Create/delete the line-side/client-side connectivities
 
 ```shell
 # Python2.7
@@ -75,7 +75,7 @@ execute-tapi-post-call.py 127.0.0.1 tapi-connectivity:create-connectivity-servic
 execute-tapi-delete-call 127.0.0.1 both
 ```
 
-### Notes about modification in yang files under `emulator-oc-cassini` directory
+## V. Notes about modification in yang files under `emulator-oc-cassini` directory
 1. Although openconfig yang models are defined with YANG 1.0, we still add module prefix before identity reference as YANG 1.1 requires. Please see https://github.com/openconfig/public/issues/223.
 2. There are operational data ("config false") and configurable data ("config true"). The operational data can not be pushed into sysrepo datastore directly via XML file, but depend on some simple C API. To simplify, the operational data in openconfig-platform.yang, openconfig-platform-transceiver.yang, and openconfig-terminal-device.yang are converted into configurational data. The code block in `push-data.sh` is listed below:
 
