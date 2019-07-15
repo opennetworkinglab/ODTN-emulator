@@ -31,11 +31,45 @@ docker run -it -d --name odtn-emulator_tapi_ols_1 -p 11000:1234 onosproject/tapi
 ```
 
 ## Test if the Cassini docker runs sucessfully
-If you want to check whether the containers start up, there are three commands to test three containers respectively:
+If you want to check whether the containers start up, you can use *netconf-console* and *curl*. To install *netconf-console* which is a  console application for interacting with NETCONF servers built on top of ncclient as follows.
+
+```bash
+pip3 install netconf-console
+```
+
+**Note**: You also need to make sure   *ncclient* version **0.6.3**  is installed on your machine. To check the version of *ncclient* on your machine, you can use the following command:
+```bash
+pip3  show ncclient
+```
+
+And the output will be like this:
+```bash
+Name: ncclient
+Version: 0.6.3
+Summary: Python library for NETCONF clients
+Home-page: https://github.com/ncclient/ncclient
+Author: Shikhar Bhushan, Leonidas Poulopoulos, Ebben Aries, Einar Nilsen-Nygaard
+Author-email: shikhar@schmizz.net, lpoulopoulos@verisign.com, earies@juniper.net, einarnn@gmail.com
+License: Apache 2.0
+Location: /usr/local/lib/python3.7/site-packages
+Requires: lxml, six, setuptools, paramiko, selectors2
+Required-by: netconf-console
+```
+
+
+ If higher versions of ncclient installed on your machine, you need to reinstall it as follows:
+
+```bash
+pip3 install ncclient==0.6.3
+```
+
+
+There are three commands to test three containers respectively as follows:
 
 * `netconf-console --host=127.0.0.1 --port=11002 -u root -p root --rpc=emulator-test/get-terminal-device.xml`
 * `netconf-console --host=127.0.0.1 --port=11003 -u root -p root --rpc=emulator-test/get-terminal-device.xml`
 * `curl http://localhost:11000/restconf/data/tapi-common:context`
+
 
 
 # Start onos and activate odtn-service locally
