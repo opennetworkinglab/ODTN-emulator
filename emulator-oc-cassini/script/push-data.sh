@@ -3,14 +3,14 @@
 export LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib
 # Clean the yang space
 sysrepoctl --uninstall --module=openconfig-terminal-device --revision=2017-07-08
-sysrepoctl --uninstall --module=openconfig-platform-transceiver revision=2018-05-15
-sysrepoctl --uninstall --module=openconfig-platform-port revision=2018-01-20
-sysrepoctl --uninstall --module=openconfig-if-ethernet revision=2018-04-10
-sysrepoctl --uninstall --module=openconfig-transport-line-common revision=2017-09-08
-sysrepoctl --uninstall --module=openconfig-interfaces revision=2018-04-24
-sysrepoctl --uninstall --module=openconfig-platform-linecard revision=2017-08-03
-sysrepoctl --uninstall --module=openconfig-transport-line-protection revision=2017-09-08
-sysrepoctl --uninstall --module=openconfig-platform revision=2018-06-13
+sysrepoctl --uninstall --module=openconfig-platform-transceiver --revision=2018-05-15
+sysrepoctl --uninstall --module=openconfig-platform-port --revision=2018-01-20
+sysrepoctl --uninstall --module=openconfig-if-ethernet --revision=2018-04-10
+sysrepoctl --uninstall --module=openconfig-transport-line-common --revision=2017-09-08
+sysrepoctl --uninstall --module=openconfig-interfaces --revision=2018-04-24
+sysrepoctl --uninstall --module=openconfig-platform-linecard --revision=2017-08-03
+sysrepoctl --uninstall --module=openconfig-transport-line-protection --revision=2017-09-08
+sysrepoctl --uninstall --module=openconfig-platform --revision=2018-06-13
 
 cd /root/yang/openconfig-odtn
 # Change a leafref to leaf with type uint32, because of parsing errors
