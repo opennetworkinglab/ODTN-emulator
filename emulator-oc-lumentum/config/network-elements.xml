@@ -1,0 +1,24 @@
+<network-elements xmlns="http://www.lumentum.com/lumentum-ote-ne" xmlns:lotene="http://www.lumentum.com/lumentum-ote-ne" xmlns:lotenip="http://www.lumentum.com/lumentum-ote-ne-ip-service">
+  <network-element>
+    <dn>ne=1</dn>
+    <config>
+      <lotene:cli-over-ssh>enable</lotene:cli-over-ssh>
+    </config>
+    <lotenip:ip-service>
+      <lotenip:config>
+        <lotenip:ipv4>
+          <lotenip:ip-address>192.168.0.1</lotenip:ip-address>
+          <lotenip:ip-netmask>255.255.255.0</lotenip:ip-netmask>
+          <lotenip:gateway-address>0.0.0.0</lotenip:gateway-address>
+          <lotenip:dhcp-enabled>true</lotenip:dhcp-enabled>
+        </lotenip:ipv4>
+        <lotenip:ipv6>
+          <lotenip:ip-address>::</lotenip:ip-address>
+          <lotenip:prefix-length>128</lotenip:prefix-length>
+          <lotenip:gateway-address>::</lotenip:gateway-address>
+          <lotenip:enabled>true</lotenip:enabled>
+        </lotenip:ipv6>
+      </lotenip:config>
+    </lotenip:ip-service>
+  </network-element>
+</network-elements>

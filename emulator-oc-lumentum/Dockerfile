@@ -41,3 +41,4 @@ EXPOSE 830
 EXPOSE 22
 EXPOSE 8080
 WORKDIR /root
+ENTRYPOINT ["sh", "/root/script/push-data.sh"]

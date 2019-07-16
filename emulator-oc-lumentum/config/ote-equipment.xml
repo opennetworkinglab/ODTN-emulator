@@ -1,0 +1,16 @@
+<cards xmlns="http://www.lumentum.com/lumentum-ote-equipment" xmlns:loteq="http://www.lumentum.com/lumentum-ote-equipment">
+  <card>
+    <dn>ne=1;chassis=1;card=1</dn>
+    <config>
+      <loteq:custom-name/>
+    </config>
+  </card>
+</cards>
+<chassis-list xmlns="http://www.lumentum.com/lumentum-ote-equipment" xmlns:loteq="http://www.lumentum.com/lumentum-ote-equipment">
+  <chassis>
+    <dn>ne=1;chassis=1</dn>
+    <config>
+      <loteq:custom-name>LABRETI</loteq:custom-name>
+    </config>
+  </chassis>
+</chassis-list>	

@@ -1,0 +1,14 @@
+<frus xmlns="http://www.lumentum.com/lumentum-ote-fru">
+  <fru>
+    <dn>ne=1;chassis=1;fru=1</dn>
+  </fru>
+  <fru>
+    <dn>ne=1;chassis=1;fru=2</dn>
+  </fru>
+  <fru>
+    <dn>ne=1;chassis=1;fru=3</dn>
+  </fru>
+  <fru>
+    <dn>ne=1;chassis=1;fru=4</dn>
+  </fru>
+</frus>

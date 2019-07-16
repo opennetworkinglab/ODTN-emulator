@@ -1,0 +1,14 @@
+<custom-lists xmlns="http://www.lumentum.com/lumentum-ote-custom-list">
+  <custom-list>
+    <index>1</index>
+    <config/>
+  </custom-list>
+  <custom-list>
+    <index>2</index>
+    <config/>
+  </custom-list>
+  <custom-list>
+    <index>3</index>
+    <config/>
+  </custom-list>
+</custom-lists>

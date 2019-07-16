@@ -1,0 +1,15 @@
+{
+  "devices": {
+    "netconf:10.10.10.30:830": {
+      "netconf": {
+        "ip": "10.10.10.30",
+        "port": "830",
+        "username": "superuser",
+        "password": "Sup%9User"
+      },
+      "basic": {
+        "driver": "lumentum-roadm20whitebox-netconf"
+      }
+    }
+  }
+}
