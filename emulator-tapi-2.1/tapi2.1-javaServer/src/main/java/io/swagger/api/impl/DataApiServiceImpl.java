@@ -1,5 +1,6 @@
 package io.swagger.api.impl;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import io.swagger.api.ApiResponseMessage;
 import io.swagger.api.DataApiService;
@@ -1453,57 +1454,83 @@ log.info("method dataContextConnectivityContextGet is called.");
 
     @Override
     public Response dataContextConnectivityContextPost(TapiConnectivityConnectivityContext tapiConnectivityContextConnectivityContextBodyParam, SecurityContext securityContext) throws NotFoundException {
-log.info("method dataContextConnectivityContextPost is called.");
-        try {
-            /** Merge into tapi-common:context  **/
-            TapiConnectivityConnectivityContext cc = context.getConnectivityContext();
-            if (cc == null) {
-                context.setConnectivityContext(tapiConnectivityContextConnectivityContextBodyParam);
-            } else {
-                List<TapiConnectivityConnectivityService> tccs =
-                        tapiConnectivityContextConnectivityContextBodyParam.getConnectivityService();
-                List<TapiConnectivityConnection> tcc =
-                        tapiConnectivityContextConnectivityContextBodyParam.getConnection();
-                // Merge List<TapiConnectivityConnectivityService>
-                if (tccs != null && !tccs.isEmpty()) {
-                    if (cc.getConnectivityService() == null || cc.getConnectivityService().isEmpty()) {
-                        cc.setConnectivityService(tccs);
-                    } else {
-                        Set<String> uuids = Sets.newHashSet();
-                        cc.getConnectivityService().stream().forEach(action -> uuids.add(action.getUuid()));
-                        tccs.stream().forEach(action -> {
-                            if (!uuids.contains(action.getUuid())) {
-                                cc.getConnectivityService().add(action);
-                            } else {
-                                log.warn("insert conflict of tapi-connectivity:connectivity-service with uuid {}.",
-                                        action.getUuid());
+        synchronized (this) {
+            log.info("method dataContextConnectivityContextPost is called.");
+            try {
+                /** Merge into tapi-common:context  **/
+                TapiConnectivityConnectivityContext cc = context.getConnectivityContext();
+                if (cc == null) {
+                    context.setConnectivityContext(tapiConnectivityContextConnectivityContextBodyParam);
+                } else {
+                    List<TapiConnectivityConnectivityService> tccs =
+                            tapiConnectivityContextConnectivityContextBodyParam.getConnectivityService();
+                    List<TapiConnectivityConnection> tcc =
+                            tapiConnectivityContextConnectivityContextBodyParam.getConnection();
+
+                    // check if List<TapiConnectivityConnectivityService> contains conflicting entity.
+                    boolean conflict = false;
+                    if (tccs != null && !tccs.isEmpty()) {
+                        if (cc.getConnectivityService() == null) {
+                            cc.setConnectivityService(Lists.newArrayList());
+                        } else {
+                            Set<String> uuids = Sets.newHashSet();
+                            cc.getConnectivityService().stream().forEach(action -> uuids.add(action.getUuid()));
+                            for (TapiConnectivityConnectivityService tmp : tccs) {
+                                if (uuids.contains(tmp.getUuid())) {
+                                    log.warn("insert conflict of tapi-connectivity:connectivity-service with uuid {}.",
+                                            tmp.getUuid());
+                                    conflict = true;
+                                    break;
+                                }
                             }
-                        });
-                    }
-                }
-                // Merge List<TapiConnectivityConnection>
-                if (tcc != null && !tcc.isEmpty()) {
-                    if (cc.getConnection() == null || cc.getConnection().isEmpty()) {
-                        cc.setConnection(tcc);
+                            if (conflict) {
+                                return Response.status(Response.Status.CONFLICT).build();
+                            }
+                        }
                     } else {
-                        Set<String> uuids = Sets.newHashSet();
-                        cc.getConnection().stream().forEach(action -> uuids.add(action.getUuid()));
+                        log.warn("The list of TapiConnectivityConnectivityService shouldn't be null or empty");
+                        return Response.notAcceptable(null).build();
+                    }
+                    // check if List<TapiConnectivityConnection> contains conflicting entity.
+                    if (tcc != null && !tcc.isEmpty()) {
+                        if (cc.getConnection() == null) {
+                            cc.setConnection(Lists.newArrayList());
+                        } else {
+                            Set<String> uuids = Sets.newHashSet();
+                            cc.getConnection().stream().forEach(action -> uuids.add(action.getUuid()));
+                            for (TapiConnectivityConnection tmp : tcc) {
+                                if (uuids.contains(tmp.getUuid())) {
+                                    log.warn("insert conflict of tapi-connectivity:connection with uuid {}.",
+                                            tmp.getUuid());
+                                    conflict = true;
+                                    break;
+                                }
+                            }
+                            if (conflict) {
+                                return Response.status(Response.Status.CONFLICT).build();
+                            }
+                        }
+                    } else {
+                        log.warn("The list of TapiConnectivityConnection shouldn't be null or empty");
+//                    return Response.notAcceptable(null).build();
+                    }
+                    // Merge two lists.
+                    tccs.stream().forEach(action -> {
+                        cc.getConnectivityService().add(action);
+                    });
+                    if (tcc != null) {
                         tcc.stream().forEach(action -> {
-                            if (!uuids.contains(action.getUuid())) {
-                                cc.getConnection().add(action);
-                            } else {
-                                log.warn("insert conflict of tapi-connectivity:connection with uuid {}.",
-                                        action.getUuid());
-                            }
+                            cc.getConnection().add(action);
                         });
                     }
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
+                return Response.serverError().build();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
             return Response.created(null).build();
         }
+
     }
 
     @Override
