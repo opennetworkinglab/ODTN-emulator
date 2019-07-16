@@ -1,0 +1,17 @@
+<nc:rpc-reply xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="urn:uuid:4aaef261-973a-43c8-b597-b1978fbc2478">
+  <data xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <components xmlns="http://openconfig.net/yang/platform">
+      <component>
+        <name>oe1/2</name>
+        <optical-channel xmlns="http://openconfig.net/yang/terminal-device">
+          <config>
+            <frequency>194750000</frequency>
+            <target-output-power>-5.1</target-output-power>
+            <line-port>oe1</line-port>
+          </config>
+        </optical-channel>
+      </component>
+    </components>
+  </data>
+</nc:rpc-reply>
+
