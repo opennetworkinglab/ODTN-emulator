@@ -70,62 +70,6 @@ There are three commands to test three containers respectively as follows:
 * `netconf-console --host=127.0.0.1 --port=11003 -u root -p root --rpc=emulator-test/get-terminal-device.xml`
 * `curl http://localhost:11000/restconf/data/tapi-common:context`
 
-
-
-# Start onos and activate odtn-service locally
-
-```shell
-cd ${ONOS_ROOT}
-export ONOS_APPS=odtn-service,roadm
-bazel build onos
-bazel run onos-local -- clean
-```
-
-## Push node and link information
-To push node and link information, you can use *onos-netcfg* script [onos-netcfg](https://github.com/opennetworkinglab/onos/tree/master/tools/package/runtime/bin/onos-netcfg)  that wraps the REST API to provide a more convenient mechanism to upload configuration from the command line. 
-
-```shell
-# The Cassini node owns 32 ports including 16 client-side ports and 16 line-side ports.
-# The TAPI node owns 2 ports.
-onos-netcfg localhost topo/with-rest-tapi/device.json
-# Each Cassini node has one link to the TAPI node.
-onos-netcfg localhost topo/with-rest-tapi/link.json
-```
-
-After running the above commands, you should be able to see the list of devices and links using ONOS CLI as follows:
-
-To login to ONOS CLI use the following command:
-```bash
-$ONOS_ROOT/tools/test/bin/onos localhost
-```
-To retrieve the list of devices, run the following command from ONOS CLI:
-```bash
-> devices                                                           14:32:02
-id=netconf:127.0.0.1:11002, available=true, local-status=connected 33s ago, role=MASTER, type=TERMINAL_DEVICE, mfr=EDGECORE, hw=Cassini, sw=OcNOS, serial=, chassis=1, driver=cassini-ocnos, ipaddress=127.0.0.1, locType=none, name=cassini2, port=11002, protocol=NETCONF
-id=netconf:127.0.0.1:11003, available=true, local-status=connected 33s ago, role=MASTER, type=TERMINAL_DEVICE, mfr=EDGECORE, hw=Cassini, sw=OcNOS, serial=, chassis=1, driver=cassini-ocnos, ipaddress=127.0.0.1, locType=none, name=cassini1, port=11003, protocol=NETCONF
-id=rest:127.0.0.1:11000, available=true, local-status=connected 34s ago, role=MASTER, type=OLS, mfr=Tapi, hw=0, sw=2.1, serial=Unknown, chassis=0, driver=ols, locType=none, name=rest:127.0.0.1:11000, protocol=REST
-```
-To retrieve the list of links run the following command from ONOS CLI:
-
-```bash
-> links                                                             14:32:04
-src=netconf:127.0.0.1:11002/201, dst=rest:127.0.0.1:11000/UNKNOWN(100000035178), type=OPTICAL, state=ACTIVE, durable=true, metric=1.0, expected=true
-src=netconf:127.0.0.1:11003/201, dst=rest:127.0.0.1:11000/UNKNOWN(100000035182), type=OPTICAL, state=ACTIVE, durable=true, metric=1.0, expected=true
-src=rest:127.0.0.1:11000/UNKNOWN(100000035178), dst=netconf:127.0.0.1:11002/201, type=OPTICAL, state=ACTIVE, durable=true, metric=1.0, expected=true
-src=rest:127.0.0.1:11000/UNKNOWN(100000035182), dst=netconf:127.0.0.1:11003/201, type=OPTICAL, state=ACTIVE, durable=true, metric=1.0, expected=true
-```
-
-# Create/Delete the line-side/client-side connectivities
-
-```shell
-# Python2.7
-
-# 1. Create line-side connectivity
-execute-tapi-post-call.py 127.0.0.1 tapi-connectivity:create-connectivity-service line-side
-# 2. Delete all line-side connectivities
-execute-tapi-delete-call 127.0.0.1 line
-# 3. Create client-side connectivity
-execute-tapi-post-call.py 127.0.0.1 tapi-connectivity:create-connectivity-servic client-side
-# 4. Delete all connectivities
-execute-tapi-delete-call 127.0.0.1 both
-```
+You can now run ONOS and use the GUI:
+- [Run ONOS](run_onos.md)
+- [GUI](gui.md)
