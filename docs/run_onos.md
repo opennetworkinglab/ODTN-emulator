@@ -1,4 +1,4 @@
-#Start ONOS and Execute connectivity requests
+# Start ONOS and Execute connectivity requests
 ## Start ONOS and activate odtn-service locally
 
 ```shell
@@ -60,7 +60,7 @@ src=rest:127.0.0.1:11000/UNKNOWN(100000035178), dst=netconf:127.0.0.1:11002/201,
 src=rest:127.0.0.1:11000/UNKNOWN(100000035182), dst=netconf:127.0.0.1:11003/201, type=OPTICAL, state=ACTIVE, durable=true, metric=1.0, expected=true
 ```
 
-# Create/Delete the line-side/client-side connectivities
+## Create/Delete the line-side/client-side connectivities
 If you have the ONOS code locally go into this folder:
 ```shell
 /Users/andrea/onos/tools/test/scenarios/bin/execute-tapi-context-get-call.py
