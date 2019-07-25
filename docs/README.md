@@ -70,4 +70,6 @@ There are three commands to test three containers respectively as follows:
 * `netconf-console --host=127.0.0.1 --port=11003 -u root -p root --rpc=emulator-test/get-terminal-device.xml`
 * `curl http://localhost:11000/restconf/data/tapi-common:context`
 
-
+You can now run ONOS and use the GUI:
+- [Run ONOS](run_onos.md)
+- [GUI](gui.md)
