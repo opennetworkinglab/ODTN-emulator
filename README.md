@@ -5,6 +5,8 @@ There are two kinds of emulators, i.e., the OpenConfig model under directory [em
 
 [How to build and run ODTN Emulators?](docs/README.md)
 
+[How to run and provision ONOS Emulators?](docs/run_onos.md)
+
 [Graphical User Interface for ODTN](docs/gui.md)
 
 [Notes about modification in Yang files under `emulator-oc-cassini` directory](docs/yang_modification.md)
