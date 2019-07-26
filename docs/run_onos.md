@@ -82,3 +82,25 @@ execute-tapi-post-call.py 127.0.0.1 tapi-connectivity:create-connectivity-servic
 # 4. Delete all connectivities
 execute-tapi-delete-call 127.0.0.1 both
 ```
+
+## Enable the optical channel and tune the wavelength via a flow rule
+
+To enable the optical channel and tune the wavelength via a flow rule, you should do the following steps:
+
+- Activate [optical-model](https://github.com/opennetworkinglab/onos/tree/master/apps/optical-model) using the following command: 
+```bash
+app activate org.onosproject.optical-model
+```
+
+- You can use port-wavelength command to add a flow rule by providing a connectPoint and signal: For example:
+```bash
+port-wavelength netconf:127.0.0.1:11002/201 4/50/1/dwdm
+```
+
+- if you run *flows* command, you should be able to see the list of flows as follows:
+```bash
+flows                                              08:42:17
+deviceId=netconf:127.0.0.1:11002, flowRuleCount=1
+    id=90000a7b0d126, state=PENDING_ADD, bytes=0, packets=0, duration=0, liveType=UNKNOWN, priority=100, tableId=0, appId=org.onosproject.optical-model, selector=[IN_PORT:201], treatment=DefaultTrafficTreatment{immediate=[OCH:OchSignal{+1 x 50.00GHz +/- 25.00GHz}, OUTPUT:201], deferred=[], transition=None, meter=[], cleared=false, StatTrigger=null, metadata=null}
+deviceId=netconf:127.0.0.1:11003, flowRuleCount=0
+```
