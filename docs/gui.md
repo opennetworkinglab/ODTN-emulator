@@ -8,7 +8,7 @@ Follow the instructions posted [How to build and run ODTN Emulators?](README.md)
 
 ![topo](images/hometopo.png)
 
-2. Second, open the roadm custom view page by visiting [Roadm View](http://localhost:8181/onos/ui/#/roadm-gui). You should be able to see the following output:
+2. Second, open the optical device custom view page by visiting [Optical View](http://localhost:8181/onos/ui/#/roadm-gui). You should be able to see the following output:
 
 ![roadm](images/roadm.png)
 
