@@ -3,7 +3,7 @@
     "netconf:127.0.0.1:11002" : {
       "basic" : {
         "name":"cassini2",
-        "driver":"cassini-ocnos"
+        "driver":"cassini-openconfig"
       },
       "netconf" : {
         "ip" : "127.0.0.1",
@@ -16,7 +16,7 @@
     "netconf:127.0.0.1:11003" : {
       "basic" : {
         "name":"cassini1",
-        "driver":"cassini-ocnos"
+        "driver":"cassini-openconfig"
       },
       "netconf" : {
         "ip" : "127.0.0.1",
