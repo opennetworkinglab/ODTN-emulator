@@ -94,7 +94,7 @@ app activate org.onosproject.optical-model
 
 - You can use port-wavelength command to add a flow rule by providing a connectPoint and signal: For example:
 ```bash
-port-wavelength netconf:127.0.0.1:11002/201 4/50/1/dwdm
+wavelength-config netconf:127.0.0.1:11002/201 4/50/1/dwdm
 ```
 
 - if you run *flows* command, you should be able to see the list of flows as follows:
