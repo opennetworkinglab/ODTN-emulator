@@ -3,7 +3,7 @@
 
 ```shell
 cd ${ONOS_ROOT}
-export ONOS_APPS=odtn-service,roadm,gui2
+export ONOS_APPS=odtn-service,roadm,gui2,optical-rest
 bazel build onos
 bazel run onos-local -- clean
 ```
