@@ -63,7 +63,7 @@ src=rest:127.0.0.1:11000/UNKNOWN(100000035182), dst=netconf:127.0.0.1:11003/201,
 ## Create/Delete the line-side/client-side connectivities
 If you have the ONOS code locally go into this folder:
 ```shell
-/Users/andrea/onos/tools/test/scenarios/bin/execute-tapi-context-get-call.py
+$ONOS_ROOT/tools/test/scenarios/bin/
 ```
 if not please pull the scritps from here:  
 - [execute-tapi-post-call.py](https://github.com/opennetworkinglab/onos/blob/master/tools/test/scenarios/bin/execute-tapi-delete-call.py)
