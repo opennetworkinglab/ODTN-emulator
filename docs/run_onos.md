@@ -92,10 +92,22 @@ To enable the optical channel and tune the wavelength via a flow rule, you shoul
 app activate org.onosproject.optical-model
 ```
 
-- You can use port-wavelength command to add a flow rule by providing a connectPoint and signal: For example:
+- You can use `available-wavelength` command to see available wavelengths on a port: For example:
 ```bash
-wavelength-config netconf:127.0.0.1:11002/201 4/50/1/dwdm
+available-wavelength netconf:127.0.0.1:11002/201
 ```
+Which will print out a series of elements
+```bash
+signal=OchSignal{-48 x 50.00GHz +/- 25.00GHz}, central-frequency=190700.000000
+signal=OchSignal{-47 x 50.00GHz +/- 25.00GHz}, central-frequency=190750.000000
+```
+where the -48 is the spacing multiplier, the 50.00Ghz is the channel spacing and +/- 25.00 GHz the range.
+
+- You can use `wavelength-config` command to add a flow rule by providing a connectPoint and signal. For example:
+```bash
+wavelength-config edit-config netconf:127.0.0.1:11002/201 4/50/1/dwdm
+```
+where the 4 is the slot granularity, the 50.00Ghz is the channel spacing, 1 is the spacing multiplier and dwdm is the grid type.
 
 - if you run *flows* command, you should be able to see the list of flows as follows:
 ```bash
@@ -103,4 +115,21 @@ flows                                              08:42:17
 deviceId=netconf:127.0.0.1:11002, flowRuleCount=1
     id=90000a7b0d126, state=PENDING_ADD, bytes=0, packets=0, duration=0, liveType=UNKNOWN, priority=100, tableId=0, appId=org.onosproject.optical-model, selector=[IN_PORT:201], treatment=DefaultTrafficTreatment{immediate=[OCH:OchSignal{+1 x 50.00GHz +/- 25.00GHz}, OUTPUT:201], deferred=[], transition=None, meter=[], cleared=false, StatTrigger=null, metadata=null}
 deviceId=netconf:127.0.0.1:11003, flowRuleCount=0
+```
+## Configure the modulation via CLI
+
+To configure the modulation via Cli, you should do the following steps:
+
+- Activate [optical-model](https://github.com/opennetworkinglab/onos/tree/master/apps/optical-model) using the following command: 
+```bash
+app activate org.onosproject.optical-model
+```
+- You can use `modulation-config` command to get the modulation on a specific port. For example:
+```bash
+modulation-config get netconf:127.0.0.1:11002/201
+```
+
+- You can use `modulation-config` command to set the modulation on a specific port. For example:
+```bash
+modulation-config edit-config netconf:127.0.0.1:11002/201 dp_qpsk
 ```
