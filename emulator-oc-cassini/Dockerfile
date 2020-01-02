@@ -3,7 +3,7 @@ COPY yang /root/yang
 COPY config /root/config
 COPY script /root/script
 RUN apt-get update && apt-get upgrade -y \
-    && apt-get install software-properties-common build-essential openssl libssl-dev libpcre3 libpcre3-dev git make cmake bison flex pkg-config graphviz doxygen valgrind zlib1g zlib1g-dev libev-dev libavl-dev libprotobuf-c-dev protobuf-c-compiler swig python-dev lua5.2 vim net-tools libcurl4-openssl-dev man -y \
+    && apt-get install software-properties-common build-essential openssl libssl-dev libpcre3 libpcre3-dev git make cmake bison flex pkg-config graphviz doxygen valgrind zlib1g zlib1g-dev libev-dev libavl-dev libprotobuf-c-dev protobuf-c-compiler swig python-dev lua5.2 vim net-tools libcurl4-openssl-dev lib32ncurses5-dev man -y \
     && echo "export LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib" >> ~/.bashrc \
     && export LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib \
     && cd ~ && git clone http://git.libssh.org/projects/libssh.git \
