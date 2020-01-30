@@ -76,11 +76,11 @@ Then you can run them like this:
 # 1. Create line-side connectivity
 execute-tapi-post-call.py 127.0.0.1 tapi-connectivity:create-connectivity-service line-side
 # 2. Delete all line-side connectivities
-execute-tapi-delete-call 127.0.0.1 line
+execute-tapi-delete-call.py 127.0.0.1 line
 # 3. Create client-side connectivity
-execute-tapi-post-call.py 127.0.0.1 tapi-connectivity:create-connectivity-servic client-side
+execute-tapi-post-call.py 127.0.0.1 tapi-connectivity:create-connectivity-service client-side
 # 4. Delete all connectivities
-execute-tapi-delete-call 127.0.0.1 both
+execute-tapi-delete-call.py 127.0.0.1 both
 ```
 
 ## Enable the optical channel and tune the wavelength via a flow rule
