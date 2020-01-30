@@ -66,8 +66,9 @@ If you have the ONOS code locally go into this folder:
 $ONOS_ROOT/tools/test/scenarios/bin/
 ```
 if not please pull the scritps from here:  
-- [execute-tapi-post-call.py](https://github.com/opennetworkinglab/onos/blob/master/tools/test/scenarios/bin/execute-tapi-delete-call.py)
-- [execute-tapi-delete-call.py](https://github.com/opennetworkinglab/onos/blob/master/tools/test/scenarios/bin/execute-tapi-post-call.py)
+- [execute-tapi-post-call.py](https://github.com/opennetworkinglab/onos/blob/master/tools/test/scenarios/bin/execute-tapi-post-call.py)
+- [execute-tapi-delete-call.py](https://github.com/opennetworkinglab/onos/blob/master/tools/test/scenarios/bin/execute-tapi-delete-call.py)
+- [tapiHelper.py](https://github.com/opennetworkinglab/onos/blob/master/tools/test/scenarios/bin/tapiHelper.py)
 
 Then you can run them like this:
 ```shell
