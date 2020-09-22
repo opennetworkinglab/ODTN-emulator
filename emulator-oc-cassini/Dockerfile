@@ -10,7 +10,7 @@ RUN apt-get update && apt-get upgrade -y \
     && cd libssh && mkdir build && cd build \
     && git checkout stable-0.8 \
     && cmake .. && make -j4 && make install \
-    && cd ~ && git clone git://git.cryptomilk.org/projects/cmocka.git \
+    && cd ~ && git clone https://git.cryptomilk.org/projects/cmocka.git \
     && cd cmocka && mkdir build && cd build \
     && git checkout tags/cmocka-1.0.1 \
     && cmake .. && make && make install \
@@ -29,7 +29,7 @@ RUN apt-get update && apt-get upgrade -y \
     && make -j4 \
     && ctest && make install \
     && cd ~ && git clone https://github.com/CESNET/Netopeer2.git \
-    && cd Netopeer2/server && git checkout v0.7-r1 \
+    && cd Netopeer2 && git checkout v0.7-r1 && cd server \
     && mkdir build && cd build && cmake .. \
     && make -j4 && make install \
     && ssh-keygen -t rsa -b 2048 -f /etc/ssh/ssh_host_rsa_key \
